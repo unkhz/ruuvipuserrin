@@ -1,0 +1,9 @@
+{
+  "name": "ruuvipuserrin",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "bun-types": "^0.4.0"
+  }
+}
