@@ -1,0 +1,22 @@
+{
+  "name": "@ruuvipuserrin/relay",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "prettier-write": "bun prettier --write *.json *.ts lib/**/*.ts",
+    "prettier-check": "bun prettier --check *.json *.ts lib/**/*.ts",
+    "test-unit": "bun wiptest",
+    "install": "bun install",
+    "lint": "bun prettier-check",
+    "test": "bun test-unit",
+    "build": "bun bun index.ts",
+    "start": "bun index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "bun-types": "^0.4.0"
+  },
+  "dependencies": {
+    "zod": "^3.20.2"
+  }
+}
