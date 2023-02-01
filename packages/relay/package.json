@@ -6,7 +6,7 @@
     "prettier-write": "bun prettier --write *.json *.ts lib/**/*.ts",
     "prettier-check": "bun prettier --check *.json *.ts lib/**/*.ts",
     "test-unit": "bun wiptest",
-    "install": "bun install",
+    "setup": "bun install",
     "lint": "bun prettier-check",
     "test": "bun test-unit",
     "build": "bun bun index.ts",

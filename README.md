@@ -5,6 +5,31 @@ This is a rebuild of @unkhz/ruuvitaulu, attempting to improve fault tolerance
 - separate measurement delegation functionality (gateway) from parsing the data, so that there can be multiple redundant gateway boxes connected to single parser pipeline
 - avoid storing measurements in the gateway after they have been succesfully passed on, so that gateway boxes do not run out of space
 
+### Install
+
+Ensure you have installed following tools in your gateway box
+
+- [Rust](https://rustup.rs/)
+- [Node](https://nodejs.org/en/download/)
+
+Install monorepo dependencies
+
+```
+npm install
+```
+
+Run package specific setup scripts
+
+```
+npm run setup
+```
+
+### Running
+
+```
+npm start
+```
+
 ### Using Nx
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>

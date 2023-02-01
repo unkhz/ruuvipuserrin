@@ -1,4 +1,4 @@
-# ruuvipuserrin
+# @ruuvipuserrin/relay
 
 To install dependencies:
 
