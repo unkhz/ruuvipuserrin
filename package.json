@@ -2,9 +2,14 @@
   "name": "ruuvipuserrin",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "format:write": "bun prettier --write *.json *.ts lib/**/*.ts",
+    "format:check": "bun prettier --check *.json *.ts lib/**/*.ts"
+  },
   "devDependencies": {
     "@types/node": "^18.11.18",
-    "bun-types": "^0.4.0"
+    "bun-types": "^0.4.0",
+    "prettier": "^2.8.3"
   },
   "dependencies": {
     "zod": "^3.20.2"
