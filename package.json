@@ -6,7 +6,7 @@
     "setup": "nx run-many --target=setup --all",
     "test": "nx run-many --target=test --all",
     "build": "nx run-many --target=build --all",
-    "start": "nx start @ruuvipuserrin/listener|nx start @ruuvipuserrin/relay"
+    "start": "nx start @ruuvipuserrin/listener  --influxdb-measurement=ruuvipuserrin-measurement|nx start @ruuvipuserrin/relay --measurementName=ruuvipuserrin-measurement"
   },
   "private": true,
   "devDependencies": {
