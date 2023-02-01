@@ -1,10 +1,10 @@
-import { parseLineFromRuuvitagListener } from './lib/listener';
+import { parseLineFromRuuvitagListener } from './lib/listener'
 
-const readline = require('node:readline');
+const readline = require('node:readline')
 
 const input = readline.createInterface({
   input: process.stdin,
-});
+})
 
 input.on('line', (line: string) => {
   const measurement = parseLineFromRuuvitagListener(line)

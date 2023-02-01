@@ -34,26 +34,25 @@ const ZRuuvitagMeasurementDataFromParsedInput = z.object({
 })
 
 const ZRuuvitagIdentifiersFromParsedInput = z.object({
-  mac: z.string()
+  mac: z.string(),
 })
 
 export type RuuvitagMeasurementData = z.infer<typeof ZRuuvitagMeasurementData>
 
 export type RuuvitagMeasurement = z.infer<typeof ZRuuvitagMeasurement>
 
-
 function parseKeyValueCsv<TData extends Record<string, unknown>>(line: string): Record<keyof TData, string> {
   const pairs = line.split(',')
-  return Object.fromEntries(pairs.map(pair => pair.split('=')))
+  return Object.fromEntries(pairs.map((pair) => pair.split('=')))
 }
 
 export function parseLineFromRuuvitagListener(line: string): RuuvitagMeasurement {
   const [identifiers, data, time] = line.split(' ')
-  const {mac} = ZRuuvitagIdentifiersFromParsedInput.parse(parseKeyValueCsv<{mac: string}>(identifiers))
+  const { mac } = ZRuuvitagIdentifiersFromParsedInput.parse(parseKeyValueCsv<{ mac: string }>(identifiers))
   return {
     id: mac.toLowerCase().replace(/:/g, ''),
     mac,
     data: ZRuuvitagMeasurementDataFromParsedInput.parse(parseKeyValueCsv<RuuvitagMeasurementData>(data)),
-    time: z.coerce.number().parse(time)
+    time: z.coerce.number().parse(time),
   }
 }
