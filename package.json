@@ -5,5 +5,8 @@
   "devDependencies": {
     "@types/node": "^18.11.18",
     "bun-types": "^0.4.0"
+  },
+  "dependencies": {
+    "zod": ""
   }
 }
