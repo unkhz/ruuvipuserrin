@@ -1,58 +1,29 @@
-import { z } from 'zod'
+import { readArgs } from './args'
+import { parseLineFromRuuvitagListener, RuuvitagMeasurement } from './measurement'
 
-export const ZRuuvitagMeasurementData = z.object({
-  acceleration_x: z.number(),
-  acceleration_y: z.number(),
-  acceleration_z: z.number(),
-  battery_potential: z.number(),
-  humidity: z.number(),
-  measurement_sequence_number: z.number(),
-  movement_counter: z.number(),
-  pressure: z.number(),
-  temperature: z.number(),
-  tx_power: z.number(),
+const readline = require('node:readline')
+const standardInputStream = readline.createInterface({
+  input: process.stdin,
 })
 
-export const ZRuuvitagMeasurement = z.object({
-  id: z.string().length(12),
-  mac: z.string().length(17),
-  data: ZRuuvitagMeasurementData,
-  time: z.number(),
-})
+const args = readArgs()
 
-const ZRuuvitagMeasurementDataFromParsedInput = z.object({
-  acceleration_x: z.coerce.number(),
-  acceleration_y: z.coerce.number(),
-  acceleration_z: z.coerce.number(),
-  battery_potential: z.coerce.number(),
-  humidity: z.coerce.number(),
-  measurement_sequence_number: z.coerce.number(),
-  movement_counter: z.coerce.number(),
-  pressure: z.coerce.number(),
-  temperature: z.coerce.number(),
-  tx_power: z.coerce.number(),
-})
+const snapshot: Map<string, RuuvitagMeasurement> = new Map()
 
-const ZRuuvitagIdentifiersFromParsedInput = z.object({
-  mac: z.string(),
-})
+export async function processMeasurementsFromStandardInput() {
+  console.log(
+    `Handling listener measurements with the name "${args.measurementName}" (configure with option --measurementName)`,
+  )
 
-export type RuuvitagMeasurementData = z.infer<typeof ZRuuvitagMeasurementData>
-
-export type RuuvitagMeasurement = z.infer<typeof ZRuuvitagMeasurement>
-
-function parseKeyValueCsv<TData extends Record<string, unknown>>(line: string): Record<keyof TData, string> {
-  const pairs = line.split(',')
-  return Object.fromEntries(pairs.map((pair) => pair.split('=')))
+  standardInputStream.on('line', (line: string) => {
+    // Only process input with sepcific ruuvitag-listener influxdb measurement name
+    if (line.startsWith(args.measurementName)) {
+      const measurement = parseLineFromRuuvitagListener(line)
+      snapshot.set(measurement.id, measurement)
+    }
+  })
 }
 
-export function parseLineFromRuuvitagListener(line: string): RuuvitagMeasurement {
-  const [identifiers, data, time] = line.split(' ')
-  const { mac } = ZRuuvitagIdentifiersFromParsedInput.parse(parseKeyValueCsv<{ mac: string }>(identifiers))
-  return {
-    id: mac.toLowerCase().replace(/:/g, ''),
-    mac,
-    data: ZRuuvitagMeasurementDataFromParsedInput.parse(parseKeyValueCsv<RuuvitagMeasurementData>(data)),
-    time: z.coerce.number().parse(time),
-  }
+export function getMeasurementSnapshot(): Record<string, RuuvitagMeasurement> {
+  return Object.fromEntries(snapshot.entries())
 }

@@ -1,12 +1,15 @@
 import { Worker } from '@temporalio/worker'
 import * as activities from './lib/activities'
+import { readArgs } from './lib/args'
+
+const { taskQueue } = readArgs()
 
 async function run() {
   // Step 1: Register Workflows and Activities with the Worker and connect to the Temporal server.
   const worker = await Worker.create({
     workflowsPath: require.resolve('./lib/workflows'),
     activities,
-    taskQueue: 'ruuvipuserrin',
+    taskQueue,
     namespace: 'default',
     // address: 'http://localhost:7233',
   })

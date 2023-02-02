@@ -1,13 +1,17 @@
-import { proxyActivities } from '@temporalio/workflow'
+import { scheduleActivity, scheduleLocalActivity } from '@temporalio/workflow'
 // Only import the activity types
-import type * as activities from './activities'
+import type { readMeasurements, readArgs } from './activities'
 
-const act = proxyActivities<typeof activities>({
-  startToCloseTimeout: '1 minute',
-})
+export async function publishMeasurements() {
+  const { pollingInterval } = await scheduleLocalActivity<ReturnType<typeof readArgs>>('readArgs', [], {
+    // missing argument is non-retriable configuration error
+    retry: { maximumAttempts: 1 },
+    startToCloseTimeout: 1000,
+  })
 
-export function publishMeasurements(): Promise<string> {
-  const data = await act.readMeasurements()
+  const data = await scheduleActivity<ReturnType<typeof readMeasurements>>('readMeasurements', [], {
+    startToCloseTimeout: pollingInterval,
+  })
 
   // polish data (calibration, naming, aggregate)
 

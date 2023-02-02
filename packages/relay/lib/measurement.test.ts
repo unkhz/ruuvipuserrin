@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
 import { ZodError } from 'zod'
-import { parseLineFromRuuvitagListener } from './listener'
+import { parseLineFromRuuvitagListener } from './measurement'
 
 type RuuvitagListenerOutputInput = {
   mac: string

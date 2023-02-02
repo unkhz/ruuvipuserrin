@@ -1,5 +1,6 @@
 import { Connection, Client } from '@temporalio/client'
 import { publishMeasurements } from '@ruuvipuserrin/temporal-worker/lib/workflows'
+import { readArgs } from './lib/args'
 
 async function run() {
   // Connect to the default Server location (localhost:7233)
@@ -10,7 +11,7 @@ async function run() {
     // namespace: 'foo.bar', // connects to 'default' namespace if not specified
   })
 
-  const pollingInterval = 15000
+  const { pollingInterval, taskQueue } = readArgs()
 
   console.log(`Scheduler started. Running publish every ${pollingInterval} ms`)
 
@@ -18,8 +19,9 @@ async function run() {
     const intervalPromise: Promise<void> = new Promise((resolve) => setTimeout(() => resolve(), pollingInterval))
     client.workflow.start(publishMeasurements, {
       args: [],
-      taskQueue: 'ruuvipuserrin',
+      taskQueue,
       workflowId: `publish-${new Date().getTime()}`,
+      workflowExecutionTimeout: pollingInterval,
     })
     await intervalPromise
   }
