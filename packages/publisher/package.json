@@ -1,0 +1,24 @@
+{
+  "name": "@ruuvipuserrin/publisher",
+  "version": "0.0.0",
+  "scripts": {
+    "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
+    "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
+    "test-unit": "jest",
+    "lint": "npm prettier-check",
+    "test": "npm test-unit",
+    "start": "npx ts-node index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "tslib": "^2.5.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@temporalio/client": "^1.6.0",
+    "@types/minimist": "",
+    "minimist": "^1.2.7",
+    "zod": "^3.20.2"
+  }
+}
