@@ -1,5 +1,5 @@
 import { Connection, Client } from '@temporalio/client'
-import { hello } from '@ruuvipuserrin/temporal-worker/lib/workflows'
+import { publishMeasurements } from '@ruuvipuserrin/temporal-worker/lib/workflows'
 
 async function run() {
   // Connect to the default Server location (localhost:7233)
@@ -16,7 +16,7 @@ async function run() {
 
   while (true) {
     const intervalPromise: Promise<void> = new Promise((resolve) => setTimeout(() => resolve(), pollingInterval))
-    client.workflow.start(hello, {
+    client.workflow.start(publishMeasurements, {
       args: [],
       taskQueue: 'ruuvipuserrin',
       workflowId: `publish-${new Date().getTime()}`,

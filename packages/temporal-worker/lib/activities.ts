@@ -1,3 +1,4 @@
-export async function hello(): Promise<string> {
+export async function readMeasurements(): Promise<string> {
+  // read snapshot from relay
   return 'hello'
 }

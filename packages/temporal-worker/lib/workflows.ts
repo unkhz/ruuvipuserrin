@@ -6,6 +6,12 @@ const act = proxyActivities<typeof activities>({
   startToCloseTimeout: '1 minute',
 })
 
-export function hello(): Promise<string> {
-  return act.hello()
+export function publishMeasurements(): Promise<string> {
+  const data = await act.readMeasurements()
+
+  // polish data (calibration, naming, aggregate)
+
+  // push polished data to cloud
+
+  return data
 }
