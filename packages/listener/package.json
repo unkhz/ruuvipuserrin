@@ -5,6 +5,6 @@
     "setcap": "sudo setcap 'cap_net_raw,cap_net_admin+eip' ./dist/bin/ruuvitag-listener",
     "cargo-install": "cargo install ruuvitag-listener --locked",
     "setup": "npm run cargo-install; npm run setcap",
-    "start": "ruuvitag-listener"
+    "bin": "./dist/bin/ruuvitag-listener"
   }
 }

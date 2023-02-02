@@ -10,13 +10,14 @@
     "lint": "bun prettier-check",
     "test": "bun test-unit",
     "build": "bun bun index.ts",
-    "start": "bun index.ts"
+    "start": "nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
     "bun-types": "^0.4.0"
   },
   "dependencies": {
+    "@ruuvipuserrin/listener": "*",
     "@types/minimist": "",
     "minimist": "^1.2.7",
     "zod": "^3.20.2"
