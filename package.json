@@ -4,10 +4,9 @@
   "license": "MIT",
   "nx": {},
   "scripts": {
-    "setup": "nx run-many --target=setup --all",
-    "test": "nx run-many --target=test --all",
-    "build": "nx run-many --target=build --all",
-    "start": "nx start @ruuvipuserrin/listener  --influxdb-measurement=ruuvipuserrin-measurement|nx start @ruuvipuserrin/relay --measurementName=ruuvipuserrin-measurement",
+    "setup-all": "nx run-many --target=setup --all",
+    "test-all": "nx run-many --target=test --all",
+    "build-all": "nx run-many --target=build --all",
     "tctl": "docker exec temporal-admin-tools tctl"
   },
   "private": true,

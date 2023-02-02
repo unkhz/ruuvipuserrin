@@ -1,16 +1,15 @@
 {
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "ruuvipuserrin",
+  "affected": {
+    "defaultBase": "master"
+  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "NGI5MTFlNzMtOTU0Ni00YWMzLTljMjEtY2UyMmEwODY0YzUzfHJlYWQtd3JpdGU="
       }
     }
