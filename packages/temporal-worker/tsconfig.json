@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "lib": ["ESNext"],
-    "module": "esnext",
+    "module": "commonjs",
     "target": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
     "strict": true,
     "downlevelIteration": true,
     "skipLibCheck": true,
@@ -11,8 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
-    "types": [
-      "bun-types" // add Bun global
-    ]
+    "types": ["node"],
+    "outDir": "./dist"
   }
 }
