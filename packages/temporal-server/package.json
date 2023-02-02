@@ -1,0 +1,9 @@
+{
+  "name": "@ruuvipuserrin/temporal-server",
+  "version": "0.0.0",
+  "scripts": {
+    "setup": "./setup.sh ./dist/docker-compose-postgres.yml",
+    "start": "docker compose -f ./dist/docker-compose-postgres.yml up",
+    "stop": "docker compose -f ./dist/docker-compose-postgres.yml down"
+  }
+}

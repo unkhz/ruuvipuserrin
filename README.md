@@ -7,10 +7,11 @@ This is a rebuild of @unkhz/ruuvitaulu, attempting to improve fault tolerance
 
 ### Install
 
-Ensure you have installed following tools in your gateway box
+Ensure you have installed following tools in your gateway box (e.g. raspberry pi).
 
 - [Rust](https://rustup.rs/)
 - [Node](https://nodejs.org/en/download/)
+- [Docker](https://docs.docker.com/engine/install/)
 
 Install monorepo dependencies
 
