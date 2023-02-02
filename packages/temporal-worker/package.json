@@ -7,7 +7,7 @@
     "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
     "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
     "test-unit": "jest",
-    "lint": "prettier-check",
+    "lint": "npm run prettier-check",
     "test": "npm run test-unit",
     "start": "ts-node index.ts"
   },
