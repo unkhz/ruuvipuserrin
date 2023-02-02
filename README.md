@@ -28,7 +28,7 @@ npm run setup
 ### Running
 
 ```
-npm start
+npm run start-all
 ```
 
 ### Using Nx
