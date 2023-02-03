@@ -13,7 +13,7 @@ const router = trpc.router({
 
 export type RelayRouter = typeof router
 
-export function createServer(): Express {
+export function createServer() {
   const app = express()
 
   app.use(
