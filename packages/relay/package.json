@@ -9,7 +9,7 @@
     "setup": "bun install",
     "lint": "bun prettier-check",
     "test": "bun test-unit",
-    "build": "bun bun index.ts",
+    "build": "bun bun index.ts --tsconfig-override tsconfig.build.json",
     "start": "nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03"
   },
   "devDependencies": {
