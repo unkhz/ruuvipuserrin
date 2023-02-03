@@ -1,18 +1,7 @@
 {
+  "extends": "../base-node/tsconfig.json",
+  "include": ["*.ts", "./lib/**/*.ts"],
   "compilerOptions": {
-    "lib": ["ESNext"],
-    "module": "commonjs",
-    "target": "esnext",
-    "moduleResolution": "nodenext",
-    "esModuleInterop": true,
-    "strict": true,
-    "downlevelIteration": true,
-    "skipLibCheck": true,
-    "jsx": "preserve",
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
-    "types": ["node", "jest"],
     "outDir": "./dist"
   }
 }

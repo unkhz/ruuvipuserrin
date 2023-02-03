@@ -6,12 +6,14 @@
   "scripts": {
     "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
     "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
-    "test-unit": "jest",
+    "test-unit": "jest --no-cache --ci",
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
+    "build": "tsc --project tsconfig.build.json",
     "start": "ts-node index.ts --pollingInterval=15000 --taskQueue=ruuvipuserrin"
   },
   "devDependencies": {
+    "@ruuvipuserrin/base-node": "*",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.11.18",
     "ts-jest": "^29.0.5",

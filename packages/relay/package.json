@@ -13,7 +13,9 @@
     "start": "nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03"
   },
   "devDependencies": {
+    "@ruuvipuserrin/base-node": "*",
     "@types/node": "^18.11.18",
+    "bun": "^0.5.5",
     "bun-types": "^0.4.0"
   },
   "dependencies": {
