@@ -13,13 +13,7 @@
     "start": "ts-node index.ts --pollingInterval=15000 --taskQueue=ruuvipuserrin"
   },
   "devDependencies": {
-    "@ruuvipuserrin/base-node": "*",
-    "@types/jest": "^29.4.0",
-    "@types/node": "^18.11.18",
-    "ts-jest": "^29.0.5",
-    "ts-node": "^10.9.1",
-    "tslib": "^2.5.0",
-    "typescript": "^4.9.5"
+    "@ruuvipuserrin/base-node": "*"
   },
   "dependencies": {
     "@temporalio/client": "^1.6.0",

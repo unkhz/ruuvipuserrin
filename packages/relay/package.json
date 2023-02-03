@@ -14,7 +14,6 @@
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*",
-    "@types/node": "^18.11.18",
     "bun": "^0.5.5",
     "bun-types": "^0.4.0"
   },
