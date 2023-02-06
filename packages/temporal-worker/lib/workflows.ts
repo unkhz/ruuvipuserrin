@@ -1,6 +1,6 @@
 import { scheduleActivity, scheduleLocalActivity } from '@temporalio/workflow'
 // Only import the activity types
-import type { readMeasurements, readArgs } from './activities'
+import type { readMeasurements, writeMeasurements, readArgs } from './activities'
 
 export async function publishMeasurements() {
   const { pollingInterval } = await scheduleLocalActivity<ReturnType<typeof readArgs>>('readArgs', [], {
@@ -16,6 +16,9 @@ export async function publishMeasurements() {
   // polish data (calibration, naming, aggregate)
 
   // push polished data to cloud
+  await scheduleActivity<ReturnType<typeof writeMeasurements>>('writeMeasurements', [data], {
+    startToCloseTimeout: pollingInterval * 10,
+  })
 
   return data
 }
