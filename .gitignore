@@ -40,3 +40,6 @@ Thumbs.db
 
 # Bun
 node_modules.bun
+
+# Nx
+.env.local
