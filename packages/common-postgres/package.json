@@ -1,0 +1,23 @@
+{
+  "name": "@ruuvipuserrin/common-postgres",
+  "version": "0.0.0",
+  "module": "index.ts",
+  "type": "commonjs",
+  "scripts": {
+    "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
+    "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
+    "test-unit": "jest --no-cache --ci",
+    "lint": "npm run prettier-check",
+    "test": "npm run test-unit",
+    "build": "tsc --project tsconfig.build.json",
+    "start": "ts-node index.ts --pollingInterval=15000 --taskQueue=ruuvipuserrin"
+  },
+  "devDependencies": {
+    "@ruuvipuserrin/base-node": "*"
+  },
+  "dependencies": {
+    "@types/pg": "^8.6.6",
+    "pg": "^8.9.0",
+    "zod": "^3.20.2"
+  }
+}
