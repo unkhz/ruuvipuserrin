@@ -1,24 +1,29 @@
-import pg from 'pg'
 import url from 'url'
-import { getEnv } from './env'
+import { Pool, PoolConfig } from 'pg'
+import { Kysely, PostgresDialect } from 'kysely'
 
-function getConfig() {
+import { getEnv } from './env'
+import { Database } from './database'
+
+function getConfig(): PoolConfig {
   const env = getEnv()
   const { href: connectionString } = new url.URL(
-    `postgres://${env.PG_USER}:${env.PG_PASSWORD}@${env.PG_HOST}:${env.PG_PORT}/${env.PG_DB}?sslmode=require`,
+    `postgres://${env.PG_USER}:${env.PG_PASSWORD}@${env.PG_HOST}:${env.PG_PORT}/${env.PG_DB}?sslmode=no-verify`,
   )
 
   return {
     connectionString,
     ssl: {
-      rejectUnauthorized: true,
+      rejectUnauthorized: false,
       ca: env.PG_CERT,
     },
   }
 }
 
-export async function createClient(): Promise<pg.Client> {
-  const client = new pg.Client(getConfig())
-  await client.connect()
-  return client
+export async function createClient(): Promise<Kysely<Database>> {
+  return new Kysely<Database>({
+    dialect: new PostgresDialect({
+      pool: new Pool(getConfig()),
+    }),
+  })
 }

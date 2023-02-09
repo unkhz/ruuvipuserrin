@@ -10,13 +10,14 @@
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
     "build": "tsc --project tsconfig.build.json",
-    "start": "ts-node index.ts --pollingInterval=15000 --taskQueue=ruuvipuserrin"
+    "migrate": "ts-node ./migrate.ts"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*"
   },
   "dependencies": {
     "@types/pg": "^8.6.6",
+    "kysely": "^0.23.4",
     "pg": "^8.9.0",
     "zod": "^3.20.2"
   }
