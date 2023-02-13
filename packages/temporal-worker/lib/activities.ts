@@ -1,6 +1,7 @@
-import { relayClient } from './relay-client'
+import { sql } from 'kysely'
 import { createPoint, createWriteApi } from '@ruuvipuserrin/common-influxdb'
 import { createClient } from '@ruuvipuserrin/common-postgres'
+import { relayClient } from './relay-client'
 export * from './args'
 
 export async function readMeasurements() {
@@ -46,7 +47,18 @@ export async function writeMeasurementsToTimescaleDb(measurements: Awaited<Retur
   for (const [_id, measurement] of Object.entries(measurements)) {
     const { id: source, time, data } = measurement
     const { temperature, humidity, pressure } = data
-    queries.push(client.insertInto('measurement').values({ time, source, temperature, humidity, pressure }).execute())
+    queries.push(
+      client
+        .insertInto('measurement')
+        .values({
+          time: sql`to_timestamp(${new Date(time / 1000000).getTime()})`,
+          source,
+          temperature,
+          humidity,
+          pressure,
+        })
+        .execute(),
+    )
   }
   return Promise.all(queries)
 }

@@ -1,5 +1,7 @@
+import { ColumnType } from 'kysely'
+
 export interface MeasurementTable {
-  time: number
+  time: ColumnType<Date, string | undefined, never>
   source: string
   temperature: number
   humidity: number
@@ -7,7 +9,7 @@ export interface MeasurementTable {
 }
 
 export interface ConfigTable {
-  time: number
+  time: ColumnType<Date, string | undefined, never>
   source: string
   location: string
 }
