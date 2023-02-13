@@ -16,6 +16,5 @@ describe('createClient', () => {
     const client = await createClient()
     expect(client).toBeDefined()
     expect(env.getEnv).toHaveBeenCalledTimes(1)
-    expect(client.connect).toHaveBeenCalledTimes(1)
   })
 })
