@@ -1,6 +1,6 @@
 # Ruuvipuserrin
 
-This is a rebuild of @unkhz/ruuvitaulu, attempting to improve fault tolerance
+This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), attempting to improve fault tolerance
 
 - separate measurement delegation functionality (gateway) from parsing the data, so that there can be multiple redundant gateway boxes connected to single parser pipeline
 - avoid storing measurements in the gateway after they have been succesfully passed on, so that gateway boxes do not run out of space
