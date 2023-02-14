@@ -3,8 +3,9 @@
   "module": "index.ts",
   "type": "commonjs",
   "scripts": {
-    "prettier-write": "npm run prettier --write *.json *.ts lib/**/*.ts",
-    "prettier-check": "npm run prettier --check *.json *.ts lib/**/*.ts",
+    "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
+    "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
+    "test-unit": "jest --no-cache --ci",
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
     "protoc": "protoc --plugin=$(npm bin)/protoc-gen-ts_proto --ts_proto_out=. lib/formats/ruuvi.proto"
