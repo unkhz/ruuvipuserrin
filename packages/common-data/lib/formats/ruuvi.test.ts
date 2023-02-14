@@ -1,16 +1,16 @@
 import { RuuviMeasurement } from './ruuvi'
 
 const exampleMeasurement = {
-  accelerationX: 123,
-  accelerationY: 123,
-  accelerationZ: 123,
-  batteryPotential: 123,
+  acceleration_x: 123,
+  acceleration_y: 123,
+  acceleration_z: 123,
+  battery_potential: 123,
   humidity: 123,
-  measurementSequenceNumber: 123,
-  movementCounter: 123,
+  measurement_sequence_number: 123,
+  movement_counter: 123,
   pressure: 123,
   temperature: 123,
-  txPower: 123,
+  tx_power: 123,
   mac: 'aa:bb:cc:dd:ee:ff',
   time: 123,
 }
@@ -33,19 +33,19 @@ describe('RuuviMeasurement', () => {
   })
 
   it('should fromPartial', () => {
-    const { accelerationX, batteryPotential } = exampleMeasurement
-    const typed = RuuviMeasurement.fromJSON({ accelerationX, batteryPotential })
+    const { acceleration_x, battery_potential } = exampleMeasurement
+    const typed = RuuviMeasurement.fromJSON({ acceleration_x, battery_potential })
     expect(typed).toEqual({
-      accelerationX,
-      batteryPotential,
-      accelerationY: 0,
-      accelerationZ: 0,
+      acceleration_x,
+      battery_potential,
+      acceleration_y: 0,
+      acceleration_z: 0,
       humidity: 0,
-      measurementSequenceNumber: 0,
-      movementCounter: 0,
+      measurement_sequence_number: 0,
+      movement_counter: 0,
       pressure: 0,
       temperature: 0,
-      txPower: 0,
+      tx_power: 0,
       mac: '',
       time: 0,
     })

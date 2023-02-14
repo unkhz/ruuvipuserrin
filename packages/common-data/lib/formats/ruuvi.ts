@@ -4,32 +4,32 @@ import * as _m0 from 'protobufjs/minimal'
 export const protobufPackage = ''
 
 export interface RuuviMeasurement {
-  accelerationX: number
-  accelerationY: number
-  accelerationZ: number
-  batteryPotential: number
+  acceleration_x: number
+  acceleration_y: number
+  acceleration_z: number
+  battery_potential: number
   humidity: number
-  measurementSequenceNumber: number
-  movementCounter: number
+  measurement_sequence_number: number
+  movement_counter: number
   pressure: number
   temperature: number
-  txPower: number
+  tx_power: number
   mac: string
   time: number
 }
 
 function createBaseRuuviMeasurement(): RuuviMeasurement {
   return {
-    accelerationX: 0,
-    accelerationY: 0,
-    accelerationZ: 0,
-    batteryPotential: 0,
+    acceleration_x: 0,
+    acceleration_y: 0,
+    acceleration_z: 0,
+    battery_potential: 0,
     humidity: 0,
-    measurementSequenceNumber: 0,
-    movementCounter: 0,
+    measurement_sequence_number: 0,
+    movement_counter: 0,
     pressure: 0,
     temperature: 0,
-    txPower: 0,
+    tx_power: 0,
     mac: '',
     time: 0,
   }
@@ -37,26 +37,26 @@ function createBaseRuuviMeasurement(): RuuviMeasurement {
 
 export const RuuviMeasurement = {
   encode(message: RuuviMeasurement, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.accelerationX !== 0) {
-      writer.uint32(8).sint32(message.accelerationX)
+    if (message.acceleration_x !== 0) {
+      writer.uint32(8).sint32(message.acceleration_x)
     }
-    if (message.accelerationY !== 0) {
-      writer.uint32(16).sint32(message.accelerationY)
+    if (message.acceleration_y !== 0) {
+      writer.uint32(16).sint32(message.acceleration_y)
     }
-    if (message.accelerationZ !== 0) {
-      writer.uint32(24).sint32(message.accelerationZ)
+    if (message.acceleration_z !== 0) {
+      writer.uint32(24).sint32(message.acceleration_z)
     }
-    if (message.batteryPotential !== 0) {
-      writer.uint32(32).uint32(message.batteryPotential)
+    if (message.battery_potential !== 0) {
+      writer.uint32(32).uint32(message.battery_potential)
     }
     if (message.humidity !== 0) {
       writer.uint32(40).uint32(message.humidity)
     }
-    if (message.measurementSequenceNumber !== 0) {
-      writer.uint32(48).uint32(message.measurementSequenceNumber)
+    if (message.measurement_sequence_number !== 0) {
+      writer.uint32(48).uint32(message.measurement_sequence_number)
     }
-    if (message.movementCounter !== 0) {
-      writer.uint32(56).uint32(message.movementCounter)
+    if (message.movement_counter !== 0) {
+      writer.uint32(56).uint32(message.movement_counter)
     }
     if (message.pressure !== 0) {
       writer.uint32(64).uint32(message.pressure)
@@ -64,8 +64,8 @@ export const RuuviMeasurement = {
     if (message.temperature !== 0) {
       writer.uint32(72).sint32(message.temperature)
     }
-    if (message.txPower !== 0) {
-      writer.uint32(80).uint32(message.txPower)
+    if (message.tx_power !== 0) {
+      writer.uint32(80).uint32(message.tx_power)
     }
     if (message.mac !== '') {
       writer.uint32(90).string(message.mac)
@@ -84,25 +84,25 @@ export const RuuviMeasurement = {
       const tag = reader.uint32()
       switch (tag >>> 3) {
         case 1:
-          message.accelerationX = reader.sint32()
+          message.acceleration_x = reader.sint32()
           break
         case 2:
-          message.accelerationY = reader.sint32()
+          message.acceleration_y = reader.sint32()
           break
         case 3:
-          message.accelerationZ = reader.sint32()
+          message.acceleration_z = reader.sint32()
           break
         case 4:
-          message.batteryPotential = reader.uint32()
+          message.battery_potential = reader.uint32()
           break
         case 5:
           message.humidity = reader.uint32()
           break
         case 6:
-          message.measurementSequenceNumber = reader.uint32()
+          message.measurement_sequence_number = reader.uint32()
           break
         case 7:
-          message.movementCounter = reader.uint32()
+          message.movement_counter = reader.uint32()
           break
         case 8:
           message.pressure = reader.uint32()
@@ -111,7 +111,7 @@ export const RuuviMeasurement = {
           message.temperature = reader.sint32()
           break
         case 10:
-          message.txPower = reader.uint32()
+          message.tx_power = reader.uint32()
           break
         case 11:
           message.mac = reader.string()
@@ -129,16 +129,18 @@ export const RuuviMeasurement = {
 
   fromJSON(object: any): RuuviMeasurement {
     return {
-      accelerationX: isSet(object.accelerationX) ? Number(object.accelerationX) : 0,
-      accelerationY: isSet(object.accelerationY) ? Number(object.accelerationY) : 0,
-      accelerationZ: isSet(object.accelerationZ) ? Number(object.accelerationZ) : 0,
-      batteryPotential: isSet(object.batteryPotential) ? Number(object.batteryPotential) : 0,
+      acceleration_x: isSet(object.acceleration_x) ? Number(object.acceleration_x) : 0,
+      acceleration_y: isSet(object.acceleration_y) ? Number(object.acceleration_y) : 0,
+      acceleration_z: isSet(object.acceleration_z) ? Number(object.acceleration_z) : 0,
+      battery_potential: isSet(object.battery_potential) ? Number(object.battery_potential) : 0,
       humidity: isSet(object.humidity) ? Number(object.humidity) : 0,
-      measurementSequenceNumber: isSet(object.measurementSequenceNumber) ? Number(object.measurementSequenceNumber) : 0,
-      movementCounter: isSet(object.movementCounter) ? Number(object.movementCounter) : 0,
+      measurement_sequence_number: isSet(object.measurement_sequence_number)
+        ? Number(object.measurement_sequence_number)
+        : 0,
+      movement_counter: isSet(object.movement_counter) ? Number(object.movement_counter) : 0,
       pressure: isSet(object.pressure) ? Number(object.pressure) : 0,
       temperature: isSet(object.temperature) ? Number(object.temperature) : 0,
-      txPower: isSet(object.txPower) ? Number(object.txPower) : 0,
+      tx_power: isSet(object.tx_power) ? Number(object.tx_power) : 0,
       mac: isSet(object.mac) ? String(object.mac) : '',
       time: isSet(object.time) ? Number(object.time) : 0,
     }
@@ -146,17 +148,17 @@ export const RuuviMeasurement = {
 
   toJSON(message: RuuviMeasurement): unknown {
     const obj: any = {}
-    message.accelerationX !== undefined && (obj.accelerationX = Math.round(message.accelerationX))
-    message.accelerationY !== undefined && (obj.accelerationY = Math.round(message.accelerationY))
-    message.accelerationZ !== undefined && (obj.accelerationZ = Math.round(message.accelerationZ))
-    message.batteryPotential !== undefined && (obj.batteryPotential = Math.round(message.batteryPotential))
+    message.acceleration_x !== undefined && (obj.acceleration_x = Math.round(message.acceleration_x))
+    message.acceleration_y !== undefined && (obj.acceleration_y = Math.round(message.acceleration_y))
+    message.acceleration_z !== undefined && (obj.acceleration_z = Math.round(message.acceleration_z))
+    message.battery_potential !== undefined && (obj.battery_potential = Math.round(message.battery_potential))
     message.humidity !== undefined && (obj.humidity = Math.round(message.humidity))
-    message.measurementSequenceNumber !== undefined &&
-      (obj.measurementSequenceNumber = Math.round(message.measurementSequenceNumber))
-    message.movementCounter !== undefined && (obj.movementCounter = Math.round(message.movementCounter))
+    message.measurement_sequence_number !== undefined &&
+      (obj.measurement_sequence_number = Math.round(message.measurement_sequence_number))
+    message.movement_counter !== undefined && (obj.movement_counter = Math.round(message.movement_counter))
     message.pressure !== undefined && (obj.pressure = Math.round(message.pressure))
     message.temperature !== undefined && (obj.temperature = Math.round(message.temperature))
-    message.txPower !== undefined && (obj.txPower = Math.round(message.txPower))
+    message.tx_power !== undefined && (obj.tx_power = Math.round(message.tx_power))
     message.mac !== undefined && (obj.mac = message.mac)
     message.time !== undefined && (obj.time = message.time)
     return obj
@@ -168,16 +170,16 @@ export const RuuviMeasurement = {
 
   fromPartial<I extends Exact<DeepPartial<RuuviMeasurement>, I>>(object: I): RuuviMeasurement {
     const message = createBaseRuuviMeasurement()
-    message.accelerationX = object.accelerationX ?? 0
-    message.accelerationY = object.accelerationY ?? 0
-    message.accelerationZ = object.accelerationZ ?? 0
-    message.batteryPotential = object.batteryPotential ?? 0
+    message.acceleration_x = object.acceleration_x ?? 0
+    message.acceleration_y = object.acceleration_y ?? 0
+    message.acceleration_z = object.acceleration_z ?? 0
+    message.battery_potential = object.battery_potential ?? 0
     message.humidity = object.humidity ?? 0
-    message.measurementSequenceNumber = object.measurementSequenceNumber ?? 0
-    message.movementCounter = object.movementCounter ?? 0
+    message.measurement_sequence_number = object.measurement_sequence_number ?? 0
+    message.movement_counter = object.movement_counter ?? 0
     message.pressure = object.pressure ?? 0
     message.temperature = object.temperature ?? 0
-    message.txPower = object.txPower ?? 0
+    message.tx_power = object.tx_power ?? 0
     message.mac = object.mac ?? ''
     message.time = object.time ?? 0
     return message
