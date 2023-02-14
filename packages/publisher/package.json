@@ -17,7 +17,8 @@
     "@ruuvipuserrin/relay": "*"
   },
   "dependencies": {
-    "@temporalio/client": "^1.6.0",
+    "@ruuvipuserrin/common-influxdb": "*",
+    "@ruuvipuserrin/common-postgres": "*",
     "@trpc/client": "^10.11.1",
     "@types/minimist": "",
     "@types/ws": "^8.5.4",

@@ -11,7 +11,8 @@
     "test": "bun test-unit",
     "build": "bun bun index.ts --tsconfig-override tsconfig.build.json",
     "start": "docker compose up -d; nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03",
-    "start-mock": "cat mock.txt|bun index.ts --measurementName=ruuvipuserrin-mock"
+    "start-mock": "cat mock.txt|bun index.ts --measurementName=ruuvipuserrin-mock",
+    "stop": "docker compose down"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*",

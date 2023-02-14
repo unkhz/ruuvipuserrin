@@ -1,31 +1,21 @@
-import { Connection, Client } from '@temporalio/client'
-import { publishMeasurements } from '@ruuvipuserrin/temporal-worker/lib/workflows'
 import { readArgs } from './lib/args'
+import { writeMeasurementsToInfluxDb } from './lib/influxdb-write'
+import { writeMeasurementsToTimescaleDb } from './lib/pg-write'
 import { readMeasurementsFromRelay } from './lib/relay-client'
 
 async function run() {
-  // Connect to the default Server location (localhost:7233)
-  const connection = await Connection.connect()
-
-  const client = new Client({
-    connection,
-    // namespace: 'foo.bar', // connects to 'default' namespace if not specified
-  })
-
-  const { pollingInterval, taskQueue } = readArgs()
+  const { pollingInterval } = readArgs()
 
   console.log(`Scheduler started. Running publish every ${pollingInterval} ms`)
 
   while (true) {
     const intervalPromise: Promise<void> = new Promise((resolve) => setTimeout(() => resolve(), pollingInterval))
-    const data = await readMeasurementsFromRelay()
-    client.workflow.start(publishMeasurements, {
-      args: [data],
-      taskQueue,
-      workflowId: `publish-${new Date().getTime()}`,
-      workflowExecutionTimeout: pollingInterval,
-    })
-    await intervalPromise
+    const measurementSnapshot = await readMeasurementsFromRelay()
+    await Promise.all([
+      writeMeasurementsToTimescaleDb(measurementSnapshot),
+      writeMeasurementsToInfluxDb(measurementSnapshot),
+      intervalPromise,
+    ])
   }
 }
 

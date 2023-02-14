@@ -12,9 +12,10 @@
     "protoc": "npm run protoc-ruuvi && npm run prettier-write"
   },
   "devDependencies": {
-    "@ruuvipuserrin/base-node": "*"
+    "@ruuvipuserrin/base-node": "*",
+    "ts-proto": "^1.139.0"
   },
   "dependencies": {
-    "ts-proto": "^1.139.0"
+    "protobufjs": "^7.2.2"
   }
 }

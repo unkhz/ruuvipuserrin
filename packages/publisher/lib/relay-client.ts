@@ -2,6 +2,7 @@ import ws from 'ws'
 import fetch from 'node-fetch-commonjs'
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
 import type { RelayRouter } from '@ruuvipuserrin/relay/lib/router'
+import { RuuviMeasurement } from '@ruuvipuserrin/common-data'
 
 // polyfill fetch & websocket, see https://github.com/trpc/trpc/discussions/1982#discussioncomment-2946392
 const globalAny = global as any
@@ -17,6 +18,6 @@ export const relayClient = createTRPCProxyClient<RelayRouter>({
   ],
 })
 
-export async function readMeasurementsFromRelay() {
+export async function readMeasurementsFromRelay(): Promise<Record<string, RuuviMeasurement>> {
   return relayClient.measurements.query()
 }

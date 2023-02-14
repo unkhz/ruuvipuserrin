@@ -9,7 +9,7 @@
     "test-all": "nx run-many --target=test --all",
     "build-all": "nx run-many --target=build --all",
     "start-all": "nx run-many --target=start --all",
-    "tctl": "docker exec temporal-admin-tools tctl"
+    "stop-all": "nx run-many --target=stop --all"
   },
   "private": true,
   "devDependencies": {

@@ -11,7 +11,6 @@ This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), at
 Following shiny tools are used
 
 - [Redis Streams](https://redis.io/docs/data-types/streams/) for at-least-once processing of measurements
-- [temporal.io](https://temporal.io) for durable execution of measurement collection
 - [tRPC](https://trpc.io) for type-safe communication between gateway box microservices
 - [Nx (package based)](https://nx.dev) for monorepo organization and task running
 - [Bun](https://bun.sh) TypeScript runtime for faster microservices (where necessary APIs are supported)

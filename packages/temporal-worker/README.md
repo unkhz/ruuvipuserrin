@@ -1,1 +1,0 @@
-# @ruuvipuserrin/temporal-worker
