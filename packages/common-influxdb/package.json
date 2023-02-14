@@ -9,8 +9,7 @@
     "test-unit": "jest --no-cache --ci",
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
-    "build": "tsc --project tsconfig.build.json",
-    "start": "ts-node index.ts --pollingInterval=15000 --taskQueue=ruuvipuserrin"
+    "build": "tsc --project tsconfig.build.json"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*"
