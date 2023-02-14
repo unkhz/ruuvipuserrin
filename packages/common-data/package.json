@@ -1,0 +1,18 @@
+{
+  "name": "@ruuvipuserrin/common-data",
+  "module": "index.ts",
+  "type": "commonjs",
+  "scripts": {
+    "prettier-write": "npm run prettier --write *.json *.ts lib/**/*.ts",
+    "prettier-check": "npm run prettier --check *.json *.ts lib/**/*.ts",
+    "lint": "npm run prettier-check",
+    "test": "npm run test-unit",
+    "protoc": "protoc --plugin=$(npm bin)/protoc-gen-ts_proto --ts_proto_out=. lib/formats/ruuvi.proto"
+  },
+  "devDependencies": {
+    "@ruuvipuserrin/base-node": "*"
+  },
+  "dependencies": {
+    "ts-proto": "^1.139.0"
+  }
+}
