@@ -1,21 +1,14 @@
 import { scheduleActivity, scheduleLocalActivity } from '@temporalio/workflow'
-// Only import the activity types
-import type {
-  readMeasurements,
-  writeMeasurementsToInfluxDb,
-  readArgs,
-  writeMeasurementsToTimescaleDb,
-} from './activities'
+import type { RuuviMeasurement } from '@ruuvipuserrin/common-data'
 
-export async function publishMeasurements() {
+// Only import the activity types
+import type { writeMeasurementsToInfluxDb, readArgs, writeMeasurementsToTimescaleDb } from './activities'
+
+export async function publishMeasurements(data: Record<string, RuuviMeasurement>) {
   const { pollingInterval } = await scheduleLocalActivity<ReturnType<typeof readArgs>>('readArgs', [], {
     // missing argument is non-retriable configuration error
     retry: { maximumAttempts: 1 },
     startToCloseTimeout: 1000,
-  })
-
-  const data = await scheduleActivity<ReturnType<typeof readMeasurements>>('readMeasurements', [], {
-    startToCloseTimeout: pollingInterval,
   })
 
   // polish data (calibration, naming, aggregate)

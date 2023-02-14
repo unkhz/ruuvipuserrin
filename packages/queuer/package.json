@@ -10,15 +10,16 @@
     "lint": "bun prettier-check",
     "test": "bun test-unit",
     "build": "bun bun index.ts --tsconfig-override tsconfig.build.json",
-    "start": "nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03",
+    "start": "docker compose up -d; nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03",
     "start-mock": "cat mock.txt|bun index.ts --measurementName=ruuvipuserrin-mock"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*",
-    "bun": "^0.5.5",
+    "bun": "^0.5.6",
     "bun-types": "^0.4.0"
   },
   "dependencies": {
+    "@ruuvipuserrin/common-data": "*",
     "@types/minimist": "^1.2.2",
     "ioredis": "^5.3.1",
     "minimist": "^1.2.7",

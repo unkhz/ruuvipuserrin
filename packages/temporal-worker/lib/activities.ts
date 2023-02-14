@@ -1,12 +1,8 @@
 import { sql } from 'kysely'
+import type { RuuviMeasurement } from '@ruuvipuserrin/common-data'
 import { createPoint, createWriteApi } from '@ruuvipuserrin/common-influxdb'
 import { createClient } from '@ruuvipuserrin/common-postgres'
-import { relayClient } from './relay-client'
 export * from './args'
-
-export async function readMeasurements() {
-  return relayClient.measurements.query()
-}
 
 let influxDbWriteApi: Awaited<ReturnType<typeof createWriteApi>>
 
@@ -17,7 +13,7 @@ async function getInfluxDbWriteApi() {
   return influxDbWriteApi
 }
 
-export async function writeMeasurementsToInfluxDb(measurements: Awaited<ReturnType<typeof readMeasurements>>) {
+export async function writeMeasurementsToInfluxDb(measurements: Record<string, RuuviMeasurement>) {
   const api = await getInfluxDbWriteApi()
   for (const [_id, measurement] of Object.entries(measurements)) {
     const { mac, time, ...data } = measurement
@@ -42,7 +38,7 @@ async function getPgClient() {
   return pgClient
 }
 
-export async function writeMeasurementsToTimescaleDb(measurements: Awaited<ReturnType<typeof readMeasurements>>) {
+export async function writeMeasurementsToTimescaleDb(measurements: Record<string, RuuviMeasurement>) {
   const client = await getPgClient()
   const queries = []
   for (const [_id, measurement] of Object.entries(measurements)) {

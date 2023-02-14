@@ -1,6 +1,7 @@
 import { Connection, Client } from '@temporalio/client'
 import { publishMeasurements } from '@ruuvipuserrin/temporal-worker/lib/workflows'
 import { readArgs } from './lib/args'
+import { readMeasurementsFromRelay } from './lib/relay-client'
 
 async function run() {
   // Connect to the default Server location (localhost:7233)
@@ -17,8 +18,9 @@ async function run() {
 
   while (true) {
     const intervalPromise: Promise<void> = new Promise((resolve) => setTimeout(() => resolve(), pollingInterval))
+    const data = await readMeasurementsFromRelay()
     client.workflow.start(publishMeasurements, {
-      args: [],
+      args: [data],
       taskQueue,
       workflowId: `publish-${new Date().getTime()}`,
       workflowExecutionTimeout: pollingInterval,
