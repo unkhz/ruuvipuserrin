@@ -20,8 +20,9 @@ async function getInfluxDbWriteApi() {
 export async function writeMeasurementsToInfluxDb(measurements: Awaited<ReturnType<typeof readMeasurements>>) {
   const api = await getInfluxDbWriteApi()
   for (const [_id, measurement] of Object.entries(measurements)) {
-    const { id, mac, time, data } = measurement
+    const { mac, time, ...data } = measurement
     const point = createPoint(mac)
+    const id = mac.toLowerCase().replace(/[^a-z0-9]/g, '')
     point.tag('id', id)
     point.timestamp(time)
     for (const [key, value] of Object.entries(data)) {
@@ -45,7 +46,8 @@ export async function writeMeasurementsToTimescaleDb(measurements: Awaited<Retur
   const client = await getPgClient()
   const queries = []
   for (const [_id, measurement] of Object.entries(measurements)) {
-    const { id: source, time, data } = measurement
+    const { mac, time, ...data } = measurement
+    const source = mac.toLowerCase().replace(/[^a-z0-9]/g, '')
     const { temperature, humidity, pressure } = data
     queries.push(
       client

@@ -1,8 +1,8 @@
-import { processMeasurementsFromStandardInput } from './lib/listener'
-import { createServer } from './lib/server'
-export * from './lib/server'
+import { processMeasurementsFromQueue } from './lib/listen'
+import { createServer } from './lib/serve'
+export * from './lib/serve'
 
-processMeasurementsFromStandardInput()
+processMeasurementsFromQueue()
 
 createServer().listen(2021, () => {
   console.log('listening on port 2021')

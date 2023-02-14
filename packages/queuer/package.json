@@ -1,5 +1,5 @@
 {
-  "name": "@ruuvipuserrin/relay",
+  "name": "@ruuvipuserrin/queuer",
   "module": "index.ts",
   "type": "commonjs",
   "scripts": {
@@ -10,7 +10,8 @@
     "lint": "bun prettier-check",
     "test": "bun test-unit",
     "build": "bun bun index.ts --tsconfig-override tsconfig.build.json",
-    "start": "nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03"
+    "start": "nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03",
+    "start-mock": "cat mock.txt|bun index.ts --measurementName=ruuvipuserrin-mock"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*",
@@ -18,10 +19,7 @@
     "bun-types": "^0.4.0"
   },
   "dependencies": {
-    "@trpc/server": "^10.9.1",
-    "@types/express": "^4.17.16",
-    "@types/minimist": "",
-    "express": "^4.18.2",
+    "@types/minimist": "^1.2.2",
     "ioredis": "^5.3.1",
     "minimist": "^1.2.7",
     "zod": "^3.20.2"

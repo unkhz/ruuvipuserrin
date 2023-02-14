@@ -1,6 +1,6 @@
 import { initTRPC } from '@trpc/server'
 import * as trpcExpress from '@trpc/server/adapters/express'
-import { getMeasurementSnapshot } from './listener'
+import { getMeasurementSnapshot } from './listen'
 import express from 'express'
 
 const trpc = initTRPC.create()

@@ -1,5 +1,6 @@
 import { readArgs } from './args'
-import { parseLineFromRuuvitagListener, RuuvitagMeasurement } from './measurement'
+import { RuuviMeasurement } from '@ruuvipuserrin/common-data'
+import { parseLineFromRuuvitagListener } from './transform'
 
 const readline = require('node:readline')
 const standardInputStream = readline.createInterface({
@@ -8,9 +9,7 @@ const standardInputStream = readline.createInterface({
 
 const args = readArgs()
 
-const snapshot: Map<string, RuuvitagMeasurement> = new Map()
-
-export async function processMeasurementsFromStandardInput() {
+export async function processMeasurementsFromStandardInput(cb: (data: RuuviMeasurement) => void) {
   console.log(
     `Handling listener measurements with the name "${args.measurementName}" (configure with option --measurementName)`,
   )
@@ -19,11 +18,7 @@ export async function processMeasurementsFromStandardInput() {
     // Only process input with sepcific ruuvitag-listener influxdb measurement name
     if (line.startsWith(args.measurementName)) {
       const measurement = parseLineFromRuuvitagListener(line)
-      snapshot.set(measurement.id, measurement)
+      cb(measurement)
     }
   })
-}
-
-export function getMeasurementSnapshot(): Record<string, RuuvitagMeasurement> {
-  return Object.fromEntries(snapshot.entries())
 }
