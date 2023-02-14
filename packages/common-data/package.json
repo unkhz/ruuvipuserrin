@@ -8,7 +8,8 @@
     "test-unit": "jest --no-cache --ci",
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
-    "protoc": "protoc --plugin=$(npm bin)/protoc-gen-ts_proto --ts_proto_out=. lib/formats/ruuvi.proto"
+    "protoc-ruuvi": "protoc --plugin=$(npm bin)/protoc-gen-ts_proto --ts_proto_out=. lib/formats/ruuvi.proto",
+    "protoc": "npm run protoc-ruuvi && npm run prettier-write"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*"
