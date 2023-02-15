@@ -6,15 +6,17 @@ This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), at
 - avoid storing measurements in the gateway after they have been succesfully passed on, so that gateway boxes do not run out of space
 - avoid unnecessary gaps in data caused by network issues between the gateway boxes and the final storage in cloud
 
-### Architecture
+### Architecture 
 
 ```mermaid
 sequenceDiagram
     Ruuvitags->>Listener: Listener (Rust) receives bluetooth beacon measurements
     Listener->>Queuer: Queuer (Bun) receives measurements from Listener
     Queuer->>Redis: Queuer (Bun) pushes periodical snapshot of measurements to Redis
-    Redis->>Publisher: Publisher (Node) pulls periodical snapshots from Redis
-    Publisher->>Cloud: Publisher (Node) pushes snapshots to cloud databases (InfluxDb, TimescaleDb) 
+    Redis->>Publisher: Publisher (Node) pulls unprocessed snapshots from Redis
+    Publisher->>Cloud: Publisher (Node) pushes snapshots to cloud databases (InfluxDb, TimescaleDb)
+    Cloud->>Publisher: Cloud databases acknowledge succesful storage of measurements
+    Publisher->>Redis: Publisher (Node) trims processed measurements from Redis stream
 ```
 
 ### Implementation
