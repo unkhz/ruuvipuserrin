@@ -10,8 +10,7 @@ This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), at
 
 Following shiny tools are used
 
-- [Redis Streams](https://redis.io/docs/data-types/streams/) for at-least-once processing of measurements
-- [tRPC](https://trpc.io) for type-safe communication between gateway box microservices
+- [Redis Streams](https://redis.io/docs/data-types/streams/) for durable processing of measurements
 - [Nx (package based)](https://nx.dev) for monorepo organization and task running
 - [Bun](https://bun.sh) TypeScript runtime for faster microservices (where necessary APIs are supported)
 - [ruuvitag-listener](https://github.com/lautis/ruuvitag-listener) fast readings from Ruuvitag devices, written in Rust
@@ -22,7 +21,7 @@ Ensure you have installed following tools in your gateway box (e.g. raspberry pi
 
 - [Rust](https://rustup.rs/)
 - [Node](https://nodejs.org/en/download/)
-- [Docker](https://docs.docker.com/engine/install/)
+- [Redis](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
 
 Install monorepo dependencies
 
