@@ -17,10 +17,11 @@ function getConfig(): PoolConfig {
       rejectUnauthorized: false,
       ca: env.PG_CERT,
     },
+    max: 20,
   }
 }
 
-export async function createClient(): Promise<Kysely<Database>> {
+export function createClient(): Kysely<Database> {
   return new Kysely<Database>({
     dialect: new PostgresDialect({
       pool: new Pool(getConfig()),

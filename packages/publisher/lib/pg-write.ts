@@ -1,17 +1,9 @@
 import type { RuuviMeasurement } from '@ruuvipuserrin/common-data'
 import { createClient, sql } from '@ruuvipuserrin/common-postgres'
 
-let pgClient: Awaited<ReturnType<typeof createClient>>
-
-async function getPgClient() {
-  if (!pgClient) {
-    pgClient = await createClient()
-  }
-  return pgClient
-}
+const client = createClient()
 
 export async function writeMeasurementsToTimescaleDb(measurements: Record<string, RuuviMeasurement>) {
-  const client = await getPgClient()
   const queries = []
   for (const [_id, measurement] of Object.entries(measurements)) {
     const { mac, time, ...data } = measurement
@@ -30,5 +22,5 @@ export async function writeMeasurementsToTimescaleDb(measurements: Record<string
         .execute(),
     )
   }
-  return Promise.all(queries)
+  await Promise.all(queries)
 }
