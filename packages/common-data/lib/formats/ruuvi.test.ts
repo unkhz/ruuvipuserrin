@@ -1,4 +1,4 @@
-import { RuuviMeasurement } from './ruuvi'
+import { RuuviMeasurement, RuuviMeasurementSnapshot } from './ruuvi'
 
 const exampleMeasurement = {
   acceleration_x: 123,
@@ -13,6 +13,15 @@ const exampleMeasurement = {
   tx_power: 123,
   mac: 'aa:bb:cc:dd:ee:ff',
   time: 123,
+}
+
+const exampleMeasurementSnapshot = {
+  time: 123,
+  measurements: [
+    exampleMeasurement,
+    { ...exampleMeasurement, mac: '11:22:33:44:55:66' },
+    { ...exampleMeasurement, mac: '77:88:99:44:55:66' },
+  ],
 }
 
 describe('RuuviMeasurement', () => {
@@ -34,7 +43,7 @@ describe('RuuviMeasurement', () => {
 
   it('should fromPartial', () => {
     const { acceleration_x, battery_potential } = exampleMeasurement
-    const typed = RuuviMeasurement.fromJSON({ acceleration_x, battery_potential })
+    const typed = RuuviMeasurement.fromPartial({ acceleration_x, battery_potential })
     expect(typed).toEqual({
       acceleration_x,
       battery_potential,
@@ -49,5 +58,47 @@ describe('RuuviMeasurement', () => {
       mac: '',
       time: 0,
     })
+  })
+})
+
+describe('RuuviMeasurementSnapshot', () => {
+  it('should encode and decode', () => {
+    const encoded = RuuviMeasurementSnapshot.encode(exampleMeasurementSnapshot).finish()
+    const decoded = RuuviMeasurementSnapshot.decode(encoded)
+    expect(decoded).toEqual(exampleMeasurementSnapshot)
+  })
+
+  it('should toJSON', () => {
+    const untyped = RuuviMeasurementSnapshot.toJSON(exampleMeasurementSnapshot)
+    expect(untyped).toEqual(exampleMeasurementSnapshot)
+  })
+
+  it('should fromJSON', () => {
+    const typed = RuuviMeasurementSnapshot.fromJSON(exampleMeasurementSnapshot)
+    expect(typed).toEqual(exampleMeasurementSnapshot)
+  })
+
+  it('should fromPartial', () => {
+    const { acceleration_x, battery_potential } = exampleMeasurement
+    const typed = RuuviMeasurementSnapshot.fromPartial({
+      time: 123,
+      measurements: [{ acceleration_x, battery_potential }],
+    })
+    expect(typed.measurements).toEqual([
+      {
+        acceleration_x,
+        battery_potential,
+        acceleration_y: 0,
+        acceleration_z: 0,
+        humidity: 0,
+        measurement_sequence_number: 0,
+        movement_counter: 0,
+        pressure: 0,
+        temperature: 0,
+        tx_power: 0,
+        mac: '',
+        time: 0,
+      },
+    ])
   })
 })

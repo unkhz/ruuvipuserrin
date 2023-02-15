@@ -14,3 +14,8 @@ message RuuviMeasurement {
   string mac = 11;
   double time = 12;
 }
+
+message RuuviMeasurementSnapshot {
+  double time = 1;
+  repeated RuuviMeasurement measurements = 2;
+}

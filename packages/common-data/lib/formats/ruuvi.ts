@@ -18,6 +18,11 @@ export interface RuuviMeasurement {
   time: number
 }
 
+export interface RuuviMeasurementSnapshot {
+  time: number
+  measurements: RuuviMeasurement[]
+}
+
 function createBaseRuuviMeasurement(): RuuviMeasurement {
   return {
     acceleration_x: 0,
@@ -182,6 +187,74 @@ export const RuuviMeasurement = {
     message.tx_power = object.tx_power ?? 0
     message.mac = object.mac ?? ''
     message.time = object.time ?? 0
+    return message
+  },
+}
+
+function createBaseRuuviMeasurementSnapshot(): RuuviMeasurementSnapshot {
+  return { time: 0, measurements: [] }
+}
+
+export const RuuviMeasurementSnapshot = {
+  encode(message: RuuviMeasurementSnapshot, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.time !== 0) {
+      writer.uint32(9).double(message.time)
+    }
+    for (const v of message.measurements) {
+      RuuviMeasurement.encode(v!, writer.uint32(18).fork()).ldelim()
+    }
+    return writer
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): RuuviMeasurementSnapshot {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input)
+    let end = length === undefined ? reader.len : reader.pos + length
+    const message = createBaseRuuviMeasurementSnapshot()
+    while (reader.pos < end) {
+      const tag = reader.uint32()
+      switch (tag >>> 3) {
+        case 1:
+          message.time = reader.double()
+          break
+        case 2:
+          message.measurements.push(RuuviMeasurement.decode(reader, reader.uint32()))
+          break
+        default:
+          reader.skipType(tag & 7)
+          break
+      }
+    }
+    return message
+  },
+
+  fromJSON(object: any): RuuviMeasurementSnapshot {
+    return {
+      time: isSet(object.time) ? Number(object.time) : 0,
+      measurements: Array.isArray(object?.measurements)
+        ? object.measurements.map((e: any) => RuuviMeasurement.fromJSON(e))
+        : [],
+    }
+  },
+
+  toJSON(message: RuuviMeasurementSnapshot): unknown {
+    const obj: any = {}
+    message.time !== undefined && (obj.time = message.time)
+    if (message.measurements) {
+      obj.measurements = message.measurements.map((e) => (e ? RuuviMeasurement.toJSON(e) : undefined))
+    } else {
+      obj.measurements = []
+    }
+    return obj
+  },
+
+  create<I extends Exact<DeepPartial<RuuviMeasurementSnapshot>, I>>(base?: I): RuuviMeasurementSnapshot {
+    return RuuviMeasurementSnapshot.fromPartial(base ?? {})
+  },
+
+  fromPartial<I extends Exact<DeepPartial<RuuviMeasurementSnapshot>, I>>(object: I): RuuviMeasurementSnapshot {
+    const message = createBaseRuuviMeasurementSnapshot()
+    message.time = object.time ?? 0
+    message.measurements = object.measurements?.map((e) => RuuviMeasurement.fromPartial(e)) || []
     return message
   },
 }
