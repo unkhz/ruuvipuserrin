@@ -9,11 +9,12 @@ export async function writeMeasurementsToTimescaleDb(measurements: Record<string
     const { mac, time, ...data } = measurement
     const source = mac.toLowerCase().replace(/[^a-z0-9]/g, '')
     const { temperature, humidity, pressure } = data
+    const timeAsSeconds = time / 1e9
     queries.push(
       client
         .insertInto('measurement')
         .values({
-          time: sql`to_timestamp(${new Date(time / 1000000).getTime()})`,
+          time: sql`to_timestamp(${timeAsSeconds})`,
           source,
           temperature,
           humidity,
