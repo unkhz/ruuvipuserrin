@@ -17,7 +17,7 @@ function getConfig(): PoolConfig {
       rejectUnauthorized: false,
       ca: env.PG_CERT,
     },
-    max: 20,
+    max: 5,
   }
 }
 
