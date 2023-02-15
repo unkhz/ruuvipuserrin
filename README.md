@@ -10,13 +10,19 @@ This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), at
 
 ```mermaid
 sequenceDiagram
-    Ruuvitags->>Listener: Listener (Rust) receives bluetooth beacon measurements
-    Listener->>Queuer: Queuer (Bun) receives measurements from Listener
-    Queuer->>Redis: Queuer (Bun) pushes periodical snapshot of measurements to Redis
-    Redis->>Publisher: Publisher (Node) pulls unprocessed snapshots from Redis
-    Publisher->>Cloud: Publisher (Node) pushes snapshots to cloud databases (InfluxDb, TimescaleDb)
-    Cloud->>Publisher: Cloud databases acknowledge succesful storage of measurements
-    Publisher->>Redis: Publisher (Node) trims processed measurements from Redis stream
+    loop Every beacon
+        Ruuvitags->>Listener: Listener (Rust) receives bluetooth beacon measurement
+        Listener->>Queuer: Queuer (Bun) receives measurement from Listener
+    end
+    loop Every 15 seconds
+        Queuer->>Redis: Queuer (Bun) pushes periodical snapshot of measurements to Redis
+    end
+    loop Every 30 seconds
+        Redis->>Publisher: Publisher (Node) pulls unprocessed snapshots from Redis
+        Publisher->>Cloud: Publisher (Node) pushes snapshots to cloud databases (InfluxDb, TimescaleDb)
+        Cloud->>Publisher: Cloud databases acknowledge succesful storage of measurements
+        Publisher->>Redis: Publisher (Node) trims processed measurements from Redis stream
+    end
 ```
 
 ### Implementation
