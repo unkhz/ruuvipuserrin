@@ -1,25 +1,20 @@
-import { readArgs } from './lib/args'
+import { RuuviMeasurementSnapshot } from '@ruuvipuserrin/common-data'
 import { writeMeasurementsToInfluxDb } from './lib/influxdb-write'
+import { processMeasurementsFromQueue } from './lib/queue-read'
 import { writeMeasurementsToTimescaleDb } from './lib/pg-write'
-import { readMeasurementsFromRelay } from './lib/relay-client'
 
-async function run() {
-  const { pollingInterval } = readArgs()
-
-  console.log(`Scheduler started. Running publish every ${pollingInterval} ms`)
-
-  while (true) {
-    const intervalPromise: Promise<void> = new Promise((resolve) => setTimeout(() => resolve(), pollingInterval))
-    const measurementSnapshot = await readMeasurementsFromRelay()
-    await Promise.all([
-      writeMeasurementsToTimescaleDb(measurementSnapshot),
-      writeMeasurementsToInfluxDb(measurementSnapshot),
-      intervalPromise,
-    ])
+async function processMessage(data: Buffer) {
+  const snapshot = RuuviMeasurementSnapshot.decode(data)
+  const len = snapshot.measurements.length
+  if (len) {
+    const objectSnapshot = Object.fromEntries(
+      snapshot.measurements.map((measurement) => [measurement.mac, measurement]),
+    )
+    await Promise.all([writeMeasurementsToTimescaleDb(objectSnapshot), writeMeasurementsToInfluxDb(objectSnapshot)])
   }
 }
 
-run().catch((err) => {
+processMeasurementsFromQueue(processMessage).catch((err) => {
   console.error(err)
   process.exit(1)
 })

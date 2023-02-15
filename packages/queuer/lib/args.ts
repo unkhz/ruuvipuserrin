@@ -1,16 +1,17 @@
 import { z } from 'zod'
 import minimist from 'minimist'
 
-const ZRelayArgsFromProcessArgv = z.object({
+const ZQueuerArgsFromProcessArgv = z.object({
   measurementName: z.string(),
+  pollingInterval: z.coerce.number().gt(1000),
 })
 
-type RelayArgs = z.infer<typeof ZRelayArgsFromProcessArgv>
+type QueuerArgs = z.infer<typeof ZQueuerArgsFromProcessArgv>
 
-export function readArgs(argv: string[] = process.argv): RelayArgs {
+export function readArgs(argv: string[] = process.argv): QueuerArgs {
   const argsInput = minimist(argv.slice(2), {
-    alias: { m: 'measurementName' },
-    default: { measurementName: 'measurement' },
+    alias: { m: 'measurementName', i: 'pollingInterval' },
+    default: { measurementName: 'measurement', pollingInterval: 15000 },
   })
-  return ZRelayArgsFromProcessArgv.parse(argsInput)
+  return ZQueuerArgsFromProcessArgv.parse(argsInput)
 }

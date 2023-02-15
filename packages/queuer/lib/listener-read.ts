@@ -11,7 +11,7 @@ const args = readArgs()
 
 export async function processMeasurementsFromStandardInput(cb: (data: RuuviMeasurement) => void) {
   console.log(
-    `Handling listener measurements with the name "${args.measurementName}" (configure with option --measurementName)`,
+    `Reading ruuvitag-listener measurements from stdin with the name "${args.measurementName}" (configure with option --measurementName)`,
   )
 
   standardInputStream.on('line', (line: string) => {

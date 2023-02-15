@@ -3,6 +3,6 @@
   "include": ["*.ts", "./lib/**/*.ts"],
   "compilerOptions": {
     "outDir": "./dist",
-    "types": ["bun-types"]
+    "types": ["bun-types", "jest"]
   }
 }
