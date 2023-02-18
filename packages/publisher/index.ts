@@ -10,7 +10,10 @@ async function processMessage(data: Buffer) {
     const objectSnapshot = Object.fromEntries(
       snapshot.measurements.map((measurement) => [measurement.mac, measurement]),
     )
-    await Promise.all([writeMeasurementsToTimescaleDb(objectSnapshot), writeMeasurementsToInfluxDb(objectSnapshot)])
+    await Promise.all([
+      writeMeasurementsToTimescaleDb(objectSnapshot),
+      /* writeMeasurementsToInfluxDb(objectSnapshot) */
+    ])
   }
 }
 
