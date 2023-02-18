@@ -1,5 +1,5 @@
 {
-  "name": "@ruuvipuserrin/queuer",
+  "name": "@ruuvipuserrin/gatherer-stdin",
   "module": "index.ts",
   "type": "commonjs",
   "scripts": {
