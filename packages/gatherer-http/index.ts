@@ -22,8 +22,8 @@ const args = readArgs()
 
 Bun.serve({
   port: args.port,
-  fetch(request) {
-    console.log(request.json())
-    return Response.json(null)
+  async fetch(request) {
+    console.log(await request.json())
+    return Response.json()
   },
 })
