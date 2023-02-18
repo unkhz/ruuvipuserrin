@@ -24,8 +24,8 @@ const ZRuuviMeasurementDataFromParsedInput = z.object({
   humidity: z.coerce.number(),
   measurement_sequence_number: z.preprocess((value: unknown) => {
     const numberValue = Number(value)
-    isNaN(numberValue) ? -1 : numberValue
-  }, z.string()),
+    return isNaN(numberValue) ? -1 : numberValue
+  }, z.number()),
   movement_counter: z.coerce.number(),
   pressure: z.coerce.number(),
   temperature: z.coerce.number(),
