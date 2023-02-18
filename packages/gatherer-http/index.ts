@@ -3,9 +3,11 @@ import { transformSnapshotFromRuuviStation, RuuviMeasurementFromRuuviStation } f
 import { pushMeasurementSnapshotToQueue, updateMeasurementSnapshot } from './lib/queue-write'
 
 async function periodicallyPublishSnapshot() {
-  const { pollingInterval } = readArgs()
+  const { pollingInterval, measurementName } = readArgs()
 
-  console.log(`HTTP Gatherer started. Pushing measurement snapshot to queue every ${pollingInterval} ms`)
+  console.log(
+    `HTTP Gatherer started. Pushing measurement snapshot to queue "${measurementName}" every ${pollingInterval} ms`,
+  )
 
   while (true) {
     const intervalPromise: Promise<void> = new Promise((resolve) => setTimeout(() => resolve(), pollingInterval))

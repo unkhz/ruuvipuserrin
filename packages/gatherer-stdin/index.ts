@@ -8,9 +8,11 @@ processMeasurementsFromStandardInput(updateMeasurementSnapshot).catch((err) => {
 })
 
 async function periodicallyPublishSnapshot() {
-  const { pollingInterval } = readArgs()
+  const { pollingInterval, measurementName } = readArgs()
 
-  console.log(`STDIN Gatherer started. Pushing measurement snapshot to queue every ${pollingInterval} ms`)
+  console.log(
+    `STDIN Gatherer started. Pushing measurement snapshot to queue "${measurementName}" every ${pollingInterval} ms`,
+  )
 
   while (true) {
     const intervalPromise: Promise<void> = new Promise((resolve) => setTimeout(() => resolve(), pollingInterval))
