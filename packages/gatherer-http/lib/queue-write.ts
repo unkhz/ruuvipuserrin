@@ -12,8 +12,10 @@ const args = readArgs()
 
 const measurementCache: Map<string, RuuviMeasurement> = new Map()
 
-export async function updateMeasurementSnapshot(data: RuuviMeasurement) {
-  measurementCache.set(data.mac, data)
+export async function updateMeasurementSnapshot(data: RuuviMeasurement[]) {
+  for (const item of data) {
+    measurementCache.set(item.mac, item)
+  }
 }
 
 export async function pushMeasurementSnapshotToQueue() {

@@ -1,5 +1,5 @@
 import { readArgs } from './lib/args'
-import { processMeasurementsFromStandardInput } from './lib/listener-read'
+import { transformSnapshotFromRuuviStation, RuuviMeasurementFromRuuviStation } from './lib/transform'
 import { pushMeasurementSnapshotToQueue, updateMeasurementSnapshot } from './lib/queue-write'
 
 async function periodicallyPublishSnapshot() {
@@ -23,7 +23,8 @@ const args = readArgs()
 Bun.serve({
   port: args.port,
   async fetch(request) {
-    console.log(await request.json())
+    const snapshotFromRuuviStation = await request.json<RuuviMeasurementFromRuuviStation>()
+    updateMeasurementSnapshot(transformSnapshotFromRuuviStation(snapshotFromRuuviStation))
     return Response.json()
   },
 })

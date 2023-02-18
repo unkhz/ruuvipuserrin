@@ -1,55 +1,55 @@
 import { z } from 'zod'
 import { RuuviMeasurement } from '@ruuvipuserrin/common-data'
 
-export const ZRuuvitagMeasurement = z.object({
-  acceleration_x: z.number(),
-  acceleration_y: z.number(),
-  acceleration_z: z.number(),
-  battery_potential: z.number(),
-  humidity: z.number(),
-  measurement_sequence_number: z.number(),
-  movement_counter: z.number(),
-  pressure: z.number(),
-  temperature: z.number(),
-  tx_power: z.number(),
-  mac: z.string().length(17),
-  time: z.number(),
+const ZRuuviMeasurementFromRuuviStation = z.object({
+  tags: z.array(
+    z.object({
+      accelX: z.number(),
+      accelY: z.number(),
+      accelZ: z.number(),
+      connectable: z.boolean(),
+      createDate: z.string(),
+      dataFormat: z.number(),
+      favorite: z.boolean(),
+      humidity: z.number(),
+      humidityOffset: z.number(),
+      id: z.string(),
+      measurementSequenceNumber: z.number(),
+      movementCounter: z.number(),
+      name: z.string(),
+      pressure: z.number(),
+      pressureOffset: z.number(),
+      rssi: z.number(),
+      temperature: z.number(),
+      temperatureOffset: z.number(),
+      txPower: z.number(),
+      updateAt: z.string(),
+      voltage: z.number(),
+    }),
+  ),
+  batteryLevel: z.number(),
+  deviceId: z.string(),
+  eventId: z.string(),
+  time: z.string(),
 })
 
-const ZRuuviMeasurementDataFromParsedInput = z.object({
-  acceleration_x: z.coerce.number(),
-  acceleration_y: z.coerce.number(),
-  acceleration_z: z.coerce.number(),
-  battery_potential: z.coerce.number(),
-  humidity: z.coerce.number(),
-  measurement_sequence_number: z.preprocess((value: unknown) => {
-    const numberValue = Number(value)
-    isNaN(numberValue) ? -1 : numberValue
-  }, z.string()),
-  movement_counter: z.coerce.number(),
-  pressure: z.coerce.number(),
-  temperature: z.coerce.number(),
-  tx_power: z.coerce.number(),
-})
+export type RuuviMeasurementFromRuuviStation = z.infer<typeof ZRuuviMeasurementFromRuuviStation>
 
-const ZRuuvitagIdentifiersFromParsedInput = z.object({
-  mac: z.string(),
-})
+export function transformSnapshotFromRuuviStation(data: RuuviMeasurementFromRuuviStation): RuuviMeasurement[] {
+  const parsedData = ZRuuviMeasurementFromRuuviStation.parse(data)
 
-function parseKeyValueCsv<TData extends Record<string, unknown>>(line: string): Record<keyof TData, string> {
-  const pairs = line.split(',')
-  return Object.fromEntries(pairs.map((pair) => pair.split('=')))
-}
-
-export function parseLineFromRuuvitagListener(line: string): RuuviMeasurement {
-  const [identifiers, data, time] = line.split(' ')
-  const { mac } = ZRuuvitagIdentifiersFromParsedInput.parse(parseKeyValueCsv<{ mac: string }>(identifiers))
-  const parsedData = ZRuuviMeasurementDataFromParsedInput.parse(
-    parseKeyValueCsv<z.infer<typeof ZRuuviMeasurementDataFromParsedInput>>(data),
-  )
-  return {
-    ...parsedData,
-    mac,
-    time: z.coerce.number().parse(time),
-  }
+  return parsedData.tags.map((tag) => ({
+    mac: tag.id,
+    acceleration_x: tag.accelX,
+    acceleration_y: tag.accelY,
+    acceleration_z: tag.accelZ,
+    battery_potential: tag.voltage,
+    measurement_sequence_number: tag.measurementSequenceNumber,
+    movement_counter: tag.movementCounter,
+    tx_power: tag.txPower,
+    temperature: tag.temperature,
+    humidity: tag.humidity,
+    pressure: tag.pressure,
+    time: new Date(tag.updateAt).getTime() * 1000,
+  }))
 }
