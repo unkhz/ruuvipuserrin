@@ -6,26 +6,71 @@ This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), at
 - avoid storing measurements in the gateway after they have been succesfully passed on, so that gateway boxes do not run out of space
 - avoid unnecessary gaps in data caused by network issues between the gateway boxes and the final storage in cloud
 
-### Architecture 
+## Architecture
+
+#### System components
+
+| Entity    | Description                   | Phase            | Responsibility                                                                                                |
+| --------- | ----------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------- |
+| Source    | IoT device                    | Extract          | sends e.g. bluetooth beacons containing measurements of physical system properties like temperature, humidity |
+| Listener  | Rust app / Ruuvi Station      | Extract          | captures measurements, forwards to gateway box                                                                |
+| Gatherer  | Typescript app w/ Bun runtime | Staging          | receives data from a different network, stores intermediate snapshots of measurement                          |
+| Queue     | Redis streams                 | Staging          | holds measurements, allows quantizing the time dimension of measurements                                      |
+| Publisher | Typescript app w/ Bun runtime | Transform / Load | transforms intermediate data into final format, pushes final data forward towards Archive                     |
+| Archive   | PostgreSQL database           |                  | holds data in final format, provides to consumers like Grafana                                                |
+
+#### Network topology diagram (example setup)
+
+```mermaid
+graph LR
+    subgraph LAN
+        Listener(Listener/Rust)---SG1(Gatherer)
+        Phone1(Listener/Phone)---HG1(Gatherer)
+        Phone2(Listener/Phone)---HG1(Gatherer)
+        SG1---Redis1(Queue)
+        HG1---Redis1(Queue)
+        Redis1---Publisher1(Publisher)
+        Tag3(Source)---Phone1
+        Tag4(Source)---Phone1
+        Tag5(Source)---Phone2
+        Tag1(Source)---Listener
+        Tag2(Source)---Listener
+    end
+    subgraph Cloud
+        Publisher1---Gatherer2(Gatherer)
+        Gatherer2---Redis2(Queue)
+        Redis2---Publisher2(Publisher)
+        Publisher2---Archive
+    end
+```
+
+#### Communication sequence diagram
 
 ```mermaid
 sequenceDiagram
     loop Every beacon
-        Ruuvitags->>Listener: Listener (Rust) receives bluetooth beacon measurement
-        Listener->>Queuer: Queuer (Bun) receives measurement from Listener
+        Source->>Listener: push single measurement
+        Listener->>Listener: aggregate multiple measurements into snapshot
+        Listener->>+Gatherer: push snapshot
+        Gatherer->>-Listener: ack
     end
     loop Every 15 seconds
-        Queuer->>Redis: Queuer (Bun) pushes periodical snapshot of measurements to Redis
+        Gatherer->>Gatherer: quantize time dimension of measurements
+        Gatherer->>+Queue: queue quantized measurements
+        Queue->>-Gatherer: ack
     end
     loop Every 30 seconds
-        Redis->>Publisher: Publisher (Node) pulls unprocessed snapshots from Redis
-        Publisher->>Cloud: Publisher (Node) pushes snapshots to cloud databases (InfluxDb, TimescaleDb)
-        Cloud->>Publisher: Cloud databases acknowledge succesful storage of measurements
-        Publisher->>Redis: Publisher (Node) trims processed measurements from Redis stream
+        Publisher->>+Queue: pull snapshots
+        Queue->>-Publisher: send snapshots
+        Publisher->>Publisher: transform measurements for final storage
+        Publisher->>+Archive: push transformed measurements
+        Archive->>-Publisher: ack
+        Publisher->>+Queue: trim processed measurements
+        Queue->>-Publisher: ack
     end
 ```
 
-### Implementation
+## Implementation
 
 Following shiny tools are used
 
