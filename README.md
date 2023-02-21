@@ -78,6 +78,9 @@ Following shiny tools are used
 - [Nx (package based)](https://nx.dev) for monorepo organization and task running
 - [Bun](https://bun.sh) TypeScript runtime for faster microservices (where necessary APIs are supported)
 - [ruuvitag-listener](https://github.com/lautis/ruuvitag-listener) fast readings from Ruuvitag devices, written in Rust
+- [Remix](https://remix.run/) for HTML first web application UI
+- [TailwindCSS](https://tailwindcss.com/) for lightweight and scalable styles
+- [DaisyUI](https://daisyui.com/) for CSS-only components
 
 ### Install
 
