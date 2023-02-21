@@ -1,4 +1,5 @@
 {
+  "name": "@ruuvipuserrin/configurator",
   "private": true,
   "sideEffects": false,
   "scripts": {
