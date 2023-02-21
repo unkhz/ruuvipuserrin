@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Ruuvipuserrin Configurator",
+  "short_name": "ruuvi config",
+  "description": "Confiuration app for @unkhz/ruuvipuserrin",
+  "theme_color": "#888888",
+  "background_color": "#000000",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/"
+}

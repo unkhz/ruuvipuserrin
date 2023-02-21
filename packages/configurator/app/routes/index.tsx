@@ -8,11 +8,13 @@ import db from '~/utils/db.server'
 
 import tailwindCss from '~/styles/tailwind.css'
 import indexCss from '~/styles/index.css'
+import webappManifest from '~/app.webmanifest'
 
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: tailwindCss },
   { rel: 'stylesheet', href: indexCss },
+  { rel: 'stylesheet', href: tailwindCss },
   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Anton|Barlow' },
+  { rel: 'manifest', href: webappManifest },
 ]
 
 export const action = async ({ request }: ActionArgs) => {
@@ -94,7 +96,7 @@ function SourcesTable() {
               <td>{name}</td>
               <td>{location}</td>
               <td>
-                <a className="btn-link" href={`?edit=${id}`}>
+                <a className="btn btn-xs" href={`?edit=${id}`}>
                   Edit
                 </a>
               </td>
