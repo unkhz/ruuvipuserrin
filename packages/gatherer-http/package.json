@@ -10,9 +10,7 @@
     "lint": "bun prettier-check",
     "test": "bun test-unit",
     "build": "bun bun index.ts --tsconfig-override tsconfig.build.json",
-    "start": "bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000",
-    "start-mock": "cat mock.txt|bun index.ts --measurementName=ruuvipuserrin-mock",
-    "stop": "docker compose down"
+    "start": "bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*",
