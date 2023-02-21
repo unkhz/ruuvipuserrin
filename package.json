@@ -9,7 +9,7 @@
     "test-all": "nx run-many --target=test --all",
     "build-all": "nx run-many --target=build --all",
     "start-all": "nx run-many --target=start --all",
-    "stop-all": "nx run-many --target=stop --all"
+    "start-gateway": "nx run-many --target=start --projects=listener,gatherer-stdin,gatherer-http,queuer,publisher"
   },
   "private": true,
   "devDependencies": {
