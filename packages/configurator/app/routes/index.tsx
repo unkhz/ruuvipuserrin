@@ -13,7 +13,7 @@ import webappManifest from '~/app.webmanifest'
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: indexCss },
   { rel: 'stylesheet', href: tailwindCss },
-  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Anton|Barlow' },
+  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Advent+Pro|Barlow' },
   { rel: 'manifest', href: webappManifest },
 ]
 
@@ -112,9 +112,7 @@ function SourcesTable() {
 export default function ConfigRoute() {
   return (
     <main>
-      <nav className="navbar w-full bg-zinc-100 dark:bg-zinc-900 px-2 py-4 text-xl sm:text-5xl">
-        Ruuvipuserrin Tag Configurator
-      </nav>
+      <nav className="navbar w-full bg-zinc-100 dark:bg-zinc-900 px-2 py-4 text-4xl sm:text-5xl">Ruuvipuserrin</nav>
       <div className="flex justify-center sm:px-8 sm:py-16">
         <div className="container flex-none mx-auto max-w-4xl">
           <SourcesTable />
