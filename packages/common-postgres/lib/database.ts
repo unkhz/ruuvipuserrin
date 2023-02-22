@@ -11,6 +11,9 @@ export interface MeasurementTable {
 export interface ConfigTable {
   time: ColumnType<Date, string | undefined, never>
   source: string
+  name: string
+  shortname: string
+  listener: string
   location: string
 }
 
