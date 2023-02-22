@@ -10,7 +10,7 @@
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
     "build": "tsc --project tsconfig.build.json",
-    "migrate": "ts-node ./migrate.ts"
+    "migrate": "ts-node ./lib/migrate.ts"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*"
