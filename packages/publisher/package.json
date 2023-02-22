@@ -16,7 +16,6 @@
     "@ruuvipuserrin/base-node": "*"
   },
   "dependencies": {
-    "@ruuvipuserrin/common-influxdb": "*",
     "@ruuvipuserrin/common-postgres": "*",
     "ioredis": "^5.3.1"
   }

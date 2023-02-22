@@ -1,5 +1,4 @@
 import { RuuviMeasurementSnapshot } from '@ruuvipuserrin/common-data'
-import { writeMeasurementsToInfluxDb } from './lib/influxdb-write'
 import { processMeasurementsFromQueue } from './lib/queue-read'
 import { writeMeasurementsToTimescaleDb } from './lib/pg-write'
 
@@ -10,10 +9,7 @@ async function processMessage(data: Buffer) {
     const objectSnapshot = Object.fromEntries(
       snapshot.measurements.map((measurement) => [measurement.mac, measurement]),
     )
-    await Promise.all([
-      writeMeasurementsToTimescaleDb(objectSnapshot),
-      /* writeMeasurementsToInfluxDb(objectSnapshot) */
-    ])
+    await Promise.all([writeMeasurementsToTimescaleDb(objectSnapshot)])
   }
 }
 
