@@ -1,14 +1,21 @@
-import { RuuviMeasurementSnapshot } from '@ruuvipuserrin/common-data'
+import { RuuviMeasurementSnapshot, RuuviMeasurement } from '@ruuvipuserrin/common-data'
 import { processMeasurementsFromQueue } from './lib/queue-read'
 import { writeMeasurementsToTimescaleDb } from './lib/pg-write'
 
+function readMeasurements(data: Buffer): RuuviMeasurement[] {
+  try {
+    const snapshot = RuuviMeasurementSnapshot.decode(data)
+    return snapshot.measurements
+  } catch (err) {
+    console.error('Decoding failed, skipping measurement:', err)
+  }
+  return []
+}
+
 async function processMessage(data: Buffer) {
-  const snapshot = RuuviMeasurementSnapshot.decode(data)
-  const len = snapshot.measurements.length
-  if (len) {
-    const objectSnapshot = Object.fromEntries(
-      snapshot.measurements.map((measurement) => [measurement.mac, measurement]),
-    )
+  const measurements = readMeasurements(data)
+  if (measurements.length) {
+    const objectSnapshot = Object.fromEntries(measurements.map((measurement) => [measurement.mac, measurement]))
     await Promise.all([writeMeasurementsToTimescaleDb(objectSnapshot)])
   }
 }
