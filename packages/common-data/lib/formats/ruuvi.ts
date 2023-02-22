@@ -43,19 +43,19 @@ function createBaseRuuviMeasurement(): RuuviMeasurement {
 export const RuuviMeasurement = {
   encode(message: RuuviMeasurement, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.acceleration_x !== 0) {
-      writer.uint32(8).sint32(message.acceleration_x)
+      writer.uint32(9).double(message.acceleration_x)
     }
     if (message.acceleration_y !== 0) {
-      writer.uint32(16).sint32(message.acceleration_y)
+      writer.uint32(17).double(message.acceleration_y)
     }
     if (message.acceleration_z !== 0) {
-      writer.uint32(24).sint32(message.acceleration_z)
+      writer.uint32(25).double(message.acceleration_z)
     }
     if (message.battery_potential !== 0) {
-      writer.uint32(32).uint32(message.battery_potential)
+      writer.uint32(33).double(message.battery_potential)
     }
     if (message.humidity !== 0) {
-      writer.uint32(40).uint32(message.humidity)
+      writer.uint32(41).double(message.humidity)
     }
     if (message.measurement_sequence_number !== 0) {
       writer.uint32(48).uint32(message.measurement_sequence_number)
@@ -64,10 +64,10 @@ export const RuuviMeasurement = {
       writer.uint32(56).uint32(message.movement_counter)
     }
     if (message.pressure !== 0) {
-      writer.uint32(64).uint32(message.pressure)
+      writer.uint32(65).double(message.pressure)
     }
     if (message.temperature !== 0) {
-      writer.uint32(72).sint32(message.temperature)
+      writer.uint32(73).double(message.temperature)
     }
     if (message.tx_power !== 0) {
       writer.uint32(80).uint32(message.tx_power)
@@ -89,19 +89,19 @@ export const RuuviMeasurement = {
       const tag = reader.uint32()
       switch (tag >>> 3) {
         case 1:
-          message.acceleration_x = reader.sint32()
+          message.acceleration_x = reader.double()
           break
         case 2:
-          message.acceleration_y = reader.sint32()
+          message.acceleration_y = reader.double()
           break
         case 3:
-          message.acceleration_z = reader.sint32()
+          message.acceleration_z = reader.double()
           break
         case 4:
-          message.battery_potential = reader.uint32()
+          message.battery_potential = reader.double()
           break
         case 5:
-          message.humidity = reader.uint32()
+          message.humidity = reader.double()
           break
         case 6:
           message.measurement_sequence_number = reader.uint32()
@@ -110,10 +110,10 @@ export const RuuviMeasurement = {
           message.movement_counter = reader.uint32()
           break
         case 8:
-          message.pressure = reader.uint32()
+          message.pressure = reader.double()
           break
         case 9:
-          message.temperature = reader.sint32()
+          message.temperature = reader.double()
           break
         case 10:
           message.tx_power = reader.uint32()
@@ -153,16 +153,16 @@ export const RuuviMeasurement = {
 
   toJSON(message: RuuviMeasurement): unknown {
     const obj: any = {}
-    message.acceleration_x !== undefined && (obj.acceleration_x = Math.round(message.acceleration_x))
-    message.acceleration_y !== undefined && (obj.acceleration_y = Math.round(message.acceleration_y))
-    message.acceleration_z !== undefined && (obj.acceleration_z = Math.round(message.acceleration_z))
-    message.battery_potential !== undefined && (obj.battery_potential = Math.round(message.battery_potential))
-    message.humidity !== undefined && (obj.humidity = Math.round(message.humidity))
+    message.acceleration_x !== undefined && (obj.acceleration_x = message.acceleration_x)
+    message.acceleration_y !== undefined && (obj.acceleration_y = message.acceleration_y)
+    message.acceleration_z !== undefined && (obj.acceleration_z = message.acceleration_z)
+    message.battery_potential !== undefined && (obj.battery_potential = message.battery_potential)
+    message.humidity !== undefined && (obj.humidity = message.humidity)
     message.measurement_sequence_number !== undefined &&
       (obj.measurement_sequence_number = Math.round(message.measurement_sequence_number))
     message.movement_counter !== undefined && (obj.movement_counter = Math.round(message.movement_counter))
-    message.pressure !== undefined && (obj.pressure = Math.round(message.pressure))
-    message.temperature !== undefined && (obj.temperature = Math.round(message.temperature))
+    message.pressure !== undefined && (obj.pressure = message.pressure)
+    message.temperature !== undefined && (obj.temperature = message.temperature)
     message.tx_power !== undefined && (obj.tx_power = Math.round(message.tx_power))
     message.mac !== undefined && (obj.mac = message.mac)
     message.time !== undefined && (obj.time = message.time)

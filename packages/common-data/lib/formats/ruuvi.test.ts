@@ -1,15 +1,15 @@
 import { RuuviMeasurement, RuuviMeasurementSnapshot } from './ruuvi'
 
 const exampleMeasurement = {
-  acceleration_x: 123,
-  acceleration_y: 123,
-  acceleration_z: 123,
-  battery_potential: 123,
-  humidity: 123,
+  acceleration_x: 123.456,
+  acceleration_y: 123.456,
+  acceleration_z: 123.456,
+  battery_potential: 123.456,
+  humidity: 123.456,
   measurement_sequence_number: 123,
   movement_counter: 123,
-  pressure: 123,
-  temperature: 123,
+  pressure: 123.456,
+  temperature: 123.456,
   tx_power: 123,
   mac: 'aa:bb:cc:dd:ee:ff',
   time: 123,

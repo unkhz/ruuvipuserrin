@@ -1,15 +1,15 @@
 syntax = "proto3";
 
 message RuuviMeasurement {
-  sint32 acceleration_x = 1;
-  sint32 acceleration_y = 2;
-  sint32 acceleration_z = 3;
-  uint32 battery_potential = 4;
-  uint32 humidity = 5;
+  double acceleration_x = 1;
+  double acceleration_y = 2;
+  double acceleration_z = 3;
+  double battery_potential = 4;
+  double humidity = 5;
   uint32 measurement_sequence_number = 6;
   uint32 movement_counter = 7;
-  uint32 pressure = 8;
-  sint32 temperature = 9;
+  double pressure = 8;
+  double temperature = 9;
   uint32 tx_power = 10;
   string mac = 11;
   double time = 12;
