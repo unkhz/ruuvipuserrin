@@ -1,5 +1,6 @@
 {
   "name": "@ruuvipuserrin/common-data",
+  "main": "dist/index.js",
   "module": "index.ts",
   "type": "commonjs",
   "scripts": {

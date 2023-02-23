@@ -13,5 +13,10 @@
         "accessToken": "NGI5MTFlNzMtOTU0Ni00YWMzLTljMjEtY2UyMmEwODY0YzUzfHJlYWQtd3JpdGU="
       }
     }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
   }
 }
