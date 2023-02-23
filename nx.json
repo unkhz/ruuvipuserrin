@@ -15,6 +15,9 @@
     }
   },
   "targetDefaults": {
+    "start": {
+      "dependsOn": ["build"]
+    },
     "build": {
       "dependsOn": ["^build"]
     }
