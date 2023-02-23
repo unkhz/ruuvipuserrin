@@ -1,6 +1,8 @@
+import { createClient } from '@ruuvipuserrin/common-archive-client'
+
 export type Item = {
   id: string
-  listener_id: string
+  listener_id?: string
   name?: string
   location?: string
 }
@@ -14,14 +16,16 @@ export const schema: FormInput[] = [
   { editable: true, autofocus: false, name: 'location', description: 'Source Device Location' },
 ]
 
-const stuff: Map<string, Item> = new Map([
-  ['a', { id: 'a', listener_id: 'irue983', name: 'stuff', location: 'drawer' }],
-  ['b', { id: 'b', listener_id: 'irue983', name: 'exist', location: 'abstract' }],
-  ['c', { id: 'c', listener_id: 'e83kjsd', name: 'here', location: 'place' }],
-])
+const client = createClient()
+
+const stuff: Map<string, Item> = new Map([])
 
 export default {
-  read: () => Array.from(stuff.values()),
+  read: async () => {
+    const result = await client.getSources.query()
+    result.forEach((id) => stuff.set(id, { id, ...stuff.get(id) }))
+    return Array.from(stuff.values())
+  },
   write: (id: string, input: Pick<Item, 'name' | 'location'>) => {
     const originalItem = stuff.get(id)
     if (!originalItem) {

@@ -8,7 +8,8 @@ export const trpc = initTRPC.context<Context>().create()
 
 export const archiveApiRouter = trpc.router({
   getSources: trpc.procedure.query(async () => {
-    return client.selectFrom('measurement').select('source').distinct()
+    const result = await client.selectFrom('measurement').select('source').distinct().execute()
+    return Array.from(result.values()).map((row) => row.source)
   }),
 })
 
