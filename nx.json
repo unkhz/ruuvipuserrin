@@ -20,6 +20,12 @@
     },
     "build": {
       "dependsOn": ["^build"]
+    },
+    "docker:build": {
+      "dependsOn": ["build", "^docker:build"]
+    },
+    "docker:run": {
+      "dependsOn": ["docker:build"]
     }
   }
 }

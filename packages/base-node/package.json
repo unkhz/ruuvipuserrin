@@ -1,6 +1,9 @@
 {
   "name": "@ruuvipuserrin/base-node",
   "version": "0.0.0",
+  "scripts": {
+    "docker:build": "docker build ../.. --tag ruuvipuserrin/root"
+  },
   "devDependencies": {
     "@types/jest": "^29.4.0",
     "@types/node": "^18.11.18",
