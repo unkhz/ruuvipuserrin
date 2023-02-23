@@ -1,0 +1,23 @@
+{
+  "name": "@ruuvipuserrin/common-archive-client",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "module": "index.ts",
+  "type": "commonjs",
+  "scripts": {
+    "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
+    "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
+    "test-unit": "jest --no-cache --ci",
+    "lint": "npm run prettier-check",
+    "test": "npm run test-unit",
+    "build": "tsc --project tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@ruuvipuserrin/base-node": "*"
+  },
+  "dependencies": {
+    "@ruuvipuserrin/archive": "*",
+    "@trpc/client": "^10.12.0",
+    "zod": "^3.20.2"
+  }
+}
