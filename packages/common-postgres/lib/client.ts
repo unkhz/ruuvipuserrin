@@ -7,18 +7,20 @@ import { Database } from './database'
 
 function getConfig(): PoolConfig {
   const env = getEnv()
-
+  console.log(env)
   return {
     host: env.PG_HOST,
     port: env.PG_PORT,
     user: env.PG_USER,
     password: env.PG_PASSWORD,
     database: env.PG_DB,
-    ssl: {
-      requestCert: false,
-      rejectUnauthorized: false,
-      ca: env.PG_CERT,
-    },
+    ssl: env.PG_CERT
+      ? {
+          requestCert: false,
+          rejectUnauthorized: false,
+          ca: env.PG_CERT,
+        }
+      : false,
     max: 5,
   }
 }

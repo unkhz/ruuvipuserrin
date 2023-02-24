@@ -8,8 +8,9 @@ const ZEnv = z.object({
   PG_DB: z.string(),
   /* Base64 encoded certificate decoded to string */
   PG_CERT: z.preprocess(
-    (base64EncodedString: unknown): string => Buffer.from(`${base64EncodedString}`, 'base64').toString(),
-    z.string().startsWith('-----BEGIN CERTIFICATE-----').endsWith('-----END CERTIFICATE-----'),
+    (base64EncodedString: unknown) =>
+      base64EncodedString ? Buffer.from(`${base64EncodedString}`, 'base64').toString() : undefined,
+    z.string().startsWith('-----BEGIN CERTIFICATE-----').endsWith('-----END CERTIFICATE-----').optional(),
   ),
 })
 
