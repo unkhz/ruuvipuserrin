@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const ZEnv = z.object({
   PG_HOST: z.string(),
-  PG_PORT: z.string(),
+  PG_PORT: z.coerce.number(),
   PG_USER: z.string(),
   PG_PASSWORD: z.string(),
   PG_DB: z.string(),
