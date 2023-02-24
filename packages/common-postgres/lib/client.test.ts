@@ -7,7 +7,7 @@ describe('createClient', () => {
   it('should use env, create client and connect', async () => {
     jest.spyOn(env, 'getEnv').mockReturnValue({
       PG_HOST: 'localhost',
-      PG_PORT: '0',
+      PG_PORT: 0,
       PG_USER: 'user',
       PG_PASSWORD: 'password',
       PG_DB: 'db',

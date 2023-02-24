@@ -13,7 +13,7 @@ describe('getEnv', () => {
     }
     expect(getEnv(env)).toEqual({
       PG_HOST: 'subdomain.localhost',
-      PG_PORT: '25502',
+      PG_PORT: 25502,
       PG_USER: 'user',
       PG_PASSWORD: 'password',
       PG_DB: 'db',
