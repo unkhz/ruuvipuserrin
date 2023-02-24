@@ -8,7 +8,8 @@
     "dev:miniflare": "cross-env NODE_ENV=development miniflare ./build/index.js --watch",
     "dev": "npm-run-all build --parallel \"dev:*\"",
     "cloudflare:build": "wrangler build",
-    "cloudflare:deploy": "wrangler publish"
+    "cloudflare:deploy": "wrangler publish",
+    "cloudflare:update-secrets": "./update-secrets.sh"
   },
   "dependencies": {
     "@ruuvipuserrin/common-archive-client": "*",
