@@ -31,16 +31,18 @@ describe('getEnv', () => {
     ).toThrow()
   })
 
-  it('should fail with missing values', async () => {
+  it('should NOT fail with missing values', async () => {
     const env = {
       ARCHIVE_API_SSL: '1',
-      // ARCHIVE_API_HOST: '127.0.0.1',
-      ARCHIVE_API_PORT: '4000',
-      ARCHIVE_API_PATH: '/trpc',
+      ARCHIVE_API_HOST: '127.0.0.1',
+      ARCHIVE_API_PORT: '',
+      ARCHIVE_API_PATH: '',
     }
-    expect(() =>
-      // @ts-ignore
-      getEnv(env),
-    ).toThrow()
+    expect(getEnv(env)).toEqual({
+      ARCHIVE_API_SSL: true,
+      ARCHIVE_API_HOST: '127.0.0.1',
+      ARCHIVE_API_PORT: 0,
+      ARCHIVE_API_PATH: '/trpc',
+    })
   })
 })

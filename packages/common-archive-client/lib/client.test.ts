@@ -3,6 +3,8 @@ import * as trpcClient from '@trpc/client'
 import { createClient } from './client'
 import * as env from './env'
 
+jest.mock('@trpc/client')
+
 describe('createClient', () => {
   it('should use env, create client and connect', async () => {
     jest.spyOn(env, 'getEnv').mockReturnValue({
@@ -11,8 +13,6 @@ describe('createClient', () => {
       ARCHIVE_API_PATH: '/teeärpeesee',
       ARCHIVE_API_SSL: true,
     })
-    jest.spyOn(trpcClient, 'createTRPCProxyClient')
-    jest.spyOn(trpcClient, 'httpBatchLink').mock
 
     createClient()
 

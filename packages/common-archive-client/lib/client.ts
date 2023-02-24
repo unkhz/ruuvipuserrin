@@ -7,6 +7,7 @@ export function createClient() {
   const protocol = ARCHIVE_API_SSL ? 'https://' : 'http://'
   const port = ARCHIVE_API_PORT ? `:${ARCHIVE_API_PORT}` : ''
   const url = `${protocol}${ARCHIVE_API_HOST}${port}${ARCHIVE_API_PATH}`
+  console.log(`Connecting to tRPC api in ${url}`)
   return createTRPCProxyClient<ArchiveApiRouter>({
     links: [
       httpBatchLink({
