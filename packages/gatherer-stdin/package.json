@@ -10,6 +10,7 @@
     "lint": "bun prettier-check",
     "test": "bun test-unit",
     "build": "bun bun index.ts --tsconfig-override tsconfig.build.json",
+    "dev": "bun listener-mock.ts --influxdb-measurement=ruuvipuserrin-mock|bun index.ts --measurementName=ruuvipuserrin-mock --pollingInterval=15000",
     "start": "nx run listener:bin --influxdb-measurement=ruuvipuserrin-rH48dag03|bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000"
   },
   "devDependencies": {
