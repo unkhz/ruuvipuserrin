@@ -9,7 +9,7 @@ const ZEnv = z.object({
     return Boolean(value)
   }, z.boolean()),
   ARCHIVE_API_HOST: z.string(),
-  ARCHIVE_API_PORT: z.coerce.number(),
+  ARCHIVE_API_PORT: z.coerce.number().optional(),
   ARCHIVE_API_PATH: z.string(),
 })
 
