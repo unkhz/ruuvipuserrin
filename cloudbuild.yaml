@@ -1,0 +1,17 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '${IMAGE_URL}', '.']
+    dir: 'app' # Working directory for build context
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${IMAGE_URL}']
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: ['run', 'deploy', '${SERVICE_NAME}', '--image', '${IMAGE_URL}', '--region', 'europe-north1', '--platform', 'managed']
+substitutions:
+# Replace these variables with your own values
+  IMAGE_URL: gcr.io/ruuvipuserrin/base-node
+  SERVICE_NAME: 'ruuvipuserrin-base-node'
+images: ['$IMAGE_URL']

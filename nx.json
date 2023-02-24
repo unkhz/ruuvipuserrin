@@ -9,7 +9,7 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": ["build", "lint", "test", "e2e", "gcloud:build"],
         "accessToken": "NGI5MTFlNzMtOTU0Ni00YWMzLTljMjEtY2UyMmEwODY0YzUzfHJlYWQtd3JpdGU="
       }
     }
@@ -22,10 +22,16 @@
       "dependsOn": ["^build"]
     },
     "docker:build": {
-      "dependsOn": ["build", "^docker:build"]
+      "dependsOn": ["^docker:build"]
     },
     "docker:run": {
       "dependsOn": ["docker:build"]
+    },
+    "gcloud:build": {
+      "dependsOn": ["^gcloud:build"]
+    },
+    "gcloud:deploy": {
+      "dependsOn": ["gcloud:build"]
     }
   }
 }

@@ -10,13 +10,14 @@
     "test-unit": "jest --no-cache --ci",
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
-    "build": "tsc --project tsconfig.build.json",
+    "node:build": "tsc --project tsconfig.build.json",
     "dev": "ts-node index.ts",
     "start": "node dist/index.js",
     "docker:build": "docker build . --tag=ruuvipuserrin/archive",
     "docker:run": "docker run --name=ruuvipuserrin-archive --env-file=../../.env.local --rm -p 4000:4000 ruuvipuserrin/archive",
     "docker:stop": "docker stop ruuvipuserrin-archive",
-    "publish": "gcloud"
+    "gcloud:build": "gcloud builds submit --tag gcr.io/ruuvipuserrin/archive",
+    "gcloud:deploy": "gcloud run deploy archive --image gcr.io/ruuvipuserrin/archive"
   },
   "devDependencies": {
     "@types/express": "^4.17.17"

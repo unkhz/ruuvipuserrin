@@ -1,4 +1,4 @@
-FROM ruuvipuserrin/root
+FROM gcr.io/ruuvipuserrin/base-node
 
 WORKDIR /app
 

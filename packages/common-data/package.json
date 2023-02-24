@@ -9,6 +9,7 @@
     "test-unit": "jest --no-cache --ci",
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
+    "node:build": "tsc --project tsconfig.build.json",
     "setup": "sudo apt-get install protobuf-compiler",
     "protoc-ruuvi": "protoc --plugin=$(npm bin)/protoc-gen-ts_proto --ts_proto_opt=snakeToCamel=false --ts_proto_out=. lib/formats/ruuvi.proto",
     "protoc": "npm run protoc-ruuvi && npm run prettier-write"
