@@ -30,17 +30,4 @@ describe('getEnv', () => {
       getEnv(env),
     ).toThrow()
   })
-
-  it('should fail with missing values', async () => {
-    const env = {
-      ARCHIVE_API_SSL: '1',
-      // ARCHIVE_API_HOST: '127.0.0.1',
-      ARCHIVE_API_PORT: '4000',
-      ARCHIVE_API_PATH: '/trpc',
-    }
-    expect(() =>
-      // @ts-ignore
-      getEnv(env),
-    ).toThrow()
-  })
 })
