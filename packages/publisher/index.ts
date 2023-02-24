@@ -1,6 +1,6 @@
 import { RuuviMeasurementSnapshot, RuuviMeasurement } from '@ruuvipuserrin/common-data'
 import { processMeasurementsFromQueue } from './lib/queue-read'
-import { writeMeasurementsToTimescaleDb } from './lib/pg-write'
+import { pushMeasurementsToArchive } from './lib/archive-write'
 
 function readMeasurements(data: Buffer): RuuviMeasurement[] {
   try {
@@ -16,7 +16,7 @@ async function processMessage(data: Buffer) {
   const measurements = readMeasurements(data)
   if (measurements.length) {
     const objectSnapshot = Object.fromEntries(measurements.map((measurement) => [measurement.mac, measurement]))
-    await Promise.all([writeMeasurementsToTimescaleDb(objectSnapshot)])
+    await Promise.all([pushMeasurementsToArchive(objectSnapshot)])
   }
 }
 

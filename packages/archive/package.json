@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@ruuvipuserrin/base-node": "*",
+    "@ruuvipuserrin/common-data": "*",
     "@ruuvipuserrin/common-postgres": "*",
     "@trpc/server": "^10.12.0",
     "express": "^4.18.2",

@@ -3,7 +3,7 @@ import minimist from 'minimist'
 
 const ZQueuerArgsFromProcessArgv = z.object({
   measurementName: z.string(),
-  pollingInterval: z.coerce.number().gt(1000),
+  pollingInterval: z.coerce.number().gt(999),
 })
 
 type QueuerArgs = z.infer<typeof ZQueuerArgsFromProcessArgv>

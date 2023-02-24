@@ -3,7 +3,7 @@ import minimist from 'minimist'
 
 const ZPublisherArgsFromProcessArgv = z.object({
   measurementName: z.string(),
-  pollingInterval: z.coerce.number().gt(1000),
+  pollingInterval: z.coerce.number().gt(999),
 })
 
 type PublisherArgs = z.infer<typeof ZPublisherArgsFromProcessArgv>

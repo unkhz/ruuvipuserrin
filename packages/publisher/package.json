@@ -7,16 +7,19 @@
     "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
     "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
     "test-unit": "jest --no-cache --ci",
-    "lint": "npm run prettier-check",
-    "test": "npm run test-unit",
-    "node:build": "tsc --project tsconfig.build.json",
-    "start": "ts-node index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000"
+    "lint": "bun prettier-check",
+    "test": "bun test-unit",
+    "build": "bun bun index.ts",
+    "dev": "bun index.ts --measurementName=ruuvipuserrin-mock --pollingInterval=1000",
+    "start": "bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*"
   },
   "dependencies": {
     "@ruuvipuserrin/common-postgres": "*",
+    "bun": "^0.5.7-canary.20230223.1",
+    "bun-types": "^0.5.7-canary.20230223.1",
     "ioredis": "^5.3.1"
   }
 }

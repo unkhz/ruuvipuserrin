@@ -21,6 +21,12 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "node:build": {
+      "dependsOn": ["^node:build"]
+    },
+    "dev": {
+      "dependsOn": ["node:build"]
+    },
     "docker:build": {
       "dependsOn": ["^docker:build"]
     },

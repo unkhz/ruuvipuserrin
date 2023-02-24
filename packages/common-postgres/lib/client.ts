@@ -7,7 +7,6 @@ import { Database } from './database'
 
 function getConfig(): PoolConfig {
   const env = getEnv()
-  console.log(env)
   return {
     host: env.PG_HOST,
     port: env.PG_PORT,
