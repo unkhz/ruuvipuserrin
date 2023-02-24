@@ -11,6 +11,7 @@ This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), at
 Following shiny tools are used
 
 - [Cloudflare workers](https://workers.cloudflare.com/) for serverless functions and apps
+- [Google Cloud Run](https://cloud.google.com/run) for apps that require nodejs apis
 - [Redis Streams](https://redis.io/docs/data-types/streams/) for durable processing of measurements
 - [Nx (package based)](https://nx.dev) for monorepo organization and task running
 - [Bun](https://bun.sh) TypeScript runtime for faster microservices (where necessary APIs are supported)
