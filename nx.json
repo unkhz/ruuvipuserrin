@@ -29,9 +29,6 @@
     },
     "gcloud:build": {
       "dependsOn": ["^gcloud:build"]
-    },
-    "gcloud:deploy": {
-      "dependsOn": ["gcloud:build"]
     }
   }
 }
