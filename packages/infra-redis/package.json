@@ -1,0 +1,10 @@
+{
+  "name": "@ruuvipuserrin/infra-redis",
+  "version": "0.0.0",
+  "scripts": {
+    "set-service": "sudo systemctl enable redis-server",
+    "apt-install": "sudo apt install redis-server",
+    "setup": "npm run apt-install; npm run set-service",
+    "infra:dev": "docker run --rm --name=ruuvipuserrin-redis -p 6379:6379 redis/redis-stack-server:latest"
+  }
+}
