@@ -7,3 +7,5 @@ function update_secret () {
 
 update_secret ARCHIVE_API_HOST
 update_secret ARCHIVE_API_SSL
+update_secret ARCHIVE_CLIENT_GCLOUD_SCOPE
+update_secret ARCHIVE_CLIENT_GCLOUD_CREDENTIALS
