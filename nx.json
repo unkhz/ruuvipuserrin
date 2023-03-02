@@ -15,9 +15,6 @@
     }
   },
   "targetDefaults": {
-    "start": {
-      "dependsOn": ["build"]
-    },
     "build": {
       "dependsOn": ["^build"]
     },
@@ -25,6 +22,9 @@
       "dependsOn": ["^node:build"]
     },
     "dev": {
+      "dependsOn": ["node:build"]
+    },
+    "start": {
       "dependsOn": ["node:build"]
     },
     "docker:build": {

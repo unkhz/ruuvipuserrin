@@ -9,7 +9,7 @@
     "test-unit": "jest --no-cache --ci",
     "lint": "bun prettier-check",
     "test": "bun test-unit",
-    "build": "bun bun index.ts",
+    "build": "bun bun index.ts --tsconfig-override tsconfig.build.json",
     "dev": "bun index.ts --measurementName=ruuvipuserrin-mock --pollingInterval=1000",
     "start": "bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000"
   },
