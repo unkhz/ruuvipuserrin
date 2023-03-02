@@ -1,6 +1,8 @@
 import { initTRPC } from '@trpc/server'
 import z from 'zod'
-import { sql, ZValidTenantId } from '@ruuvipuserrin/common-postgres'
+import { sql } from '@ruuvipuserrin/common-postgres'
+import { ZValidTenantId } from '@ruuvipuserrin/common-data'
+
 import type { Context } from './context'
 
 export const trpc = initTRPC.context<Context>().create()

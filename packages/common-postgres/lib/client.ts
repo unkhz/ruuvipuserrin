@@ -1,8 +1,9 @@
 import { Pool, PoolConfig } from 'pg'
 import { Kysely, PostgresDialect } from 'kysely'
+import { ZValidTenantId, ValidTenantId } from '@ruuvipuserrin/common-data'
 
 import { getEnv } from './env'
-import { Database, ZValidTenantId, ValidTenantId } from './database'
+import { Database } from './database'
 
 function getConfig(tenantId: string): PoolConfig {
   const env = getEnv()

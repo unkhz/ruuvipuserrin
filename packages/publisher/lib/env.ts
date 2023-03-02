@@ -1,4 +1,4 @@
-import { ZValidTenantId } from '@ruuvipuserrin/common-postgres'
+import { ZValidTenantId } from '@ruuvipuserrin/common-data'
 import { z } from 'zod'
 
 const ZEnv = z.object({
