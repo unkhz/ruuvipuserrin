@@ -5,23 +5,38 @@ import { getEnv } from './env'
 // TODO: consider storing in KV in case of cloudflare worker client
 const cache: Map<string, unknown> = new Map()
 
-export async function getAuthHeaders() {
+async function fetchAuthHeaders() {
   const env = getEnv()
   if (!env.ARCHIVE_CLIENT_GCLOUD_CREDENTIALS) {
     return {}
   }
+  try {
+    const { getAccessToken } = await import('web-auth-library/google')
+    const options = {
+      credentials: env.ARCHIVE_CLIENT_GCLOUD_CREDENTIALS,
+      scope: env.ARCHIVE_CLIENT_GCLOUD_SCOPE,
+      cache,
+    }
+    const accessToken = await getAccessToken(options)
 
-  const { getAccessToken } = await import('web-auth-library/google')
-
-  const accessToken = await getAccessToken({
-    credentials: env.ARCHIVE_CLIENT_GCLOUD_CREDENTIALS,
-    scope: env.ARCHIVE_CLIENT_GCLOUD_SCOPE,
-    cache,
-  })
-
-  return {
-    Authorization: `Bearer ${accessToken}`,
+    return {
+      Authorization: `Bearer ${accessToken}`,
+    }
+  } catch (err) {
+    console.error(err, (err as any).response)
+    throw err
   }
+}
+
+let getAuthHeadersPromise: Promise<{ Authorization?: string }> | undefined
+
+export async function getAuthHeaders() {
+  if (!getAuthHeadersPromise) {
+    getAuthHeadersPromise = fetchAuthHeaders().finally(() => {
+      getAuthHeadersPromise = undefined
+    })
+  }
+  return getAuthHeadersPromise
 }
 
 export function createClient() {
