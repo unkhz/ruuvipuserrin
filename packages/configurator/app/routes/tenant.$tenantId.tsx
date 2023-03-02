@@ -18,7 +18,11 @@ export const links: LinksFunction = () => [
   { rel: 'manifest', href: webappManifest },
 ]
 
-export const action = async ({ request }: ActionArgs) => {
+function getValidTenantId(params: ActionArgs['params']) {
+  return ZValidTenantId.parse(params.tenantId)
+}
+
+export const action = async ({ request, params }: ActionArgs) => {
   const form = await request.formData()
   const id = form.get('id')
   const name = form.get('name')
@@ -27,19 +31,20 @@ export const action = async ({ request }: ActionArgs) => {
   if (typeof id !== 'string' || typeof name !== 'string' || typeof location !== 'string') {
     throw new Error('Invalid form data')
   }
+  const tenantId = getValidTenantId(params)
   await db.write(tenantId, { id, name, location })
-  return redirect('/')
+  return redirect(`/tenant/${tenantId}`)
 }
 
 export const loader = async ({ params }: ActionArgs) => {
   try {
-    ZValidTenantId.parse(params.tenantId)
+    getValidTenantId(params)
   } catch (err) {
     return redirect('/tenant/dev', { status: 302 })
   }
 
   return json({
-    items: await db.read(ZValidTenantId.parse(params.tenantId)),
+    items: await db.read(getValidTenantId(params)),
   })
 }
 
