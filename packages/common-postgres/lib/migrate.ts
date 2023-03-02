@@ -3,9 +3,7 @@ import { promises as fs } from 'fs'
 import { Migrator, FileMigrationProvider } from 'kysely'
 import { createClient } from './client'
 
-async function migrateToLatest() {
-  const db = await createClient()
-
+export async function migrateToLatest(db: ReturnType<typeof createClient>) {
   const migrator = new Migrator({
     db,
     provider: new FileMigrationProvider({
@@ -25,14 +23,8 @@ async function migrateToLatest() {
     }
   })
 
-  await db.destroy()
   if (error) {
     console.error(error)
     throw new Error('failed to migrate', { cause: error })
   }
 }
-
-migrateToLatest().catch((error) => {
-  console.error(error)
-  process.exit(1)
-})

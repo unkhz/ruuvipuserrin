@@ -1,4 +1,5 @@
 import { ColumnType } from 'kysely'
+import { z } from 'zod'
 
 export interface MeasurementTable {
   time: ColumnType<Date, string | undefined, never>
@@ -21,3 +22,7 @@ export interface Database {
   measurement: MeasurementTable
   config: ConfigTable
 }
+
+// TODO: Placeholder decision for valid tenant ids
+export const ZValidTenantId = z.enum(['dev', 'test', 'prod'])
+export type ValidTenantId = z.infer<typeof ZValidTenantId>

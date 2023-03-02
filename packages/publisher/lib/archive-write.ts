@@ -1,13 +1,16 @@
 import type { RuuviMeasurement } from '@ruuvipuserrin/common-data'
 import { createClient } from '@ruuvipuserrin/common-archive-client'
+import { getEnv } from './env'
 
 const client = createClient()
+const env = getEnv()
 
 export async function pushMeasurementsToArchive(measurements: Record<string, RuuviMeasurement>) {
   for (const [_id, measurement] of Object.entries(measurements)) {
     const { mac, time: timeAsMicroSeconds, temperature, humidity, pressure } = measurement
     const source = mac.toLowerCase().replace(/[^a-z0-9]/g, '')
     const time = timeAsMicroSeconds / 1e9
-    await client.addMeasurements.mutate({ source, time, temperature, humidity, pressure })
+    const tenantId = env.TENANT_ID
+    await client.addMeasurement.mutate({ tenantId, measurement: { source, time, temperature, humidity, pressure } })
   }
 }

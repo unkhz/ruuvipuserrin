@@ -13,7 +13,7 @@ describe('createClient', () => {
       PG_DB: 'db',
       PG_CERT: 'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCnRlc3QKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==',
     })
-    const client = await createClient()
+    const client = await createClient('test')
     expect(client).toBeDefined()
     expect(env.getEnv).toHaveBeenCalledTimes(1)
   })

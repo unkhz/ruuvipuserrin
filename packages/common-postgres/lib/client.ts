@@ -1,18 +1,17 @@
-import url from 'url'
 import { Pool, PoolConfig } from 'pg'
 import { Kysely, PostgresDialect } from 'kysely'
 
 import { getEnv } from './env'
-import { Database } from './database'
+import { Database, ZValidTenantId, ValidTenantId } from './database'
 
-function getConfig(): PoolConfig {
+function getConfig(tenantId: string): PoolConfig {
   const env = getEnv()
   return {
     host: env.PG_HOST,
     port: env.PG_PORT,
     user: env.PG_USER,
     password: env.PG_PASSWORD,
-    database: env.PG_DB,
+    database: `${env.PG_DB}-${tenantId}`,
     ssl: env.PG_CERT
       ? {
           requestCert: false,
@@ -24,10 +23,13 @@ function getConfig(): PoolConfig {
   }
 }
 
-export function createClient(): Kysely<Database> {
+export function createClient(tenantId: ValidTenantId): Kysely<Database> {
+  const validatedTenantId = ZValidTenantId.parse(tenantId, {
+    errorMap: () => new Error(`Invalid tenantId: ${tenantId}`),
+  })
   return new Kysely<Database>({
     dialect: new PostgresDialect({
-      pool: new Pool(getConfig()),
+      pool: new Pool(getConfig(validatedTenantId)),
     }),
   })
 }
