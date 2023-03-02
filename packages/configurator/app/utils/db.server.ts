@@ -1,4 +1,5 @@
 import { createClient } from '@ruuvipuserrin/common-archive-client'
+import type { ValidTenantId } from '@ruuvipuserrin/common-data'
 
 export type Item = {
   id: string
@@ -18,24 +19,28 @@ export const schema: FormInput[] = [
 
 const client = createClient()
 
-const stuff: Map<string, Item> = new Map([])
+const mock: Map<ValidTenantId, Map<string, Item>> = new Map()
 
 export default {
-  read: async () => {
-    const result = await client.getSources.query()
+  read: async (tenantId: ValidTenantId) => {
+    const result = await client.getSources.query({ tenantId })
+    const stuff = mock.get(tenantId) ?? new Map()
+    mock.set(tenantId, stuff)
     result.forEach((id) => stuff.set(id, { id, ...stuff.get(id) }))
     return Array.from(stuff.values())
   },
-  write: (id: string, input: Pick<Item, 'name' | 'location'>) => {
-    const originalItem = stuff.get(id)
+  write: (tenantId: ValidTenantId, input: Pick<Item, 'id' | 'name' | 'location'>) => {
+    const stuff = mock.get(tenantId) ?? new Map()
+    const originalItem = stuff.get(input.id)
     if (!originalItem) {
-      throw new Error(`Item with id ${id} not found`)
+      throw new Error(`Item with id ${input.id} not found`)
     }
     const modifiedItem: Item = {
       ...originalItem,
       name: input.name ?? originalItem.name,
       location: input.location ?? originalItem.location,
     }
-    stuff.set(id, modifiedItem)
+    stuff.set(input.id, modifiedItem)
+    mock.set(tenantId, stuff)
   },
 }
