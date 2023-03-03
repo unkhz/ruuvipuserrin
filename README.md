@@ -14,6 +14,7 @@ Following shiny tools are used
 - [Cloudflare workers](https://workers.cloudflare.com/) for serverless functions and apps
 - [Google Cloud Run](https://cloud.google.com/run) for apps that require nodejs apis
 - [Redis Streams](https://redis.io/docs/data-types/streams/) for durable processing of measurements
+- [TimescaleDb](https://www.timescale.com/) for SQL based long term storage of time series data
 - [Nx (package based)](https://nx.dev) for monorepo organization and task running
 - [Bun](https://bun.sh) TypeScript runtime for faster microservices (where necessary APIs are supported)
 - [tRPC](https://trpc.io/) type-safe API for exposing database to serverless functions and apps
