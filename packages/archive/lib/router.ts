@@ -1,19 +1,11 @@
 import { initTRPC } from '@trpc/server'
 import z from 'zod'
 import { sql } from '@ruuvipuserrin/common-postgres'
-import { ZValidTenantId } from '@ruuvipuserrin/common-data'
+import { ZConfig, ZMeasurement, ZValidTenantId } from '@ruuvipuserrin/common-data'
 
 import type { Context } from './context'
 
 export const trpc = initTRPC.context<Context>().create()
-
-const ZMeasurement = z.object({
-  source: z.string(),
-  time: z.number(),
-  temperature: z.number(),
-  humidity: z.number(),
-  pressure: z.number(),
-})
 
 export const archiveApiRouter = trpc.router({
   getSources: trpc.procedure
@@ -45,6 +37,29 @@ export const archiveApiRouter = trpc.router({
           temperature,
           humidity,
           pressure,
+        })
+        .execute()
+    }),
+  addConfig: trpc.procedure
+    .input(
+      z.object({
+        tenantId: ZValidTenantId,
+        config: ZConfig,
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { source, time, name, shortname, location } = input.config
+      const db = await ctx.dbForTenant(input.tenantId)
+      return db
+        .insertInto('config')
+        .values({
+          time: sql`to_timestamp(${time})`,
+          source,
+          name,
+          shortname,
+          location,
+          // deprercated field
+          listener: '',
         })
         .execute()
     }),

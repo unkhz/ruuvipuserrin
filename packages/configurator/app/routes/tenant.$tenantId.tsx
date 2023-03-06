@@ -9,7 +9,7 @@ import db from '~/utils/db.server'
 import tailwindCss from '~/styles/tailwind.css'
 import indexCss from '~/styles/index.css'
 import webappManifest from '~/app.webmanifest'
-import { ZValidTenantId } from '@ruuvipuserrin/common-data'
+import { ZConfig, ZValidTenantId } from '@ruuvipuserrin/common-data'
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: indexCss },
@@ -24,15 +24,9 @@ function getValidTenantId(params: ActionArgs['params']) {
 
 export const action = async ({ request, params }: ActionArgs) => {
   const form = await request.formData()
-  const id = form.get('id')
-  const name = form.get('name')
-  const location = form.get('location')
-  console.log('dat', { id, name, location })
-  if (typeof id !== 'string' || typeof name !== 'string' || typeof location !== 'string') {
-    throw new Error('Invalid form data')
-  }
+  const data = Object.fromEntries(schema.map(({ name }) => [name, form.get(name)]))
   const tenantId = getValidTenantId(params)
-  await db.write(tenantId, { id, name, location })
+  await db.write(tenantId, ZConfig.parse(data))
   return redirect(`/tenant/${tenantId}`)
 }
 
@@ -53,9 +47,9 @@ function SourceEditModal({ item }: { item: Item }) {
     <div className="modal modal-open">
       <div className="modal-box">
         <Form className="form-control" method="post">
-          <h3 className="text-lg mx-2">Edit source: {item.id}</h3>
-          {schema.map(({ name, autofocus, editable, description }) => {
-            const htmlId = `edit-item-${item.id}-${name}`
+          <h3 className="text-lg mx-2">Edit source: {item.source}</h3>
+          {schema.map(({ name, type, autofocus, editable, description, defaultValue }) => {
+            const htmlId = `edit-item-${item.source}-${name}`
             return (
               <fieldset key={name} className="mx-1">
                 <label className="label" htmlFor={htmlId}>
@@ -65,10 +59,10 @@ function SourceEditModal({ item }: { item: Item }) {
                   className="input input-bordered"
                   name={name}
                   id={htmlId}
-                  type="text"
+                  type={type}
                   autoFocus={autofocus}
-                  defaultValue={item[name]}
-                  hidden={!editable}
+                  defaultValue={item[name] ?? defaultValue}
+                  readOnly={!editable}
                 />
               </fieldset>
             )
@@ -89,26 +83,24 @@ export default function SourcesTable() {
   const data = useLoaderData<typeof loader>()
   const [searchParams] = useSearchParams()
   const editItemId = searchParams.get('edit')
-  const editItem = data.items.find((item) => item.id === editItemId)
+  const editItem = data.items.find((item) => item.source === editItemId)
   return (
     <>
       <table className="table w-full">
         <thead>
-          <th>ID</th>
-          <th>Listener ID</th>
-          <th>Name</th>
-          <th>Location</th>
+          {schema.map(({ name }) => (
+            <th key={name}>{name}</th>
+          ))}
           <th></th>
         </thead>
         <tbody>
-          {data.items.map(({ id, listener_id = '<none>', name = '<none>', location = '<none>' }) => (
-            <tr key={id}>
-              <td>{id}</td>
-              <td>{listener_id}</td>
-              <td>{name}</td>
-              <td>{location}</td>
+          {data.items.map((item: Item) => (
+            <tr key={item.source}>
+              {schema.map(({ name }) => (
+                <td key={name}>{item[name] ?? '<none>'}</td>
+              ))}
               <td>
-                <a className="btn btn-xs" href={`?edit=${id}`}>
+                <a className="btn btn-xs" href={`?edit=${item.source}`}>
                   Edit
                 </a>
               </td>
