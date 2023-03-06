@@ -41,10 +41,11 @@ const mock: Map<ValidTenantId, Map<string, Item>> = new Map()
 
 export default {
   read: async (tenantId: ValidTenantId) => {
-    const result = await client.getSources.query({ tenantId })
+    const result = await client.getConfigs.query({ tenantId })
     const stuff = mock.get(tenantId) ?? new Map()
+    console.log(result)
     mock.set(tenantId, stuff)
-    result.forEach((source) => stuff.set(source, { source, ...stuff.get(source) }))
+    result.forEach((item) => stuff.set(item.source, item))
     return Array.from(stuff.values())
   },
   write: (tenantId: ValidTenantId, input: Item) => {

@@ -40,6 +40,22 @@ export const archiveApiRouter = trpc.router({
         })
         .execute()
     }),
+  getConfigs: trpc.procedure
+    .input(
+      z.object({
+        tenantId: ZValidTenantId,
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const db = await ctx.dbForTenant(input.tenantId)
+      const result = await db
+        .selectFrom(['measurement as m'])
+        .leftJoin('config as c', 'm.source', 'c.source')
+        .select(['m.source', 'c.time', 'c.name', 'c.shortname', 'c.location'])
+        .orderBy('c.time', 'desc')
+        .execute()
+      return Array.from(result.values())
+    }),
   addConfig: trpc.procedure
     .input(
       z.object({
