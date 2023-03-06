@@ -1,5 +1,8 @@
 import { Links, LiveReload, Outlet } from '@remix-run/react'
-import type { LinksFunction } from '@remix-run/cloudflare'
+import type { LinksFunction, LoaderFunction } from '@remix-run/cloudflare'
+import { rootAuthLoader } from '@clerk/remix/ssr.server'
+import { ClerkApp, ClerkCatchBoundary } from '@clerk/remix'
+
 import tailwindCss from '~/styles/tailwind.css'
 import indexCss from '~/styles/index.css'
 import webappManifest from '~/app.webmanifest'
@@ -11,7 +14,9 @@ export const links: LinksFunction = () => [
   { rel: 'manifest', href: webappManifest },
 ]
 
-export default function App() {
+export const loader: LoaderFunction = (args) => rootAuthLoader(args)
+
+function App() {
   return (
     <html lang="en" className="">
       <head>
@@ -34,3 +39,7 @@ export default function App() {
     </html>
   )
 }
+
+export default ClerkApp(App)
+
+export const CatchBoundary = ClerkCatchBoundary()
