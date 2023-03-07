@@ -4,12 +4,12 @@ import { json } from '@remix-run/cloudflare'
 import { Form, useLoaderData, useSearchParams } from '@remix-run/react'
 import type { Item } from '~/utils/db.server'
 import { schema } from '~/utils/db.server'
-import db from '~/utils/db.server'
+import db, { ZItem } from '~/utils/db.server'
 
 import tailwindCss from '~/styles/tailwind.css'
 import indexCss from '~/styles/index.css'
 import webappManifest from '~/app.webmanifest'
-import { ZConfig, ZValidTenantId } from '@ruuvipuserrin/common-data'
+import { ZValidTenantId } from '@ruuvipuserrin/common-data'
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: indexCss },
@@ -26,7 +26,7 @@ export const action = async ({ request, params }: ActionArgs) => {
   const form = await request.formData()
   const data = Object.fromEntries(schema.map(({ name }) => [name, form.get(name)]))
   const tenantId = getValidTenantId(params)
-  await db.write(tenantId, ZConfig.parse(data))
+  await db.write(tenantId, ZItem.parse(data))
   return redirect(`/tenant/${tenantId}`)
 }
 
@@ -51,24 +51,24 @@ function SourceEditModal({ item }: { item: Partial<Item> }) {
           {schema.map(({ name, type, autofocus, editable, description, newValue }) => {
             const htmlId = `edit-item-${item.source}-${name}`
             return (
-              <fieldset key={name} className="mx-1">
-                <label className="label" htmlFor={htmlId}>
-                  <span className="label-text">{description}</span>
+              <div key={name} className="mx-1 my-2 form-control">
+                <label className="input-group" htmlFor={htmlId}>
+                  <span className="label-text w-48 min-w-max">{description}</span>
+                  <input
+                    className="input input-bordered w-48 min-w-max"
+                    name={name}
+                    id={htmlId}
+                    type={type}
+                    autoFocus={autofocus}
+                    defaultValue={newValue ? newValue() : item[name]}
+                    readOnly={!editable}
+                  />
                 </label>
-                <input
-                  className="input input-bordered"
-                  name={name}
-                  id={htmlId}
-                  type={type}
-                  autoFocus={autofocus}
-                  defaultValue={newValue?.() ?? item[name]}
-                  readOnly={!editable}
-                />
-              </fieldset>
+              </div>
             )
           })}
           <div className="modal-action">
-            <a className="btn" href="/">
+            <a className="btn" href="?index">
               Cancel
             </a>
             <input type="submit" className="btn" value="Submit" />

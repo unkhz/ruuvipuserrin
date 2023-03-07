@@ -1,14 +1,33 @@
+import { z } from 'zod'
 import { createClient } from '@ruuvipuserrin/common-archive-client'
 import { ZConfig } from '@ruuvipuserrin/common-data'
 import type { ValidTenantId } from '@ruuvipuserrin/common-data'
-import type { z } from 'zod'
 
-export type Item = z.infer<typeof ZConfig>
+function getDateAndTime(inputDatetime?: string) {
+  const date = inputDatetime ? new Date(inputDatetime) : new Date()
+  const yyyy = date.getFullYear()
+  const mm = `${date.getMonth() + 1}`.padStart(2, '0')
+  const dd = `${date.getDate()}`.padStart(2, '0')
+  return {
+    date: `${yyyy}-${mm}-${dd}`,
+    time: date.toLocaleTimeString(),
+  }
+}
+
+export const ZItem = z.object({
+  source: z.string(),
+  date: z.string(),
+  time: z.string(),
+  name: z.string(),
+  shortname: z.string(),
+  location: z.string(),
+})
+export type Item = z.infer<typeof ZItem>
 
 export type FormInput = {
   editable: boolean
   autofocus: boolean
-  type: 'text' | 'number'
+  type: 'text' | 'number' | 'date' | 'time'
   name: keyof Item
   description: string
   newValue?: () => string | number
@@ -25,10 +44,18 @@ export const schema: FormInput[] = [
   {
     editable: true,
     autofocus: false,
-    type: 'number',
+    type: 'date',
+    name: 'date',
+    description: 'Effective Date',
+    newValue: () => getDateAndTime().date,
+  },
+  {
+    editable: true,
+    autofocus: false,
+    type: 'time',
     name: 'time',
-    description: 'Effective Datetime',
-    newValue: () => Date.now() / 1000,
+    description: 'Effective Time',
+    newValue: () => getDateAndTime().time,
   },
   { editable: true, autofocus: true, type: 'text', name: 'name', description: 'Source Device Name' },
   { editable: true, autofocus: true, type: 'text', name: 'shortname', description: 'Source Device Short Name' },
@@ -39,12 +66,17 @@ const client = createClient()
 
 const api = {
   read: async (tenantId: ValidTenantId) => {
-    const items = await client.getCurrentConfigs.query({ tenantId })
-    // FIXME
-    return items as unknown as Partial<Item>[]
+    const configs = await client.getCurrentConfigs.query({ tenantId })
+    return configs.map((config) => {
+      const { time: datetime, ...items } = config
+      const { date, time } = getDateAndTime(datetime?.toString())
+      return { date, time, ...items }
+    })
   },
   write: async (tenantId: ValidTenantId, input: Item) => {
-    return client.addConfig.mutate({ tenantId, config: ZConfig.parse(input) })
+    const { date, time, ...data } = input
+    const datetime = new Date(`${date}T${time}`).getTime() / 1000
+    return client.addConfig.mutate({ tenantId, config: ZConfig.parse({ ...data, time: datetime }) })
   },
 }
 
