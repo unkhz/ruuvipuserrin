@@ -18,7 +18,12 @@ export interface ConfigTable {
   location: string
 }
 
+export interface SourceView {
+  source: string
+}
+
 export interface Database {
   measurement: MeasurementTable
   config: ConfigTable
+  source: SourceView
 }

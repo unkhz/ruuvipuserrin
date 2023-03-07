@@ -42,13 +42,13 @@ export const loader = async ({ params }: ActionArgs) => {
   })
 }
 
-function SourceEditModal({ item }: { item: Item }) {
+function SourceEditModal({ item }: { item: Partial<Item> }) {
   return (
     <div className="modal modal-open">
       <div className="modal-box">
         <Form className="form-control" method="post">
           <h3 className="text-lg mx-2">Edit source: {item.source}</h3>
-          {schema.map(({ name, type, autofocus, editable, description, defaultValue }) => {
+          {schema.map(({ name, type, autofocus, editable, description, newValue }) => {
             const htmlId = `edit-item-${item.source}-${name}`
             return (
               <fieldset key={name} className="mx-1">
@@ -61,7 +61,7 @@ function SourceEditModal({ item }: { item: Item }) {
                   id={htmlId}
                   type={type}
                   autoFocus={autofocus}
-                  defaultValue={item[name] ?? defaultValue}
+                  defaultValue={newValue?.() ?? item[name]}
                   readOnly={!editable}
                 />
               </fieldset>
@@ -83,7 +83,7 @@ export default function SourcesTable() {
   const data = useLoaderData<typeof loader>()
   const [searchParams] = useSearchParams()
   const editItemId = searchParams.get('edit')
-  const editItem = data.items.find((item) => item.source === editItemId)
+  const editItem = editItemId ? data.items.find((item) => item.source === editItemId) : null
   return (
     <>
       <table className="table w-full">
@@ -94,7 +94,7 @@ export default function SourcesTable() {
           <th></th>
         </thead>
         <tbody>
-          {data.items.map((item: Item) => (
+          {data.items.map((item) => (
             <tr key={item.source}>
               {schema.map(({ name }) => (
                 <td key={name}>{item[name] ?? '<none>'}</td>

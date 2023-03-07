@@ -11,7 +11,7 @@ export type FormInput = {
   type: 'text' | 'number'
   name: keyof Item
   description: string
-  defaultValue?: string | number
+  newValue?: () => string | number
 }
 
 export const schema: FormInput[] = [
@@ -28,7 +28,7 @@ export const schema: FormInput[] = [
     type: 'number',
     name: 'time',
     description: 'Effective Datetime',
-    defaultValue: Date.now(),
+    newValue: () => Date.now() / 1000,
   },
   { editable: true, autofocus: true, type: 'text', name: 'name', description: 'Source Device Name' },
   { editable: true, autofocus: true, type: 'text', name: 'shortname', description: 'Source Device Short Name' },
@@ -37,27 +37,15 @@ export const schema: FormInput[] = [
 
 const client = createClient()
 
-const mock: Map<ValidTenantId, Map<string, Item>> = new Map()
-
-export default {
+const api = {
   read: async (tenantId: ValidTenantId) => {
-    const result = await client.getSources.query({ tenantId })
-    const stuff = mock.get(tenantId) ?? new Map()
-    mock.set(tenantId, stuff)
-    result.forEach((source) => stuff.set(source, { source, ...stuff.get(source) }))
-    return Array.from(stuff.values())
+    const items = await client.getCurrentConfigs.query({ tenantId })
+    // FIXME
+    return items as unknown as Partial<Item>[]
   },
-  write: (tenantId: ValidTenantId, input: Item) => {
-    const stuff = mock.get(tenantId) ?? new Map()
-    const originalItem = stuff.get(input.source)
-    if (!originalItem) {
-      throw new Error(`Item with id ${input.source} not found`)
-    }
-    const modifiedItem: Item = {
-      ...originalItem,
-      ...ZConfig.parse(input),
-    }
-    stuff.set(input.source, modifiedItem)
-    mock.set(tenantId, stuff)
+  write: async (tenantId: ValidTenantId, input: Item) => {
+    return client.addConfig.mutate({ tenantId, config: ZConfig.parse(input) })
   },
 }
+
+export default api
