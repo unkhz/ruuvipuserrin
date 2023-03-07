@@ -11,11 +11,14 @@
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
     "node:build": "tsc --project tsconfig.build.json",
-    "migrate": "ts-node ./lib/migrate.ts"
+    "migrate-one-up": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job up",
+    "migrate-one-down": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job down",
+    "migrate-to-latest": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job latest"
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*",
-    "@types/pg": "^8.6.6"
+    "@types/pg": "^8.6.6",
+    "minimist": "^1.2.7"
   },
   "dependencies": {
     "kysely": "^0.23.4",
