@@ -8,11 +8,14 @@ const clients = new Map<ValidTenantId, Promise<ReturnType<typeof createClient>>>
 async function createClientAndRunMigrations(tenantId: ValidTenantId) {
   console.log('connecting new db client for tenant', tenantId)
   const db = createClient(tenantId)
-  await migrateToLatest(db).catch((err) => {
+  try {
+    await migrateToLatest(db)
+    return db
+  } catch (error) {
+    await db.destroy()
     clients.delete(tenantId)
-    throw err
-  })
-  return db
+    throw error
+  }
 }
 
 async function dbForTenant(tenantId: ValidTenantId) {
