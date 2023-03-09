@@ -7,6 +7,17 @@ import type { Context } from './context'
 
 export const trpc = initTRPC.context<Context>().create()
 
+let timeout: NodeJS.Timeout | undefined
+function debounce(cb: () => void) {
+  if (timeout) {
+    clearTimeout(timeout)
+  }
+  timeout = setTimeout(() => {
+    timeout = undefined
+    cb()
+  }, 1000)
+}
+
 export const archiveApiRouter = trpc.router({
   getSources: trpc.procedure
     .input(
@@ -29,7 +40,7 @@ export const archiveApiRouter = trpc.router({
     .mutation(async ({ ctx, input }) => {
       const { source, time, temperature, humidity, pressure } = input.measurement
       const db = await ctx.dbForTenant(input.tenantId)
-      return db
+      await db
         .insertInto('ruuvi_measurement')
         .values({
           time: sql`to_timestamp(${time})`,
@@ -39,6 +50,11 @@ export const archiveApiRouter = trpc.router({
           pressure,
         })
         .execute()
+      debounce(() =>
+        sql`
+          SELECT refresh_materialized_views();
+        `.execute(db),
+      )
     }),
   getCurrentConfigs: trpc.procedure
     .input(
@@ -81,6 +97,18 @@ export const archiveApiRouter = trpc.router({
           listener: '',
         })
         .execute()
+    }),
+  refreshDownsampledMeasurements: trpc.procedure
+    .input(
+      z.object({
+        tenantId: ZValidTenantId,
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const db = await ctx.dbForTenant(input.tenantId)
+      await sql`
+        SELECT refresh_materialized_views();
+      `.execute(db)
     }),
 })
 

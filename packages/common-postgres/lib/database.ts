@@ -9,6 +9,14 @@ export interface RuuviMeasurementTable {
   pressure: number
 }
 
+export interface DownsampledMeasurementView {
+  time: ColumnType<Date, string | undefined, never>
+  name: string
+  temperature: number
+  humidity: number
+  pressure: number
+}
+
 export interface RuuviHealthTable {
   time: ColumnType<Date, string | undefined, never>
   source: string
@@ -32,6 +40,8 @@ export interface SourceView {
 
 export interface Database {
   ruuvi_measurement: RuuviMeasurementTable
+  ruuvi_measurement_1m: DownsampledMeasurementView
+  ruuvi_measurement_1h: DownsampledMeasurementView
   ruuvi_health: RuuviHealthTable
   config: ConfigTable
   source: SourceView
