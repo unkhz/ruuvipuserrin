@@ -10,7 +10,7 @@
     "test-unit": "jest --no-cache --ci",
     "lint": "npm run prettier-check",
     "test": "npm run test-unit",
-    "node:build": "tsc --project tsconfig.build.json",
+    "node:build": "rm -rf ./dist && tsc --project tsconfig.build.json",
     "migrate-one-up": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job up",
     "migrate-one-down": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job down",
     "migrate-to-latest": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job latest"

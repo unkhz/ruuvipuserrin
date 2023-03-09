@@ -18,6 +18,15 @@ export async function up(db: Kysely<any>) {
     .addColumn('shortname', 'varchar(8)', (col) => col.notNull())
     .execute()
 
+  await db.schema
+    .createTable('measurement')
+    .addColumn('time', 'timestamptz', (col) => col.notNull())
+    .addColumn('source', 'text', (col) => col.notNull())
+    .addColumn('temperature', 'double precision', (col) => col.notNull())
+    .addColumn('humidity', 'double precision', (col) => col.notNull())
+    .addColumn('pressure', 'double precision', (col) => col.notNull())
+    .execute()
+
   // Make hypertable
   await sql`
     SELECT create_hypertable('measurement','time');

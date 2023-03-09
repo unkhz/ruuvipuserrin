@@ -16,7 +16,7 @@ export const archiveApiRouter = trpc.router({
     )
     .query(async ({ ctx, input }) => {
       const db = await ctx.dbForTenant(input.tenantId)
-      const result = await db.selectFrom('measurement').select('source').distinct().execute()
+      const result = await db.selectFrom('source').select('source').execute()
       return Array.from(result.values()).map((row) => row.source)
     }),
   addMeasurement: trpc.procedure
@@ -30,7 +30,7 @@ export const archiveApiRouter = trpc.router({
       const { source, time, temperature, humidity, pressure } = input.measurement
       const db = await ctx.dbForTenant(input.tenantId)
       return db
-        .insertInto('measurement')
+        .insertInto('ruuvi_measurement')
         .values({
           time: sql`to_timestamp(${time})`,
           source,
