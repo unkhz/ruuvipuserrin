@@ -30,6 +30,6 @@ export async function up(db: Kysely<any>) {
 
 export async function down(db: Kysely<any>): Promise<void> {
   await sql`
-    DROP FUNCTION refresh_materialized_views();
+    DROP FUNCTION IF EXISTS refresh_materialized_views;
   `.execute(db)
 }
