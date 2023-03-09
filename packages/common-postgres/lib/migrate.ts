@@ -20,15 +20,15 @@ export async function migrateToLatest(db: ReturnType<typeof createClient>) {
 
   results?.forEach((it) => {
     if (it.status === 'Success') {
-      console.log(`migration "${it.migrationName}" was executed successfully`)
+      console.log(`Migrated up to "${it.migrationName}"`)
     } else if (it.status === 'Error') {
-      console.error(`failed to execute migration "${it.migrationName}"`)
+      console.error(`Failed to migrate up to "${it.migrationName}"`)
     }
   })
 
   if (error) {
     console.error(error)
-    throw new Error('failed to migrate', { cause: error })
+    throw new Error('Failed to migrate', { cause: error })
   }
 }
 
@@ -37,15 +37,15 @@ export async function migrateOneDown(db: ReturnType<typeof createClient>) {
   const { error, results } = await migrator.migrateDown()
   results?.forEach((it) => {
     if (it.status === 'Success') {
-      console.log(`migration "${it.migrationName}" was executed successfully`)
+      console.log(`Migrated down from "${it.migrationName}"`)
     } else if (it.status === 'Error') {
-      console.error(`failed to execute migration "${it.migrationName}"`)
+      console.error(`Failed to migrate down from "${it.migrationName}"`)
     }
   })
 
   if (error) {
     console.error(error)
-    throw new Error('failed to migrate', { cause: error })
+    throw new Error('Failed to migrate', { cause: error })
   }
 }
 
@@ -54,14 +54,14 @@ export async function migrateOneUp(db: ReturnType<typeof createClient>) {
   const { error, results } = await migrator.migrateUp()
   results?.forEach((it) => {
     if (it.status === 'Success') {
-      console.log(`migration "${it.migrationName}" was executed successfully`)
+      console.log(`Migrated up to "${it.migrationName}"`)
     } else if (it.status === 'Error') {
-      console.error(`failed to execute migration "${it.migrationName}"`)
+      console.error(`Failed to migrate up to "${it.migrationName}"`)
     }
   })
 
   if (error) {
     console.error(error)
-    throw new Error('failed to migrate', { cause: error })
+    throw new Error('Failed to migrate', { cause: error })
   }
 }
