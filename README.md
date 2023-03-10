@@ -1,3 +1,5 @@
+![Image of Grafana dashboard showing temperature and humidity metrics](https://github.com/unkhz/ruuvipuserrin/blob/master/docs/example.png?raw=true)
+
 # Ruuvipuserrin
 
 This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), attempting to improve fault tolerance
