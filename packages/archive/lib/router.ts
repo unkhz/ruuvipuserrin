@@ -52,7 +52,7 @@ export const archiveApiRouter = trpc.router({
         .execute()
       debounce(() =>
         sql`
-          SELECT refresh_materialized_views();
+          SELECT refresh_measurement_aggregates();
         `.execute(db),
       )
     }),
@@ -107,7 +107,7 @@ export const archiveApiRouter = trpc.router({
     .mutation(async ({ ctx, input }) => {
       const db = await ctx.dbForTenant(input.tenantId)
       await sql`
-        SELECT refresh_materialized_views();
+        SELECT refresh_measurement_aggregates();
       `.execute(db)
     }),
 })
