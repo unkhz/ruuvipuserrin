@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@ruuvipuserrin/base-node": "*",
+    "@types/minimist": "^1.2.2",
     "@types/pg": "^8.6.6",
     "minimist": "^1.2.7"
   },

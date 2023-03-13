@@ -1,10 +1,21 @@
 FROM node:lts-slim as buildtime
 WORKDIR /app
 COPY package*.json nx.json /app/
-COPY packages /app/packages
+
+# Add any node packages
+COPY packages/archive/*.json /app/packages/archive/
+COPY packages/base-node/*.json /app/packages/base-node/
+COPY packages/common-data/*.json /app/packages/common-data/
+COPY packages/common-postgres/*.json /app/packages/common-postgres/
 
 # Install dev deps for buildtime
 RUN npm ci
+
+# Copy source code
+COPY packages/archive /app/packages/archive/
+COPY packages/base-node /app/packages/base-node/
+COPY packages/common-data /app/packages/common-data/
+COPY packages/common-postgres /app/packages/common-postgres/
 
 # Build any node packages
 RUN npx nx run-many --target=node:build --all
