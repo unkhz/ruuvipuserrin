@@ -1,4 +1,4 @@
-FROM node:lts-slim as buildtime
+FROM node:lts-alpine as buildtime
 WORKDIR /app
 COPY package*.json nx.json /app/
 
@@ -21,7 +21,7 @@ COPY packages/common-postgres /app/packages/common-postgres/
 RUN npx nx run-many --target=node:build --all
 
 # Clean slate for runtime
-FROM node:lts-slim as runtime
+FROM node:lts-alpine as runtime
 WORKDIR /app
 COPY --from=buildtime /app/package*.json /app/nx.json /app/
 COPY --from=buildtime /app/packages /app/packages
