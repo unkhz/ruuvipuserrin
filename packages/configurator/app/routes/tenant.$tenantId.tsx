@@ -52,8 +52,10 @@ function SourceEditModal({ item }: { item: Partial<Item> }) {
             const htmlId = `edit-item-${item.source}-${name}`
             return (
               <div key={name} className="mx-1 my-2 form-control">
+                <span className="label-text w-48 min-w-max sm:hidden">{description}</span>
+
                 <label className="input-group" htmlFor={htmlId}>
-                  <span className="label-text w-48 min-w-max">{description}</span>
+                  <span className="label-text hidden sm:flex">{description}</span>
                   <input
                     className="input input-bordered w-48 min-w-max"
                     name={name}
@@ -88,16 +90,20 @@ export default function SourcesTable() {
     <>
       <table className="table w-full">
         <thead>
-          {schema.map(({ name }) => (
-            <th key={name}>{name}</th>
+          {schema.map(({ name, breakpoint }) => (
+            <th key={name} className={breakpoint ? `hidden ${breakpoint}:table-cell` : ''}>
+              {name}
+            </th>
           ))}
           <th></th>
         </thead>
         <tbody>
           {data.items.map((item) => (
             <tr key={item.source}>
-              {schema.map(({ name }) => (
-                <td key={name}>{item[name] ?? '<none>'}</td>
+              {schema.map(({ name, breakpoint }) => (
+                <td key={name} className={breakpoint ? `hidden ${breakpoint}:table-cell` : ''}>
+                  {item[name] ?? '<none>'}
+                </td>
               ))}
               <td>
                 <a className="btn btn-xs" href={`?edit=${item.source}`}>

@@ -31,6 +31,7 @@ export type FormInput = {
   name: keyof Item
   description: string
   newValue?: () => string | number
+  breakpoint?: 'sm' | 'md' | 'lg' | 'xl'
 }
 
 export const schema: FormInput[] = [
@@ -48,6 +49,7 @@ export const schema: FormInput[] = [
     name: 'date',
     description: 'Effective Date',
     newValue: () => getDateAndTime().date,
+    breakpoint: 'md',
   },
   {
     editable: true,
@@ -56,10 +58,25 @@ export const schema: FormInput[] = [
     name: 'time',
     description: 'Effective Time',
     newValue: () => getDateAndTime().time,
+    breakpoint: 'md',
   },
   { editable: true, autofocus: true, type: 'text', name: 'name', description: 'Source Device Name' },
-  { editable: true, autofocus: true, type: 'text', name: 'shortname', description: 'Source Device Short Name' },
-  { editable: true, autofocus: false, type: 'text', name: 'location', description: 'Source Device Location' },
+  {
+    editable: true,
+    autofocus: true,
+    type: 'text',
+    name: 'shortname',
+    description: 'Source Device Short Name',
+    breakpoint: 'sm',
+  },
+  {
+    editable: true,
+    autofocus: false,
+    type: 'text',
+    name: 'location',
+    description: 'Source Device Location',
+    breakpoint: 'sm',
+  },
 ]
 
 const client = createClient()
