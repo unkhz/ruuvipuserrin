@@ -85,7 +85,7 @@ export const archiveApiRouter = trpc.router({
     .mutation(async ({ ctx, input }) => {
       const { source, time, name, shortname, location } = input.config
       const db = await ctx.dbForTenant(input.tenantId)
-      return db
+      await db
         .insertInto('config')
         .values({
           time: sql`to_timestamp(${time})`,
@@ -97,6 +97,15 @@ export const archiveApiRouter = trpc.router({
           listener: '',
         })
         .execute()
+      // Invalidate downsampled measurements
+      debounce(async () => {
+        await sql`
+          DELETE FROM ruuvi_measurement_1m WHERE time >= to_timestamp(${time});
+        `
+        await sql`
+          DELETE FROM ruuvi_measurement_1h WHERE time >= to_timestamp(${time});
+        `
+      })
     }),
   refreshDownsampledMeasurements: trpc.procedure
     .input(
