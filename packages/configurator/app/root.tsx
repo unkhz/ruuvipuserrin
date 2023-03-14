@@ -20,7 +20,7 @@ export default function App() {
         <title>Ruuvipuserrin configurator</title>
         <Links />
       </head>
-      <body>
+      <body className="min-h-screen">
         <main>
           <nav className="navbar w-full bg-zinc-100 dark:bg-zinc-900 px-2 py-4 text-4xl sm:text-5xl">Ruuvipuserrin</nav>
           <div className="flex justify-center sm:px-8 sm:py-16">

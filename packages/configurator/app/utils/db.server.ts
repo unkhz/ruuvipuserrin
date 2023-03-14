@@ -31,7 +31,7 @@ export type FormInput = {
   name: keyof Item
   description: string
   newValue?: () => string | number
-  breakpoint?: 'sm' | 'md' | 'lg' | 'xl'
+  cellClassName?: string
 }
 
 export const schema: FormInput[] = [
@@ -49,7 +49,7 @@ export const schema: FormInput[] = [
     name: 'date',
     description: 'Effective Date',
     newValue: () => getDateAndTime().date,
-    breakpoint: 'md',
+    cellClassName: 'hidden md:table-cell',
   },
   {
     editable: true,
@@ -58,7 +58,7 @@ export const schema: FormInput[] = [
     name: 'time',
     description: 'Effective Time',
     newValue: () => getDateAndTime().time,
-    breakpoint: 'md',
+    cellClassName: 'hidden md:table-cell',
   },
   { editable: true, autofocus: true, type: 'text', name: 'name', description: 'Source Device Name' },
   {
@@ -67,7 +67,7 @@ export const schema: FormInput[] = [
     type: 'text',
     name: 'shortname',
     description: 'Source Device Short Name',
-    breakpoint: 'sm',
+    cellClassName: 'hidden sm:table-cell',
   },
   {
     editable: true,
@@ -75,7 +75,7 @@ export const schema: FormInput[] = [
     type: 'text',
     name: 'location',
     description: 'Source Device Location',
-    breakpoint: 'sm',
+    cellClassName: 'hidden sm:table-cell',
   },
 ]
 

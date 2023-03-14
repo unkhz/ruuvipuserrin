@@ -90,8 +90,8 @@ export default function SourcesTable() {
     <>
       <table className="table w-full">
         <thead>
-          {schema.map(({ name, breakpoint }) => (
-            <th key={name} className={breakpoint ? `hidden ${breakpoint}:table-cell` : ''}>
+          {schema.map(({ name, cellClassName }) => (
+            <th key={name} className={cellClassName}>
               {name}
             </th>
           ))}
@@ -100,8 +100,8 @@ export default function SourcesTable() {
         <tbody>
           {data.items.map((item) => (
             <tr key={item.source}>
-              {schema.map(({ name, breakpoint }) => (
-                <td key={name} className={breakpoint ? `hidden ${breakpoint}:table-cell` : ''}>
+              {schema.map(({ name, cellClassName }) => (
+                <td key={name} className={cellClassName}>
                   {item[name] ?? '<none>'}
                 </td>
               ))}
