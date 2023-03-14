@@ -101,12 +101,10 @@ export const archiveApiRouter = trpc.router({
       debounce(async () => {
         await sql`
           DELETE FROM ruuvi_measurement_1m
-          WHERE source = ${source}
           AND time >= to_timestamp(${time});
         `
         await sql`
           DELETE FROM ruuvi_measurement_1h
-          WHERE source = ${source}
           AND time >= to_timestamp(${time});
         `
       })
