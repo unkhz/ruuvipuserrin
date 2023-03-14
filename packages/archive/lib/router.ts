@@ -70,7 +70,7 @@ export const archiveApiRouter = trpc.router({
           c.time, c.name, c.shortname, c.location
         FROM
           source as s
-        LEFT JOIN config AS c ON s.source = c.source AND c.time = (SELECT max(time) FROM config WHERE source = s.source);
+        LEFT JOIN config AS c ON s.source = c.s WHERE c.time = (SELECT max(time) FROM config WHERE source = s.source);
       `
       const result = await query.execute(db)
       return Array.from(result.rows)
@@ -100,12 +100,10 @@ export const archiveApiRouter = trpc.router({
       // Invalidate downsampled measurements
       debounce(async () => {
         await sql`
-          DELETE FROM ruuvi_measurement_1m
-          AND time >= to_timestamp(${time});
+          DELETE FROM ruuvi_measurement_1m WHERE time >= to_timestamp(${time});
         `
         await sql`
-          DELETE FROM ruuvi_measurement_1h
-          AND time >= to_timestamp(${time});
+          DELETE FROM ruuvi_measurement_1h WHERE time >= to_timestamp(${time});
         `
       })
     }),
