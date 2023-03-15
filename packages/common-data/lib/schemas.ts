@@ -12,6 +12,14 @@ export const ZMeasurement = z.object({
   pressure: z.number(),
 })
 
+export const ZHealthMeasurement = z.object({
+  source: z.string(),
+  time: z.number(),
+  tx_power: z.number(),
+  battery_potential: z.number(),
+  movement_counter: z.number(),
+})
+
 export const ZConfig = z.object({
   source: z.string().min(1, { message: 'Source Device ID is required' }),
   time: z.coerce.number(),

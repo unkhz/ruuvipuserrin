@@ -1,7 +1,7 @@
 import { initTRPC } from '@trpc/server'
 import z from 'zod'
 import { ConfigTable, SourceView, sql } from '@ruuvipuserrin/common-postgres'
-import { ZConfig, ZMeasurement, ZValidTenantId } from '@ruuvipuserrin/common-data'
+import { ZConfig, ZHealthMeasurement, ZMeasurement, ZValidTenantId } from '@ruuvipuserrin/common-data'
 
 import type { Context } from './context'
 
@@ -34,22 +34,37 @@ export const archiveApiRouter = trpc.router({
     .input(
       z.object({
         tenantId: ZValidTenantId,
-        measurement: ZMeasurement,
+        measurement: ZMeasurement.merge(ZHealthMeasurement),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { source, time, temperature, humidity, pressure } = input.measurement
+      const { source, time, temperature, humidity, pressure, tx_power, battery_potential, movement_counter } =
+        input.measurement
       const db = await ctx.dbForTenant(input.tenantId)
-      await db
-        .insertInto('ruuvi_measurement')
-        .values({
-          time: sql`to_timestamp(${time})`,
-          source,
-          temperature,
-          humidity,
-          pressure,
+      db.transaction()
+        .setIsolationLevel('read committed')
+        .execute(async (trx) => {
+          await trx
+            .insertInto('ruuvi_measurement')
+            .values({
+              time: sql`to_timestamp(${time})`,
+              source,
+              temperature,
+              humidity,
+              pressure,
+            })
+            .execute()
+          await trx
+            .insertInto('ruuvi_health')
+            .values({
+              time: sql`to_timestamp(${time})`,
+              source,
+              tx_power,
+              battery_potential,
+              movement_counter,
+            })
+            .execute()
         })
-        .execute()
       debounce(() =>
         sql`
           SELECT refresh_measurement_aggregates();
