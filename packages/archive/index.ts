@@ -16,6 +16,15 @@ app.use(
     createContext,
   }),
 )
+app.use('/health', (req, res) => {
+  res.set({
+    'Cache-Control': 'no-cache',
+    'Content-Type': 'text/plain',
+    'X-Health-Check': 'OK',
+  })
+  res.send('OK')
+  res.end()
+})
 
 const port = env.PORT ?? env.ARCHIVE_API_PORT ?? 8080
 app.listen(port, () => {

@@ -21,7 +21,7 @@ spec:
         - name: ruuvipuserrin-archive
           image: ghcr.io/unkhz/ruuvipuserrin-archive:latest
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           environment:
             - name: PG_HOST
               value: 'nope'
@@ -45,11 +45,11 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: 80
+              port: 8080
           livenessProbe:
             httpGet:
               path: /health
-              port: 80
+              port: 8080
             initialDelaySeconds: 30
             periodSeconds: 300
             timeoutSeconds: 15
@@ -69,7 +69,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1

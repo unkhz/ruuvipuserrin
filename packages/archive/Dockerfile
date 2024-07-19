@@ -2,6 +2,6 @@ FROM ghcr.io/unkhz/ruuvipuserrin-base-node
 
 WORKDIR /app
 
-EXPOSE 4000
+EXPOSE 8080
 
 CMD node packages/archive
