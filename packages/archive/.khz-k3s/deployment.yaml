@@ -22,19 +22,6 @@ spec:
           image: ghcr.io/unkhz/ruuvipuserrin-archive:latest
           ports:
             - containerPort: 8080
-          environment:
-            - name: PG_HOST
-              value: 'nope'
-            - name: PG_HOSTPORT
-              value: 'nope'
-            - name: PG_HOSTUSER
-              value: 'nope'
-            - name: PG_HOSTPASSWORD
-              value: 'nope'
-            - name: PG_HOSTDB
-              value: 'nope'
-            - name: PG_HOSTCERT
-              value: 'nope'
           resources:
             requests:
               memory: '32Mi'
@@ -60,8 +47,7 @@ metadata:
   name: ruuvipuserrin-archive-service
 
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: archive.ruuvipuserrin.khz.fi
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: 'false'
+    external-dns.alpha.kubernetes.io/hostname: ruuvipuserrin-archive.khz.fi
 
 spec:
   selector:
@@ -82,7 +68,7 @@ metadata:
     cert-manager.io/cluster-issuer: 'letsencrypt-prod'
 spec:
   rules:
-    - host: archive.ruuvipuserrin.khz.fi
+    - host: ruuvipuserrin-archive.khz.fi
       http:
         paths:
           - path: /
@@ -94,5 +80,5 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - archive.ruuvipuserrin.khz.fi
+        - ruuvipuserrin-archive.khz.fi
       secretName: ruuvipuserrin-archive-tls
