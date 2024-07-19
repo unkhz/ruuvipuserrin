@@ -1,4 +1,4 @@
-FROM gcr.io/ruuvipuserrin/base-node
+FROM ghcr.io/ruuvipuserrin/base-node
 
 WORKDIR /app
 
