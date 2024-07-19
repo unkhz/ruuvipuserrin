@@ -4,5 +4,5 @@ namespace: apps
 resources:
   - deployment.yaml
 images:
-  - name: ghcr.io/unkhz/ruuvipuserrin/archive
+  - name: ghcr.io/unkhz/ruuvipuserrin-archive
     newTag: latest

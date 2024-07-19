@@ -19,7 +19,7 @@ spec:
         - name: github-registry-secret
       containers:
         - name: ruuvipuserrin-archive
-          image: ghcr.io/unkhz/ruuvipuserrin/archive:latest
+          image: ghcr.io/unkhz/ruuvipuserrin-archive:latest
           ports:
             - containerPort: 80
           environment:

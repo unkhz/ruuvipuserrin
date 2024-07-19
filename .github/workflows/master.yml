@@ -51,7 +51,7 @@ jobs:
         args:
           - package: base-node
             context: .
-            image: ghcr.io/unkhz/ruuvipuserrin/base-node
+            image: ghcr.io/unkhz/ruuvipuserrin-base-node
             kustomization: ./packages/base-node/.khz-k3s/kustomization.yaml
 
     uses: unkhz/ruuvipuserrin/.github/workflows/build-package.yml@master
@@ -70,7 +70,7 @@ jobs:
         args:
           - package: archive
             context: ./packages/archive
-            image: ghcr.io/unkhz/ruuvipuserrin/archive
+            image: ghcr.io/unkhz/ruuvipuserrin-archive
             kustomization: ./packages/archive/.khz-k3s/kustomization.yaml
 
     uses: unkhz/ruuvipuserrin/.github/workflows/build-package.yml@master
