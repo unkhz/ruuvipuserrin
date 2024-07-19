@@ -1,12 +1,6 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
-
+name: Master
 on:
   push:
-    branches: ['master']
-  pull_request:
     branches: ['master']
 
 jobs:
@@ -81,24 +75,30 @@ jobs:
     if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
     needs: build-package-images
-
-    strategy:
-      matrix:
-        kustomization:
-          - ./packages/base-node/.khz-k3s/kustomization.yaml
-          - ./packages/archive/.khz-k3s/kustomization.yaml
+    permissions:
+      contents: write
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Install yq
         uses: mikefarah/yq@master
         with:
           cmd: yq --version
 
-      - name: Update image version tag
+      - name: Update version tags
         run: |
+          function update_version_tag() {
+            file=$1
+            yq e '.images[0].newTag = "${{ github.sha }}"' -i $file
+            git add $file
+          }
+
+          update_version_tag ./packages/base-node/.khz-k3s/kustomization.yaml
+          update_version_tag ./packages/archive/.khz-k3s/kustomization.yaml
+
           git config --global user.email "juhani.pelli@gmail.com"
           git config --global user.name "Juhani Pelli"
-          yq e '.images[0].newTag = "${{ github.sha }}"' -i ${{ matrix.kustomization }}
-          git add ${{ matrix.kustomization }}
           git commit -m "Deploy ${{ github.sha }} [skip ci]"
           git push origin ${{ github.event.repository.default_branch }}
