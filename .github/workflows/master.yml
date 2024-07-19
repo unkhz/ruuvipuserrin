@@ -45,6 +45,9 @@ jobs:
   build-base-images:
     if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
     needs: test
+    permissions:
+      contents: write
+      packages: write
 
     strategy:
       matrix:
@@ -54,7 +57,7 @@ jobs:
             image: ghcr.io/unkhz/ruuvipuserrin-base-node
             kustomization: ./packages/base-node/.khz-k3s/kustomization.yaml
 
-    uses: unkhz/ruuvipuserrin/.github/workflows/build-package.yml@master
+    uses: ./.github/workflows/build-package.yml
     with:
       package: ${{ matrix.args.package }}
       context: ${{ matrix.args.context }}
@@ -64,6 +67,9 @@ jobs:
   build-package-images:
     if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
     needs: build-base-images
+    permissions:
+      contents: write
+      packages: write
 
     strategy:
       matrix:
@@ -73,7 +79,7 @@ jobs:
             image: ghcr.io/unkhz/ruuvipuserrin-archive
             kustomization: ./packages/archive/.khz-k3s/kustomization.yaml
 
-    uses: unkhz/ruuvipuserrin/.github/workflows/build-package.yml@master
+    uses: ./.github/workflows/build-package.yml
     with:
       package: ${{ matrix.args.package }}
       context: ${{ matrix.args.context }}
