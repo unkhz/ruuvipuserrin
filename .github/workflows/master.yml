@@ -29,7 +29,6 @@ jobs:
           - infra-redis
           - listener
           - publisher
-        target: ['lint', 'test']
         node-version: [20]
 
     steps:
@@ -40,7 +39,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm install
-      - run: npx nx run-many --target=${{ matrix.target }} --projects=${{ matrix.package }} --output-style=stream
+      - run: npx nx run-many --target=lint,test --projects=${{ matrix.package }} --output-style=stream
 
   build-base-images:
     if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
