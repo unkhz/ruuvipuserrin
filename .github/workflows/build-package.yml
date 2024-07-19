@@ -3,43 +3,19 @@ name: Build package
 on:
   workflow_call:
     inputs:
-      package:
-        required: true
-        type: string
       context:
         required: true
         type: string
       image:
         required: true
         type: string
-      kustomization:
-        required: true
-        type: string
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    continue-on-error: true
-
-    strategy:
-      matrix:
-        node-version: [20]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Setup node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Run npm install
-        run: npm install
-
-      - name: Run node build
-        run: npx nx run-many --projects=${{ inputs.package }} --target=$node:build --output-style=stream
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -57,16 +33,3 @@ jobs:
           context: ${{ inputs.context }}
           push: true
           tags: ${{ inputs.image }}:latest, ${{ inputs.image }}:${{ github.sha }}
-
-      - uses: mikefarah/yq@master
-        with:
-          cmd: yq --version
-
-      - name: Update image version tag
-        run: |
-          git config --global user.email "juhani.pelli@gmail.com"
-          git config --global user.name "Juhani Pelli"
-          yq e '.images[0].newTag = "${{ github.sha }}"' -i ${{ inputs.kustomization }}
-          git add ${{ inputs.kustomization }}
-          git commit -m "Deploy ${{ github.sha }} [skip ci]"
-          git push origin ${{ github.event.repository.default_branch }}

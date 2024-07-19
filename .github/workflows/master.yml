@@ -51,17 +51,13 @@ jobs:
     strategy:
       matrix:
         args:
-          - package: base-node
-            context: .
+          - context: .
             image: ghcr.io/unkhz/ruuvipuserrin-base-node
-            kustomization: ./packages/base-node/.khz-k3s/kustomization.yaml
 
     uses: ./.github/workflows/build-package.yml
     with:
-      package: ${{ matrix.args.package }}
       context: ${{ matrix.args.context }}
       image: ${{ matrix.args.image }}
-      kustomization: ${{ matrix.args.kustomization }}
 
   build-package-images:
     if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
@@ -73,14 +69,36 @@ jobs:
     strategy:
       matrix:
         args:
-          - package: archive
-            context: ./packages/archive
+          - context: ./packages/archive
             image: ghcr.io/unkhz/ruuvipuserrin-archive
-            kustomization: ./packages/archive/.khz-k3s/kustomization.yaml
 
     uses: ./.github/workflows/build-package.yml
     with:
-      package: ${{ matrix.args.package }}
       context: ${{ matrix.args.context }}
       image: ${{ matrix.args.image }}
-      kustomization: ${{ matrix.args.kustomization }}
+
+  update-version-tags:
+    if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    needs: build-package-images
+
+    strategy:
+      matrix:
+        kustomization:
+          - ./packages/base-node/.khz-k3s/kustomization.yaml
+          - ./packages/archive/.khz-k3s/kustomization.yaml
+
+    steps:
+      - name: Install yq
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq --version
+
+      - name: Update image version tag
+        run: |
+          git config --global user.email "juhani.pelli@gmail.com"
+          git config --global user.name "Juhani Pelli"
+          yq e '.images[0].newTag = "${{ github.sha }}"' -i ${{ matrix.kustomization }}
+          git add ${{ matrix.kustomization }}
+          git commit -m "Deploy ${{ github.sha }} [skip ci]"
+          git push origin ${{ github.event.repository.default_branch }}
