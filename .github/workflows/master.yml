@@ -17,20 +17,18 @@ jobs:
     strategy:
       matrix:
         package:
-          [
-            'archive',
-            'base-node',
-            'common-archive-client',
-            'common-data',
-            'common-postgres',
-            'configurator',
-            'gatherer-http',
-            'gatherer-stdin',
-            'infra-postgres',
-            'infra-redis',
-            'listener',
-            'publisher',
-          ]
+          - archive
+          - base-node
+          - common-archive-client
+          - common-data
+          - common-postgres
+          - configurator
+          - gatherer-http
+          - gatherer-stdin
+          - infra-postgres
+          - infra-redis
+          - listener
+          - publisher
         target: ['lint', 'test']
         node-version: [20]
 
@@ -52,8 +50,16 @@ jobs:
 
     strategy:
       matrix:
-        package: ['base-node', 'archive']
         node-version: [20]
+        package:
+          - name: base-node
+            context: .
+            image: ghcr.io/unkhz/ruuvipuserrin/base-node
+            kustomization: ./packages/base-node/.khz-k3s/kustomization.yaml
+          - name: archive
+            context: ./packages/archive
+            image: ghcr.io/unkhz/ruuvipuserrin/archive
+            kustomization: ./packages/archive/.khz-k3s/kustomization.yaml
 
     steps:
       - name: Checkout repository
@@ -84,9 +90,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./packages/${{ matrix.package }}
+          context: ${{ matrix.package.context }}
           push: true
-          tags: ghcr.io/${{ github.repository }}/${{ matrix.package}}:latest, ghcr.io/${{ github.repository }}/${{ matrix.package}}:${{ github.sha }}
+          tags: ${{ matrix.package.image }}:latest, ${{ matrix.package.image }}:${{ github.sha }}
 
       - uses: mikefarah/yq@master
         with:
@@ -96,7 +102,7 @@ jobs:
         run: |
           git config --global user.email "juhani.pelli@gmail.com"
           git config --global user.name "Juhani Pelli"
-          yq e '.images[0].newTag = "${{ github.sha }}"' -i packages/${{ matrix.package }}/.khz-k3s/kustomization.yaml
-          git add packages/${{ matrix.package }}/.khz-k3s/kustomization.yaml
+          yq e '.images[0].newTag = "${{ github.sha }}"' -i ${{ matrix.package.kustomization }}
+          git add ${{ matrix.package.kustomization }}
           git commit -m "Deploy ${{ github.sha }} [skip ci]"
           git push origin ${{ github.event.repository.default_branch }}
