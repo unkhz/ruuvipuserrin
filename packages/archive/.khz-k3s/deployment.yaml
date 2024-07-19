@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ruuvipuserrin-archive
+
+  labels:
+    app: ruuvipuserrin-archive
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ruuvipuserrin-archive
+  template:
+    metadata:
+      labels:
+        app: ruuvipuserrin-archive
+    spec:
+      imagePullSecrets:
+        - name: github-registry-secret
+      containers:
+        - name: ruuvipuserrin-archive
+          image: ghcr.io/unkhz/ruuvipuserrin/archive:latest
+          ports:
+            - containerPort: 80
+          environment:
+            - name: PG_HOST
+              value: 'nope'
+            - name: PG_HOSTPORT
+              value: 'nope'
+            - name: PG_HOSTUSER
+              value: 'nope'
+            - name: PG_HOSTPASSWORD
+              value: 'nope'
+            - name: PG_HOSTDB
+              value: 'nope'
+            - name: PG_HOSTCERT
+              value: 'nope'
+          resources:
+            requests:
+              memory: '32Mi'
+              cpu: '50m'
+            limits:
+              memory: '256Mi'
+              cpu: '200m'
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 300
+            timeoutSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ruuvipuserrin-archive-service
+
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: archive.ruuvipuserrin.khz.fi
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: 'false'
+
+spec:
+  selector:
+    app: ruuvipuserrin-archive
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ruuvipuserrin-archive-ingress
+
+  annotations:
+    kubernetes.io/ingress.class: 'traefik'
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+spec:
+  rules:
+    - host: archive.ruuvipuserrin.khz.fi
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ruuvipuserrin-archive-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - archive.ruuvipuserrin.khz.fi
+      secretName: ruuvipuserrin-archive-tls

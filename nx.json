@@ -26,15 +26,6 @@
     },
     "start": {
       "dependsOn": ["node:build"]
-    },
-    "docker:build": {
-      "dependsOn": ["^docker:build"]
-    },
-    "docker:run": {
-      "dependsOn": ["docker:build"]
-    },
-    "gcloud:build": {
-      "dependsOn": ["^gcloud:build"]
     }
   }
 }

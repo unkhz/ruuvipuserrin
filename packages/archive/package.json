@@ -13,12 +13,8 @@
     "node:build": "tsc --project tsconfig.build.json",
     "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' index.ts",
     "start": "node dist/index.js",
-    "docker:build": "docker build . --tag=ruuvipuserrin/archive",
     "docker:run": "docker run --name=ruuvipuserrin-archive --env-file=../../.env.local --rm -p 4000:4000 ruuvipuserrin/archive",
-    "docker:stop": "docker stop ruuvipuserrin-archive",
-    "gcloud:build": "gcloud builds submit --tag gcr.io/ruuvipuserrin/archive",
-    "gcloud:deploy": "gcloud run deploy archive --image gcr.io/ruuvipuserrin/archive --update-secrets=PG_HOST=PG_HOST:latest,PG_PORT=PG_PORT:latest,PG_DB=PG_DB:latest,PG_USER=PG_USER:latest,PG_PASSWORD=PG_PASSWORD:latest,PG_CERT=PG_CERT:latest --service-account=archive-identity --no-allow-unauthenticated",
-    "gcloud:update-secrets": "./update-secrets.sh"
+    "docker:stop": "docker stop ruuvipuserrin-archive"
   },
   "devDependencies": {
     "@types/express": "^4.17.17"

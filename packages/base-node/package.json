@@ -1,10 +1,6 @@
 {
   "name": "@ruuvipuserrin/base-node",
   "version": "0.0.0",
-  "scripts": {
-    "docker:build": "docker build ../.. --tag gcr.io/ruuvipuserrin/base-node",
-    "gcloud:build": "cd ../..; gcloud builds submit --tag gcr.io/ruuvipuserrin/base-node"
-  },
   "devDependencies": {
     "@types/jest": "^29.4.0",
     "@types/node": "^18.11.18",
