@@ -14,7 +14,6 @@ This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), at
 Following shiny tools are used
 
 - [Cloudflare workers](https://workers.cloudflare.com/) for serverless functions and apps
-- [Google Cloud Run](https://cloud.google.com/run) for apps that require nodejs apis
 - [Redis Streams](https://redis.io/docs/data-types/streams/) for durable processing of measurements
 - [TimescaleDb](https://www.timescale.com/) for SQL based long term storage of time series data
 - [Nx (package based)](https://nx.dev) for monorepo organization and task running
@@ -48,6 +47,7 @@ npm run setup
 ### Running
 
 Run gateway functionality in gateway box
+
 ```
 npm run start-gateway
 ```
@@ -62,8 +62,8 @@ npm run start-gateway
 | Listener  | Rust app / Ruuvi Station      | Extract          | captures measurements, forwards to gateway box                                                                |
 | Gatherer  | Typescript app w/ Bun runtime | Staging          | receives data from a different network, stores intermediate snapshots of measurement                          |
 | Queue     | Redis streams                 | Staging          | holds measurements, allows quantizing the time dimension of measurements                                      |
-| Publisher | Typescript app w/ Bun runtime | Transform / Load | transforms intermediate data into final format, pushes final data forward towards Archive                      |
-| Archive   | tRPC API for TimescaleDb      | Load          | stores data in final format, provides to consumers like Grafana, Configurator                                  |
+| Publisher | Typescript app w/ Bun runtime | Transform / Load | transforms intermediate data into final format, pushes final data forward towards Archive                     |
+| Archive   | tRPC API for TimescaleDb      | Load             | stores data in final format, provides to consumers like Grafana, Configurator                                 |
 
 #### Network topology diagram (example setup)
 
