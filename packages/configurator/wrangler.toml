@@ -3,13 +3,11 @@ name = "ruuvipuserrin-configurator"
 workers_dev = true
 main = "./build/index.js"
 # https://developers.cloudflare.com/workers/platform/compatibility-dates
-compatibility_date = "2022-04-05"
+compatibility_date = "2022-07-19"
+upload_source_maps = true
 
 [site]
-  bucket = "./public"
+bucket = "./public"
 
 [build]
-  command = "npx nx build"
-
-[miniflare]
-env_path = "../../.env.local"
+command = "npx nx build"

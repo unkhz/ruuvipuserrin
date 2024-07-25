@@ -2,41 +2,14 @@ import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
 import type { ArchiveApiRouter } from '@ruuvipuserrin/archive'
 import { getEnv } from './env'
 
-// TODO: consider storing in KV in case of cloudflare worker client
 const cache: Map<string, unknown> = new Map()
 
-async function fetchAuthHeaders() {
+export async function fetchAuthHeaders() {
   const env = getEnv()
-  if (!env.ARCHIVE_CLIENT_GCLOUD_CREDENTIALS) {
-    return {}
+  return {
+    'CF-Access-Client-Id': env.ARCHIVE_API_CLIENT_ID,
+    'CF-Access-Client-Secret': env.ARCHIVE_API_CLIENT_SECRET,
   }
-  try {
-    const { getAccessToken } = await import('web-auth-library/google')
-    const options = {
-      credentials: env.ARCHIVE_CLIENT_GCLOUD_CREDENTIALS,
-      scope: env.ARCHIVE_CLIENT_GCLOUD_SCOPE,
-      cache,
-    }
-    const accessToken = await getAccessToken(options)
-
-    return {
-      Authorization: `Bearer ${accessToken}`,
-    }
-  } catch (err) {
-    console.error(err, (err as any).response)
-    throw err
-  }
-}
-
-let getAuthHeadersPromise: Promise<{ Authorization?: string }> | undefined
-
-export async function getAuthHeaders() {
-  if (!getAuthHeadersPromise) {
-    getAuthHeadersPromise = fetchAuthHeaders().finally(() => {
-      getAuthHeadersPromise = undefined
-    })
-  }
-  return getAuthHeadersPromise
 }
 
 export function createClient() {
@@ -50,9 +23,7 @@ export function createClient() {
     links: [
       httpBatchLink({
         url,
-        headers: async () => ({
-          ...(await getAuthHeaders()),
-        }),
+        headers: async () => fetchAuthHeaders(),
       }),
     ],
   })
