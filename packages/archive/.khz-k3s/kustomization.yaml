@@ -5,4 +5,4 @@ resources:
   - deployment.yaml
 images:
   - name: ghcr.io/unkhz/ruuvipuserrin-archive
-    newTag: 35bdcc19535e9b9ceb94f02def6c84078071d1dd
+    newTag: 43daf9b541a349dcbdf77da416ac70751278b82d
