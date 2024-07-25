@@ -12,7 +12,7 @@ function getConfig(tenantId: string): PoolConfig {
     port: env.PG_PORT,
     user: env.PG_USER,
     password: env.PG_PASSWORD,
-    database: `${env.PG_DB}-${tenantId}`,
+    database: `${env.PG_DB}_${tenantId}`,
     ssl: {
       requestCert: false,
       rejectUnauthorized: false,
