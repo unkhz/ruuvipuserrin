@@ -13,7 +13,6 @@ This is a rebuild of [unkhz/ruuvitaulu](https://github.com/unkhz/ruuvitaulu), at
 
 Following shiny tools are used
 
-- [Cloudflare workers](https://workers.cloudflare.com/) for serverless functions and apps
 - [Redis Streams](https://redis.io/docs/data-types/streams/) for durable processing of measurements
 - [TimescaleDb](https://www.timescale.com/) for SQL based long term storage of time series data
 - [Nx (package based)](https://nx.dev) for monorepo organization and task running
