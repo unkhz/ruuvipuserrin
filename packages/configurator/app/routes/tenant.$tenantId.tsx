@@ -23,7 +23,12 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   const form = await request.formData()
   const data = Object.fromEntries(schema.map(({ name }) => [name, form.get(name)]))
   const tenantId = getValidTenantId(params)
-  await db.write(tenantId, ZItem.parse(data))
+  try {
+    await db.write(tenantId, ZItem.parse(data))
+  } catch (err) {
+    console.error('write error', err)
+  }
+
   return redirect(`/tenant/${tenantId}`)
 }
 
@@ -34,9 +39,19 @@ export const loader = async ({ params }: ActionFunctionArgs) => {
     return redirect('/tenant/dev', { status: 302 })
   }
 
-  return json({
-    items: await db.read(getValidTenantId(params)),
-  })
+  try {
+    const items = await db.read(getValidTenantId(params))
+    return json({
+      items,
+      error: null,
+    })
+  } catch (err) {
+    console.error('read error', err)
+    return json({
+      items: [],
+      error: err,
+    })
+  }
 }
 
 function SourceEditModal({ item }: { item: Partial<Item> }) {
@@ -81,8 +96,9 @@ function SourceEditModal({ item }: { item: Partial<Item> }) {
 export default function SourcesTable() {
   const data = useLoaderData<typeof loader>()
   const [searchParams] = useSearchParams()
+  const items = data.items.filter((item) => typeof item === 'object' && item !== null)
   const editItemId = searchParams.get('edit')
-  const editItem = editItemId ? data.items.find((item) => item.source === editItemId) : null
+  const editItem = editItemId ? items.find((item) => item.source === editItemId) : null
   return (
     <>
       <table className="table w-full">
@@ -95,7 +111,7 @@ export default function SourcesTable() {
           <th></th>
         </thead>
         <tbody>
-          {data.items.map((item) => (
+          {items.map((item) => (
             <tr key={item.source}>
               {schema.map(({ name, cellClassName }) => (
                 <td key={name} className={cellClassName}>
