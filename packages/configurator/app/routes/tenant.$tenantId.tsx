@@ -1,8 +1,8 @@
 import type { ActionFunctionArgs, LinksFunction } from '@remix-run/node'
 import { redirect, json } from '@remix-run/node'
 import { Form, useLoaderData, useSearchParams } from '@remix-run/react'
-import type { Item } from '~/utils/db.server'
-import db, { schema, ZItem } from '~/utils/db.server'
+import { schema, ZItem, Item } from '~/utils/schema'
+import db from '~/utils/db.server'
 
 import webappManifest from '~/app.webmanifest'
 import { ZValidTenantId } from '@ruuvipuserrin/common-data'
