@@ -1,4 +1,4 @@
-import { Links, LiveReload, Outlet, Scripts } from '@remix-run/react'
+import { Links, Outlet, Scripts } from '@remix-run/react'
 import type { LinksFunction } from '@remix-run/cloudflare'
 import tailwindCss from '~/styles/tailwind.css'
 import indexCss from '~/styles/index.css'
@@ -29,7 +29,6 @@ export default function App() {
             </div>
           </div>
         </main>
-        <LiveReload />
       </body>
     </html>
   )
@@ -56,7 +55,6 @@ export function ErrorBoundary({ error }: { error: unknown }) {
           </div>
         </main>
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   )

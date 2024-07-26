@@ -1,10 +1,8 @@
-import type { ActionArgs, LinksFunction } from '@remix-run/cloudflare'
-import { redirect } from '@remix-run/cloudflare'
-import { json } from '@remix-run/cloudflare'
+import type { ActionFunctionArgs, LinksFunction } from '@remix-run/cloudflare'
+import { redirect, json } from '@remix-run/cloudflare'
 import { Form, useLoaderData, useSearchParams } from '@remix-run/react'
 import type { Item } from '~/utils/db.server'
-import { schema } from '~/utils/db.server'
-import db, { ZItem } from '~/utils/db.server'
+import db, { schema, ZItem } from '~/utils/db.server'
 
 import tailwindCss from '~/styles/tailwind.css'
 import indexCss from '~/styles/index.css'
@@ -18,11 +16,11 @@ export const links: LinksFunction = () => [
   { rel: 'manifest', href: webappManifest },
 ]
 
-function getValidTenantId(params: ActionArgs['params']) {
+function getValidTenantId(params: ActionFunctionArgs['params']) {
   return ZValidTenantId.parse(params.tenantId)
 }
 
-export const action = async ({ request, params }: ActionArgs) => {
+export const action = async ({ request, params }: ActionFunctionArgs) => {
   const form = await request.formData()
   const data = Object.fromEntries(schema.map(({ name }) => [name, form.get(name)]))
   const tenantId = getValidTenantId(params)
@@ -30,7 +28,7 @@ export const action = async ({ request, params }: ActionArgs) => {
   return redirect(`/tenant/${tenantId}`)
 }
 
-export const loader = async ({ params }: ActionArgs) => {
+export const loader = async ({ params }: ActionFunctionArgs) => {
   try {
     getValidTenantId(params)
   } catch (err) {
