@@ -3,13 +3,15 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "node:build": "remix vite:build",
     "dev": "remix vite:dev"
   },
+  "type": "module",
   "dependencies": {
     "@ruuvipuserrin/common-archive-client": "*",
     "@remix-run/node": "^2.10.3",
     "@remix-run/react": "^2.10.3",
+    "@remix-run/serve": "^2.10.3",
     "cross-env": "^7.0.3",
     "daisyui": "^2.50.2",
     "react": "^18.2.0",

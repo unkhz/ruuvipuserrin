@@ -65,6 +65,8 @@ jobs:
         args:
           - context: ./packages/archive
             image: ghcr.io/unkhz/ruuvipuserrin-archive
+          - context: ./packages/configurator
+            image: ghcr.io/unkhz/ruuvipuserrin-configurator
 
     uses: ./.github/workflows/build-package.yml
     with:
@@ -97,6 +99,7 @@ jobs:
 
           update_version_tag ./packages/base-node/.khz-k3s/kustomization.yaml
           update_version_tag ./packages/archive/.khz-k3s/kustomization.yaml
+          update_version_tag ./packages/configurator/.khz-k3s/kustomization.yaml
 
           git config --global user.email "juhani.pelli@gmail.com"
           git config --global user.name "Juhani Pelli"

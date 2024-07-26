@@ -11,9 +11,5 @@ export default defineConfig({
       '~': path.resolve(__dirname, './app'),
     },
   },
-  plugins: [
-    remix({
-      ignoredRouteFiles: ['**/.*'],
-    }),
-  ],
+  plugins: [remix()],
 })

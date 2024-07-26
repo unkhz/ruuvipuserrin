@@ -1,5 +1,5 @@
 import { Links, Outlet, Scripts } from '@remix-run/react'
-import type { LinksFunction } from '@remix-run/cloudflare'
+import type { LinksFunction } from '@remix-run/node'
 import webappManifest from '~/app.webmanifest'
 
 import '~/styles/tailwind.css'

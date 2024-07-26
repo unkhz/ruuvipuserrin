@@ -4,20 +4,10 @@
     "types": ["@remix-run/node", "vite/client"],
     "skipLibCheck": true,
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "paths": {
       "~/*": ["./app/*"]
     },
-    "baseUrl": ".",
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
-    "strict": true,
-    "target": "ES2019",
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "noEmit": true,
-    "resolveJsonModule": true
+    "jsx": "react-jsx"
   }
 }

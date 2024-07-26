@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ruuvipuserrin-configurator
+
+  labels:
+    app: ruuvipuserrin-configurator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ruuvipuserrin-configurator
+  template:
+    metadata:
+      labels:
+        app: ruuvipuserrin-configurator
+    spec:
+      imagePullSecrets:
+        - name: github-registry-secret
+      containers:
+        - name: ruuvipuserrin-configurator
+          image: ghcr.io/unkhz/ruuvipuserrin-configurator:latest
+          env:
+            - name: ARCHIVE_API_HOST
+              value: ruuvipuserrin-archive-service
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: '32Mi'
+              cpu: '50m'
+            limits:
+              memory: '256Mi'
+              cpu: '200m'
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 300
+            timeoutSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ruuvipuserrin-configurator-service
+
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: ruuvipuserrin.khz.fi
+
+spec:
+  selector:
+    app: ruuvipuserrin-configurator
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ruuvipuserrin-configurator-ingress
+
+  annotations:
+    kubernetes.io/ingress.class: 'traefik'
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+spec:
+  rules:
+    - host: ruuvipuserrin.khz.fi
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ruuvipuserrin-configurator-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - ruuvipuserrin.khz.fi
+      secretName: ruuvipuserrin-tls

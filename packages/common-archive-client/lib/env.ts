@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { base64 } from 'rfc4648'
 
 const ZEnv = z.object({
   ARCHIVE_API_SSL: z.preprocess((value) => {

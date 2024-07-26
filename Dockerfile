@@ -4,7 +4,9 @@ COPY package*.json nx.json /app/
 
 # Add any node packages
 COPY packages/archive/*.json /app/packages/archive/
+COPY packages/configurator/*.json /app/packages/configurator/
 COPY packages/base-node/*.json /app/packages/base-node/
+COPY packages/common-archive-client/*.json /app/packages/common-archive-client/
 COPY packages/common-data/*.json /app/packages/common-data/
 COPY packages/common-postgres/*.json /app/packages/common-postgres/
 
@@ -13,7 +15,9 @@ RUN npm ci
 
 # Copy source code
 COPY packages/archive /app/packages/archive/
+COPY packages/configurator /app/packages/configurator/
 COPY packages/base-node /app/packages/base-node/
+COPY packages/common-archive-client /app/packages/common-archive-client/
 COPY packages/common-data /app/packages/common-data/
 COPY packages/common-postgres /app/packages/common-postgres/
 
