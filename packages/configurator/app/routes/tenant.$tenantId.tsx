@@ -4,14 +4,13 @@ import { Form, useLoaderData, useSearchParams } from '@remix-run/react'
 import type { Item } from '~/utils/db.server'
 import db, { schema, ZItem } from '~/utils/db.server'
 
-import tailwindCss from '~/styles/tailwind.css'
-import indexCss from '~/styles/index.css'
 import webappManifest from '~/app.webmanifest'
 import { ZValidTenantId } from '@ruuvipuserrin/common-data'
 
+import '~/styles/tailwind.css'
+import '~/styles/index.css'
+
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: indexCss },
-  { rel: 'stylesheet', href: tailwindCss },
   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Advent+Pro|Barlow' },
   { rel: 'manifest', href: webappManifest },
 ]

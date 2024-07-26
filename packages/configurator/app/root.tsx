@@ -1,12 +1,11 @@
 import { Links, Outlet, Scripts } from '@remix-run/react'
 import type { LinksFunction } from '@remix-run/cloudflare'
-import tailwindCss from '~/styles/tailwind.css'
-import indexCss from '~/styles/index.css'
 import webappManifest from '~/app.webmanifest'
 
+import '~/styles/tailwind.css'
+import '~/styles/index.css'
+
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: indexCss },
-  { rel: 'stylesheet', href: tailwindCss },
   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Advent+Pro|Barlow' },
   { rel: 'manifest', href: webappManifest },
 ]
