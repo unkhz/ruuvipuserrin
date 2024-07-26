@@ -43,3 +43,5 @@ node_modules.bun
 
 # Nx
 .env.local
+
+*-secret.yaml

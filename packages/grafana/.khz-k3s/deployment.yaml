@@ -19,10 +19,15 @@ spec:
           ports:
             - containerPort: 3000
           env:
+            - name: GF_SECURITY_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: ruuvipuserrin-grafana-credentials
+                  key: username
             - name: GF_SECURITY_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: archive.ruuvipuserrin.credentials.postgresql.acid.zalan.do
+                  name: ruuvipuserrin-grafana-credentials
                   key: password
             - name: PG_USER
               valueFrom:
