@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources
+  namespace: apps
+data:
+  datasources.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: rupu
+        type: postgres
+        uid: postgresql_ruuvi_prod
+        url: ruuvipuserrin
+        user: ${PG_USER}
+        secureJsonData:
+          password: ${PG_PASSWORD}
+        jsonData:
+          sslmode: "require"
+          database: ruuvi_prod
+          port: "5432"
+          timescaledb: true
+          postgresVersion: 1000
