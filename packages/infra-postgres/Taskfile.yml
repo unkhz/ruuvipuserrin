@@ -1,0 +1,14 @@
+# packages/infra-postgres/Taskfile.yml
+version: '3'
+
+tasks:
+  dev:
+    desc: Start PostgreSQL with TimescaleDB in a Docker container
+    cmds:
+      - >
+        docker run --rm 
+        --name=ruuvipuserrin-pg 
+        -p 5432:5432 
+        -e POSTGRES_PASSWORD={{.PG_PASSWORD}} 
+        -e POSTGRES_USER={{.PG_USER}} 
+        timescale/timescaledb:latest-pg14

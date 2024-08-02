@@ -1,0 +1,21 @@
+version: '3'
+
+tasks:
+  setcap:
+    cmds:
+      - sudo setcap 'cap_net_raw,cap_net_admin+eip' ./dist/bin/ruuvitag-listener
+
+  cargo-install:
+    cmds:
+      - cargo install ruuvitag-listener --locked --root ./dist
+
+  setup:
+    cmds:
+      - task: cargo-install
+      - task: setcap
+
+  bin:
+    cmds:
+      - ./dist/bin/ruuvitag-listener --influxdb-measurement={{.INFLUXDB_MEASUREMENT}}
+    vars:
+      INFLUXDB_MEASUREMENT: ruuvitag

@@ -1,0 +1,53 @@
+# packages/common-postgres/Taskfile.yml
+version: '3'
+
+tasks:
+  prettier-write:
+    desc: Run Prettier and format files
+    cmds:
+      - bun x prettier --write *.json *.ts lib/**/*.ts
+
+  prettier-check:
+    desc: Check if files are formatted with Prettier
+    cmds:
+      - bun x prettier --check *.json *.ts lib/**/*.ts
+
+  test-unit:
+    desc: Run unit tests
+    cmds:
+      - bun x jest --no-cache --ci
+
+  lint:
+    desc: Run linter (Prettier check)
+    cmds:
+      - task: prettier-check
+
+  test:
+    desc: Run all tests
+    cmds:
+      - task: test-unit
+
+  build:
+    desc: Build the project
+    cmds:
+      - rm -rf ./dist
+      - bun x tsc --project tsconfig.build.json
+
+  migrate-one-up:
+    desc: Run one migration up for a specific tenant
+    cmds:
+      - bun ./manual-migrate.ts --tenantId {{.TENANT_ID}} --job up
+
+  migrate-one-down:
+    desc: Run one migration down for a specific tenant
+    cmds:
+      - bun ./manual-migrate.ts --tenantId {{.TENANT_ID}} --job down
+
+  migrate-to-latest:
+    desc: Migrate to the latest version for a specific tenant
+    cmds:
+      - bun ./manual-migrate.ts --tenantId {{.TENANT_ID}} --job latest
+
+vars:
+  TENANT_ID:
+    sh: echo $TENANT_ID

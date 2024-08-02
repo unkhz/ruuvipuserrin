@@ -1,0 +1,23 @@
+# packages/configurator/Taskfile.yml
+version: '3'
+
+tasks:
+  build:
+    desc: Build the project
+    cmds:
+      - bun x remix vite:build
+
+  dev:
+    desc: Run in development mode
+    cmds:
+      - bun x remix vite:dev
+
+  lint:
+    desc: Run ESLint
+    cmds:
+      - bun x eslint .
+
+  type-check:
+    desc: Run TypeScript type checking
+    cmds:
+      - bun x tsc --noEmit

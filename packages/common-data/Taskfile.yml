@@ -1,0 +1,49 @@
+# packages/common-data/Taskfile.yml
+version: '3'
+
+tasks:
+  setup:
+    desc: Install system dependencies
+    cmds:
+      - sudo apt install protobuf-compiler
+
+  prettier-write:
+    desc: Run Prettier and format files
+    cmds:
+      - bun x prettier --write *.json *.ts lib/**/*.ts
+
+  prettier-check:
+    desc: Check if files are formatted with Prettier
+    cmds:
+      - bun x prettier --check *.json *.ts lib/**/*.ts
+
+  test-unit:
+    desc: Run unit tests
+    cmds:
+      - bun x jest --no-cache --ci
+
+  lint:
+    desc: Run linter (Prettier check)
+    cmds:
+      - task: prettier-check
+
+  test:
+    desc: Run all tests
+    cmds:
+      - task: test-unit
+
+  build:
+    desc: Build the project
+    cmds:
+      - bun x tsc --project tsconfig.build.json
+
+  protoc-ruuvi:
+    desc: Generate TypeScript from Ruuvi proto file
+    cmds:
+      - bun x protoc --plugin=$(npm bin)/protoc-gen-ts_proto --ts_proto_opt=snakeToCamel=false --ts_proto_out=. lib/formats/ruuvi.proto
+
+  protoc:
+    desc: Generate all protobuf files and format
+    cmds:
+      - task: protoc-ruuvi
+      - task: prettier-write

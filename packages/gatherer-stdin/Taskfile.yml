@@ -1,0 +1,54 @@
+# packages/gatherer-stdin/Taskfile.yml
+version: '3'
+
+includes:
+  listener: ../listener/Taskfile.yml
+
+tasks:
+  prettier-write:
+    desc: Run Prettier and format files
+    cmds:
+      - bun prettier --write *.json *.ts lib/**/*.ts
+
+  prettier-check:
+    desc: Check if files are formatted with Prettier
+    cmds:
+      - bun prettier --check *.json *.ts lib/**/*.ts
+
+  test-unit:
+    desc: Run unit tests
+    cmds:
+      - bun wiptest
+
+  lint:
+    desc: Run linter (Prettier check)
+    cmds:
+      - task: prettier-check
+
+  test:
+    desc: Run all tests
+    cmds:
+      - task: test-unit
+
+  build:
+    desc: Build the project
+    cmds:
+      - bun index.ts --tsconfig-override tsconfig.build.json
+
+  dev:
+    desc: Run in development mode
+    cmds:
+      - bun listener-mock.ts --measurementName=ruuvipuserrin-mock --pollingInterval=1000 | bun index.ts --measurementName=ruuvipuserrin-mock --pollingInterval=1000
+
+  start:
+    desc: Start the application
+    cmds:
+      - task: listener-bin
+      - bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000
+
+  listener-bin:
+    internal: true
+    cmds:
+      - task: listener:bin
+        vars:
+          INFLUXDB_MEASUREMENT: ruuvipuserrin-rH48dag03

@@ -1,0 +1,28 @@
+# packages/infra-redis/Taskfile.yml
+version: '3'
+
+tasks:
+  set-service:
+    desc: Enable Redis server systemd service
+    cmds:
+      - sudo systemctl enable redis-server
+
+  apt-install:
+    desc: Install Redis server using apt
+    cmds:
+      - sudo apt install redis-server
+
+  setup:
+    desc: Install and set up Redis server
+    cmds:
+      - task: apt-install
+      - task: set-service
+
+  dev:
+    desc: Start Redis Stack Server in a Docker container
+    cmds:
+      - >
+        docker run --rm 
+        --name=ruuvipuserrin-redis 
+        -p 6379:6379 
+        redis/redis-stack-server:latest

@@ -1,0 +1,36 @@
+# Root Taskfile.yml
+version: '3'
+
+dotenv:
+  - ../../.env
+  - ../../.env.local
+
+includes:
+  gatherer-stdin: packages/gatherer-stdin/Taskfile.yml
+  gatherer-http: packages/gatherer-http/Taskfile.yml
+  publisher: packages/publisher/Taskfile.yml
+  infra-postgres: packages/infra-postgres/Taskfile.yml
+  infra-redis: packages/infra-redis/Taskfile.yml
+
+tasks:
+  start-gateway:
+    desc: Start gateway services
+    cmds:
+      - task: gatherer-stdin:start
+      - task: gatherer-http:start
+      - task: publisher:start
+
+  dev-infra:
+    desc: Start development infrastructure
+    cmds:
+      - task: infra-postgres:dev
+      - task: infra-redis:dev
+
+  dev-apps:
+    desc: Start development infrastructure
+    cmds:
+      - task: archive:dev
+      - task: configurator:dev
+      - task: gatherer-http:dev
+      - task: gatherer-stdin:dev
+      - task: publisher:dev
