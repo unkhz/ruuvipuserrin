@@ -6,11 +6,17 @@ dotenv:
   - ../../.env.local
 
 includes:
+  archive: packages/archive/Taskfile.yml
+  common-archive-client: packages/common-archive-client/Taskfile.yml
+  common-data: packages/common-data/Taskfile.yml
+  common-postgres: packages/common-postgres/Taskfile.yml
+  configurator: packages/configurator/Taskfile.yml
   gatherer-stdin: packages/gatherer-stdin/Taskfile.yml
   gatherer-http: packages/gatherer-http/Taskfile.yml
-  publisher: packages/publisher/Taskfile.yml
   infra-postgres: packages/infra-postgres/Taskfile.yml
   infra-redis: packages/infra-redis/Taskfile.yml
+  listener: packages/listener/Taskfile.yml
+  publisher: packages/publisher/Taskfile.yml
 
 tasks:
   start-gateway:
