@@ -15,8 +15,8 @@
   },
   "private": true,
   "devDependencies": {
-    "@nrwl/nx-cloud": "latest",
-    "nx": "15.6.3"
+    "@nrwl/nx-cloud": "19.5.6",
+    "nx": "19.5.6"
   },
   "workspaces": [
     "packages/*"

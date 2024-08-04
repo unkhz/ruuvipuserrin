@@ -19,24 +19,46 @@ includes:
   publisher: packages/publisher/Taskfile.yml
 
 tasks:
-  start-gateway:
-    desc: Start gateway services
+  run_parallel:
+    desc: Run specified tasks in parallel
+    vars:
+      TASKS: '{{.TASKS | default ""}}'
     cmds:
-      - task: gatherer-stdin:start
-      - task: gatherer-http:start
-      - task: publisher:start
+      - |
+        tasks=({{.TASKS}})
+        args=()
+        for task in "${tasks[@]}"; do
+          args+=("$task" "task $task")
+        done
+        ./run_parallel.sh "${args[@]}"
+
+  start-gateway:
+    desc: Start gateway services in parallel
+    cmds:
+      - task: run_parallel
+        vars:
+          TASKS: >
+            gatherer-stdin:start
+            gatherer-http:start
+            publisher:start
 
   dev-infra:
-    desc: Start development infrastructure
+    desc: Start development infrastructure in parallel
     cmds:
-      - task: infra-postgres:dev
-      - task: infra-redis:dev
+      - task: run_parallel
+        vars:
+          TASKS: >
+            infra-postgres:dev
+            infra-redis:dev
 
   dev-apps:
-    desc: Start development infrastructure
+    desc: Start development applications in parallel
     cmds:
-      - task: archive:dev
-      - task: configurator:dev
-      - task: gatherer-http:dev
-      - task: gatherer-stdin:dev
-      - task: publisher:dev
+      - task: run_parallel
+        vars:
+          TASKS: >
+            archive:dev
+            configurator:dev
+            gatherer-http:dev
+            gatherer-stdin:dev
+            publisher:dev
