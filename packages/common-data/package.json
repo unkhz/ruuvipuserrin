@@ -3,19 +3,8 @@
   "main": "dist/index.js",
   "module": "index.ts",
   "type": "commonjs",
-  "scripts": {
-    "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
-    "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
-    "test-unit": "jest --no-cache --ci",
-    "lint": "npm run prettier-check",
-    "test": "npm run test-unit",
-    "node:build": "tsc --project tsconfig.build.json",
-    "setup": "sudo apt-get install protobuf-compiler",
-    "protoc-ruuvi": "protoc --plugin=$(npm bin)/protoc-gen-ts_proto --ts_proto_opt=snakeToCamel=false --ts_proto_out=. lib/formats/ruuvi.proto",
-    "protoc": "npm run protoc-ruuvi && npm run prettier-write"
-  },
   "devDependencies": {
-    "@ruuvipuserrin/base-node": "*",
+    "@ruuvipuserrin/base-bun": "workspace:*",
     "ts-proto": "^1.139.0"
   },
   "dependencies": {

@@ -36,18 +36,14 @@ tasks:
   migrate-one-up:
     desc: Run one migration up for a specific tenant
     cmds:
-      - bun ./manual-migrate.ts --tenantId {{.TENANT_ID}} --job up
+      - bun ./manual-migrate.ts --tenantId $TENANT_ID --job up
 
   migrate-one-down:
     desc: Run one migration down for a specific tenant
     cmds:
-      - bun ./manual-migrate.ts --tenantId {{.TENANT_ID}} --job down
+      - bun ./manual-migrate.ts --tenantId $TENANT_ID --job down
 
   migrate-to-latest:
     desc: Migrate to the latest version for a specific tenant
     cmds:
-      - bun ./manual-migrate.ts --tenantId {{.TENANT_ID}} --job latest
-
-vars:
-  TENANT_ID:
-    sh: echo $TENANT_ID
+      - bun ./manual-migrate.ts --tenantId $TENANT_ID --job latest

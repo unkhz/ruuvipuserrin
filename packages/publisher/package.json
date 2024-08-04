@@ -3,23 +3,12 @@
   "version": "0.0.0",
   "type": "commonjs",
   "module": "index.ts",
-  "scripts": {
-    "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
-    "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
-    "test-unit": "jest --no-cache --ci",
-    "lint": "bun prettier-check",
-    "test": "bun test-unit",
-    "build": "bun bun index.ts --tsconfig-override tsconfig.build.json",
-    "dev": "bun index.ts --measurementName=ruuvipuserrin-mock --pollingInterval=1000",
-    "start": "bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000"
-  },
   "devDependencies": {
-    "@ruuvipuserrin/base-node": "*"
+    "@ruuvipuserrin/base-bun": "workspace:*"
   },
   "dependencies": {
-    "@ruuvipuserrin/common-postgres": "*",
-    "bun": "^0.5.7-canary.20230223.1",
-    "bun-types": "^0.5.7-canary.20230223.1",
+    "@ruuvipuserrin/common-archive-client": "workspace:*",
+    "@ruuvipuserrin/common-postgres": "workspace:*",
     "ioredis": "^5.3.1"
   }
 }

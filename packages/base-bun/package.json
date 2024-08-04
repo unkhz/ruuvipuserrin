@@ -1,5 +1,5 @@
 {
-  "name": "@ruuvipuserrin/base-node",
+  "name": "@ruuvipuserrin/base-bun",
   "version": "0.0.0",
   "devDependencies": {
     "@types/jest": "^29.4.0",

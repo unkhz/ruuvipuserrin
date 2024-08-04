@@ -14,8 +14,6 @@ tasks:
       - task: cargo-install
       - task: setcap
 
-  bin:
+  start:
     cmds:
-      - ./dist/bin/ruuvitag-listener --influxdb-measurement={{.INFLUXDB_MEASUREMENT}}
-    vars:
-      INFLUXDB_MEASUREMENT: ruuvitag
+      - ./dist/bin/ruuvitag-listener --influxdb-measurement=$INFLUXDB_MEASUREMENT

@@ -4,19 +4,8 @@
   "main": "dist/index.js",
   "module": "index.ts",
   "type": "commonjs",
-  "scripts": {
-    "prettier-write": "prettier --write *.json *.ts lib/**/*.ts",
-    "prettier-check": "prettier --check *.json *.ts lib/**/*.ts",
-    "test-unit": "jest --no-cache --ci",
-    "lint": "npm run prettier-check",
-    "test": "npm run test-unit",
-    "node:build": "rm -rf ./dist && tsc --project tsconfig.build.json",
-    "migrate-one-up": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job up",
-    "migrate-one-down": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job down",
-    "migrate-to-latest": "ts-node ./manual-migrate.ts --tenantId $TENANT_ID --job latest"
-  },
   "devDependencies": {
-    "@ruuvipuserrin/base-node": "*",
+    "@ruuvipuserrin/base-bun": "workspace:*",
     "@types/minimist": "^1.2.2",
     "@types/pg": "^8.6.6",
     "minimist": "^1.2.7"

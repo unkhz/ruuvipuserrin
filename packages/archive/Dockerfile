@@ -1,7 +1,7 @@
-FROM ghcr.io/unkhz/ruuvipuserrin-base-node
+FROM ghcr.io/unkhz/ruuvipuserrin-base-bun
 
 WORKDIR /app
 
 EXPOSE 8080
 
-CMD node packages/archive
+CMD ["bun", "packages/archive/index.ts"]

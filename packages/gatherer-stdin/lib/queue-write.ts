@@ -1,11 +1,15 @@
 import { Redis } from 'ioredis'
 import { RuuviMeasurement, RuuviMeasurementSnapshot } from '@ruuvipuserrin/common-data'
 import { readArgs } from './args'
+import { getEnv } from './env'
+
+const { REDIS_HOST, REDIS_PORT } = getEnv()
 
 const queue = new Redis({
-  host: 'localhost',
-  port: 6379,
+  host: REDIS_HOST,
+  port: REDIS_PORT,
 })
+
 queue.on('error', (err) => console.error(err))
 
 const args = readArgs()

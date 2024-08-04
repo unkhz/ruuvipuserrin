@@ -17,6 +17,11 @@ tasks:
     cmds:
       - bun x eslint .
 
+  test:
+    desc: Run ESLint
+    cmds:
+      - echo "No tests :/"
+
   type-check:
     desc: Run TypeScript type checking
     cmds:

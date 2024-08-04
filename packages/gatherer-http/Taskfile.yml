@@ -15,7 +15,7 @@ tasks:
   test-unit:
     desc: Run unit tests
     cmds:
-      - bun wiptest
+      - bun test
 
   lint:
     desc: Run linter (Prettier check)
@@ -35,6 +35,7 @@ tasks:
   start:
     desc: Start the application
     cmds:
+      - echo "Start gathering to $REDIS_HOST:$REDIS_PORT"
       - bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000
 
   dev:

@@ -2,21 +2,43 @@
 version: '3'
 
 dotenv:
-  - ../../.env
-  - ../../.env.local
+  - .env.local
+  - .env
 
 includes:
-  archive: packages/archive/Taskfile.yml
-  common-archive-client: packages/common-archive-client/Taskfile.yml
-  common-data: packages/common-data/Taskfile.yml
-  common-postgres: packages/common-postgres/Taskfile.yml
-  configurator: packages/configurator/Taskfile.yml
-  gatherer-stdin: packages/gatherer-stdin/Taskfile.yml
-  gatherer-http: packages/gatherer-http/Taskfile.yml
-  infra-postgres: packages/infra-postgres/Taskfile.yml
-  infra-redis: packages/infra-redis/Taskfile.yml
-  listener: packages/listener/Taskfile.yml
-  publisher: packages/publisher/Taskfile.yml
+  archive:
+    taskfile: packages/archive/Taskfile.yml
+    dir: packages/archive
+  common-archive-client:
+    taskfile: packages/common-archive-client/Taskfile.yml
+    dir: packages/common-archive-client
+  common-data:
+    taskfile: packages/common-data/Taskfile.yml
+    dir: packages/common-data
+  common-postgres:
+    taskfile: packages/common-postgres/Taskfile.yml
+    dir: packages/common-postgres
+  configurator:
+    taskfile: packages/configurator/Taskfile.yml
+    dir: packages/configurator
+  gatherer-stdin:
+    taskfile: packages/gatherer-stdin/Taskfile.yml
+    dir: packages/gatherer-stdin
+  gatherer-http:
+    taskfile: packages/gatherer-http/Taskfile.yml
+    dir: packages/gatherer-http
+  infra-postgres:
+    taskfile: packages/infra-postgres/Taskfile.yml
+    dir: packages/infra-postgres
+  infra-redis:
+    taskfile: packages/infra-redis/Taskfile.yml
+    dir: packages/infra-redis
+  listener:
+    taskfile: packages/listener/Taskfile.yml
+    dir: packages/listener
+  publisher:
+    taskfile: packages/publisher/Taskfile.yml
+    dir: packages/publisher
 
 tasks:
   run_parallel:
@@ -38,6 +60,7 @@ tasks:
       - task: run_parallel
         vars:
           TASKS: >
+            listener:start
             gatherer-stdin:start
             gatherer-http:start
             publisher:start

@@ -41,7 +41,7 @@ Thumbs.db
 # Bun
 node_modules.bun
 
-# Nx
+# Tasks
 .env.local
 
 *-secret.yaml

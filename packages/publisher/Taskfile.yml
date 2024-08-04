@@ -40,4 +40,5 @@ tasks:
   start:
     desc: Start the application
     cmds:
+      - echo "Start publishing to $ARCHIVE_API_HOST"
       - bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000

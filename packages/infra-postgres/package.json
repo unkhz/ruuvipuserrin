@@ -1,7 +1,0 @@
-{
-  "name": "@ruuvipuserrin/infra-postgres",
-  "version": "0.0.0",
-  "scripts": {
-    "infra:dev": "docker run --rm --name=ruuvipuserrin-pg -p 5432:5432 -e POSTGRES_PASSWORD=$PG_PASSWORD -e POSTGRES_USER=$PG_USER timescale/timescaledb:latest-pg14"
-  }
-}

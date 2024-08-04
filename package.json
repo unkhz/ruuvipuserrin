@@ -2,22 +2,7 @@
   "name": "@ruuvipuserrin/root",
   "version": "0.0.0",
   "license": "MIT",
-  "nx": {},
-  "scripts": {
-    "setup-all": "nx run-many --target=setup --all --output-style=stream",
-    "lint-all": "nx run-many --target=lint --all --output-style=stream",
-    "test-all": "nx run-many --target=test --all --output-style=stream",
-    "build-all": "nx run-many --target=build --all --output-style=stream",
-    "start-all": "nx run-many --target=start --all --output-style=stream",
-    "start-gateway": "nx run-many --target=start --projects=gatherer-stdin,gatherer-http,publisher --output-style=stream",
-    "dev-infra": "nx run-many --target=infra:dev --projects=infra-redis,infra-postgres --output-style=stream",
-    "dev-all": "nx run-many --target=dev --all --output-style=stream"
-  },
   "private": true,
-  "devDependencies": {
-    "@nrwl/nx-cloud": "19.5.6",
-    "nx": "19.5.6"
-  },
   "workspaces": [
     "packages/*"
   ]

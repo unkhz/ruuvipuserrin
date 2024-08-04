@@ -2,5 +2,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: apps
 images:
-  - name: ghcr.io/unkhz/ruuvipuserrin-base-node
+  - name: ghcr.io/unkhz/ruuvipuserrin-base-bun
     newTag: d0a5dc253b8417e62eb1ca65c6a876ca4f5e04b9

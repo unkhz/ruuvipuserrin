@@ -18,7 +18,7 @@ tasks:
   test-unit:
     desc: Run unit tests
     cmds:
-      - bun wiptest
+      - bun test
 
   lint:
     desc: Run linter (Prettier check)
@@ -43,12 +43,5 @@ tasks:
   start:
     desc: Start the application
     cmds:
-      - task: listener-bin
-      - bun index.ts --measurementName=ruuvipuserrin-rH48dag03 --pollingInterval=15000
-
-  listener-bin:
-    internal: true
-    cmds:
-      - task: listener:bin
-        vars:
-          INFLUXDB_MEASUREMENT: ruuvipuserrin-rH48dag03
+      - echo "Start gathering to $REDIS_HOST:$REDIS_PORT"
+      - bun index.ts --measurementName=$INFLUXDB_MEASUREMENT --pollingInterval=15000

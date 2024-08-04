@@ -15,7 +15,8 @@ Following shiny tools are used
 
 - [Redis Streams](https://redis.io/docs/data-types/streams/) for durable processing of measurements
 - [TimescaleDb](https://www.timescale.com/) for SQL based long term storage of time series data
-- [Nx (package based)](https://nx.dev) for monorepo organization and task running
+- [Task](https://taskfile.dev/) for task running
+- [Bun workspaces](https://bun.sh/docs/install/workspaces) for monorepo organization
 - [Bun](https://bun.sh) TypeScript runtime for faster microservices (where necessary APIs are supported)
 - [tRPC](https://trpc.io/) type-safe API for exposing database to serverless functions and apps
 - [ruuvitag-listener](https://github.com/lautis/ruuvitag-listener) fast readings from Ruuvitag devices, written in Rust
@@ -28,19 +29,20 @@ Following shiny tools are used
 Ensure you have installed following tools in your gateway box (e.g. raspberry pi).
 
 - [Rust](https://rustup.rs/)
-- [Node](https://nodejs.org/en/download/)
+- [Bun](https://bun.sh/)
 - [Redis](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
 
 Install monorepo dependencies
 
 ```
-npm install
+bun install
 ```
 
 Run package specific setup scripts
 
 ```
-npm run setup
+task common-data:setup
+task infra-redis:setup
 ```
 
 ### Running
@@ -48,7 +50,7 @@ npm run setup
 Run gateway functionality in gateway box
 
 ```
-npm run start-gateway
+task start-gateway
 ```
 
 ## Architecture

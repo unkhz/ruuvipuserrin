@@ -18,15 +18,13 @@ jobs:
           - configurator
           - gatherer-http
           - gatherer-stdin
-          - listener
           - publisher
-        node-version: [20]
 
     steps:
       - uses: actions/checkout@v4
       - uses: arduino/setup-task@v2
         with:
-          version: 2.x
+          version: 3.38.0
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: 1.1.20
@@ -45,7 +43,7 @@ jobs:
       matrix:
         args:
           - context: .
-            image: ghcr.io/unkhz/ruuvipuserrin-base-node
+            image: ghcr.io/unkhz/ruuvipuserrin-base-bun
 
     uses: ./.github/workflows/build-package.yml
     with:
@@ -96,7 +94,7 @@ jobs:
             git add $file
           }
 
-          update_version_tag ./packages/base-node/.khz-k3s/kustomization.yaml
+          update_version_tag ./packages/base-bun/.khz-k3s/kustomization.yaml
           update_version_tag ./packages/archive/.khz-k3s/kustomization.yaml
           update_version_tag ./packages/configurator/.khz-k3s/kustomization.yaml
 

@@ -1,3 +1,3 @@
 # @ruuvipuserrin/infra-redis
 
-Nx project wrapper for running the redis server
+Wrapper for running redis server locally during development

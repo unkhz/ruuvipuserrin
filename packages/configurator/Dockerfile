@@ -1,9 +1,9 @@
-FROM ghcr.io/unkhz/ruuvipuserrin-base-node
+FROM ghcr.io/unkhz/ruuvipuserrin-base-bun
 
-WORKDIR /app/packages/configurator
+WORKDIR /app
 
 EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["npx", "@remix-run/serve", "build/server/index.js"]
+CMD ["bun", "x", "@remix-run/serve", "packages/configurator/build/server/index.js"]

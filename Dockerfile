@@ -1,34 +1,26 @@
-FROM node:lts-alpine AS buildtime
+FROM oven/bun:1.1.20-alpine
 WORKDIR /app
-COPY package*.json nx.json /app/
 
-# Add any node packages
-COPY packages/archive/*.json /app/packages/archive/
-COPY packages/configurator/*.json /app/packages/configurator/
-COPY packages/base-node/*.json /app/packages/base-node/
-COPY packages/common-archive-client/*.json /app/packages/common-archive-client/
-COPY packages/common-data/*.json /app/packages/common-data/
-COPY packages/common-postgres/*.json /app/packages/common-postgres/
+COPY package.json bun.lockb ./
 
-# Install dev deps for buildtime
-RUN npm ci
+# Add bun install dependencies
+COPY packages/archive/package.json ./packages/archive/
+COPY packages/base-bun/package.json ./packages/base-bun/
+COPY packages/configurator/package.json ./packages/configurator/
+COPY packages/common-archive-client/package.json ./packages/common-archive-client/
+COPY packages/common-data/package.json ./packages/common-data/
+COPY packages/common-postgres/package.json ./packages/common-postgres/
+COPY packages/gatherer-http/package.json ./packages/gatherer-http/
+COPY packages/gatherer-stdin/package.json ./packages/gatherer-stdin/
+COPY packages/publisher/package.json ./packages/publisher/
+
+# Install deps
+RUN bun install --frozen-lockfile --production
 
 # Copy source code
-COPY packages/archive /app/packages/archive/
-COPY packages/configurator /app/packages/configurator/
-COPY packages/base-node /app/packages/base-node/
-COPY packages/common-archive-client /app/packages/common-archive-client/
-COPY packages/common-data /app/packages/common-data/
-COPY packages/common-postgres /app/packages/common-postgres/
-
-# Build any node packages
-RUN npx nx run-many --target=node:build --all
-
-# Clean slate for runtime
-FROM node:lts-alpine AS runtime
-WORKDIR /app
-COPY --link --from=buildtime /app/package*.json /app/nx.json /app/
-COPY --link --from=buildtime /app/packages /app/packages
-
-# Remove dev deps for runtime
-RUN npm ci --omit=dev
+COPY packages/archive ./packages/archive/
+COPY packages/configurator ./packages/configurator/
+COPY packages/base-bun ./packages/base-bun/
+COPY packages/common-archive-client ./packages/common-archive-client/
+COPY packages/common-data ./packages/common-data/
+COPY packages/common-postgres ./packages/common-postgres/

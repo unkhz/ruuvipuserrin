@@ -1,5 +1,5 @@
 {
-  "extends": "../base-node/tsconfig.json",
+  "extends": "../base-bun/tsconfig.json",
   "include": ["*.ts", "./lib/**/*.ts", "./migrations/**/*.ts", "manual-migrate.ts"],
   "compilerOptions": {
     "outDir": "./dist"
