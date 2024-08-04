@@ -4,7 +4,7 @@ on:
     branches: ['master']
 
 jobs:
-  test:
+  test-ts:
     if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
 
@@ -12,32 +12,31 @@ jobs:
       matrix:
         package:
           - archive
-          - base-node
           - common-archive-client
           - common-data
           - common-postgres
           - configurator
           - gatherer-http
           - gatherer-stdin
-          - infra-postgres
-          - infra-redis
           - listener
           - publisher
         node-version: [20]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - uses: arduino/setup-task@v2
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm install
-      - run: npx nx run-many --target=lint,test --projects=${{ matrix.package }} --output-style=stream
+          version: 2.x
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.1.20
+      - run: bun install --frozen-lockfile
+      - run: task ${{ matrix.package }}:lint
+      - run: task ${{ matrix.package }}:test
 
   build-base-images:
     if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
-    needs: test
+    needs: test-ts
     permissions:
       contents: write
       packages: write

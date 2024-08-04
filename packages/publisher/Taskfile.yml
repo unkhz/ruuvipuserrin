@@ -19,13 +19,13 @@ tasks:
 
   lint:
     desc: Run linter (Prettier check)
-    cmds:
-      - bun x bun prettier-check
+    deps:
+      - prettier-check
 
   test:
     desc: Run all tests
-    cmds:
-      - bun test-unit
+    deps:
+      - test-unit
 
   build:
     desc: Build the project
