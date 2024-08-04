@@ -12,6 +12,12 @@ tasks:
     cmds:
       - bun x remix vite:dev
 
+  serve:
+    desc: Run in development mode
+    cmds:
+      # Can't run with bun yet, see https://github.com/remix-run/remix/discussions/7413
+      - npx remix-serve build/server/index.js
+
   lint:
     desc: Run ESLint
     cmds:
