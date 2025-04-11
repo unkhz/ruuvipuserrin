@@ -40,6 +40,9 @@ export const archiveApiRouter = trpc.router({
     .mutation(async ({ ctx, input }) => {
       const { source, time, temperature, humidity, pressure, tx_power, battery_potential, movement_counter } =
         input.measurement
+      if (process.env.DEBUG) {
+        console.debug('Received measurement', time)
+      }
       const db = await ctx.dbForTenant(input.tenantId)
       db.transaction()
         .setIsolationLevel('read committed')

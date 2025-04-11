@@ -17,6 +17,9 @@ const args = readArgs()
 const measurementCache: Map<string, RuuviMeasurement> = new Map()
 
 export async function updateMeasurementSnapshot(data: RuuviMeasurement) {
+  if (process.env.DEBUG) {
+    console.debug('Received measurement', data.time)
+  }
   measurementCache.set(data.mac, data)
 }
 
