@@ -1,4 +1,4 @@
-FROM oven/bun:1.1.20-alpine
+FROM oven/bun:1.2.9-alpine
 WORKDIR /app
 
 COPY package.json bun.lockb ./
@@ -15,7 +15,7 @@ COPY packages/gatherer-stdin/package.json ./packages/gatherer-stdin/
 COPY packages/publisher/package.json ./packages/publisher/
 
 # Install deps
-RUN bun install --frozen-lockfile --production
+RUN bun install --production
 
 # Copy source code
 COPY packages/archive ./packages/archive/

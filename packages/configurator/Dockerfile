@@ -3,7 +3,7 @@ FROM ghcr.io/unkhz/ruuvipuserrin-base-bun AS build
 WORKDIR /app
 
 # Install dev deps for build
-RUN bun install --frozen-lockfile
+RUN bun install
 
 WORKDIR /app/packages/configurator
 
