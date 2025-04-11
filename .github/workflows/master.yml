@@ -25,6 +25,7 @@ jobs:
       - uses: arduino/setup-task@v2
         with:
           version: 3.38.0
+      # Update lockfile here until renovate can update it
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version-file: ".bun-version"
@@ -86,8 +87,8 @@ jobs:
         with:
           cmd: yq --version
 
-      - name: Update bun.lock
-        uses: oven-sh/setup-bun@v1
+      # Update lockfile here until renovate can update it
+      - uses: oven-sh/setup-bun@v1
         with:
           bun-version-file: ".bun-version"
       - run: bun install
@@ -99,6 +100,9 @@ jobs:
             yq e '.images[0].newTag = "${{ github.sha }}"' -i $file
             git add $file
           }
+
+          # Update lockfile here until renovate can update it
+          git add bun.lock
 
           update_version_tag ./packages/base-bun/.khz-k3s/kustomization.yaml
           update_version_tag ./packages/archive/.khz-k3s/kustomization.yaml
