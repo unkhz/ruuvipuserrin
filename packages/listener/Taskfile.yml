@@ -7,7 +7,9 @@ tasks:
 
   cargo-install:
     cmds:
-      - cargo install ruuvitag-listener --locked --root ./dist
+      - cargo install ruuvitag-listener --locked --root ./dist --release -j 1
+    env:
+      RUSTFLAGS: "-C opt-level=3 -C codegen-units=1 -C lto=fat"
 
   setup:
     cmds:
