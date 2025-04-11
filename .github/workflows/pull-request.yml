@@ -1,0 +1,69 @@
+name: Master
+on:
+  pull_request:
+
+jobs:
+  test-ts:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        package:
+          - archive
+          - common-archive-client
+          - common-data
+          - common-postgres
+          - configurator
+          - gatherer-http
+          - gatherer-stdin
+          - publisher
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-task@v2
+        with:
+          version: 3.38.0
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.1.20
+      - run: bun install --frozen-lockfile
+      - run: task ${{ matrix.package }}:lint
+      - run: task ${{ matrix.package }}:test
+
+  build-base-images:
+    if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
+    needs: test-ts
+    permissions:
+      contents: write
+      packages: write
+
+    strategy:
+      matrix:
+        args:
+          - context: .
+            image: ghcr.io/unkhz/ruuvipuserrin-base-bun
+
+    uses: ./.github/workflows/build-package.yml
+    with:
+      context: ${{ matrix.args.context }}
+      image: ${{ matrix.args.image }}
+
+  build-package-images:
+    if: ${{ ! endsWith(github.event.head_commit.message, '[skip ci]') }}
+    needs: build-base-images
+    permissions:
+      contents: write
+      packages: write
+
+    strategy:
+      matrix:
+        args:
+          - context: ./packages/archive
+            image: ghcr.io/unkhz/ruuvipuserrin-archive
+          - context: ./packages/configurator
+            image: ghcr.io/unkhz/ruuvipuserrin-configurator
+
+    uses: ./.github/workflows/build-package.yml
+    with:
+      context: ${{ matrix.args.context }}
+      image: ${{ matrix.args.image }}
