@@ -10,7 +10,7 @@ WORKDIR /app/packages/configurator
 RUN bun x remix vite:build
 
 #########################################
-FROM node:20-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
