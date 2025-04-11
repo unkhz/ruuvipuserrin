@@ -101,6 +101,9 @@ jobs:
             git add $file
           }
 
+          # Update lockfile here until renovate can update it
+          git add bun.lock
+
           update_version_tag ./packages/base-bun/.khz-k3s/kustomization.yaml
           update_version_tag ./packages/archive/.khz-k3s/kustomization.yaml
           update_version_tag ./packages/configurator/.khz-k3s/kustomization.yaml
