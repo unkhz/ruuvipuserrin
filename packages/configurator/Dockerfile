@@ -23,4 +23,4 @@ EXPOSE 3000
 
 ENV PORT=3000
 
-CMD ["npx", "remix-serve", "/app/packages/configurator/build/server"]
+CMD ["npx", "remix-serve", "/app/packages/configurator/build/server/index.js"]
