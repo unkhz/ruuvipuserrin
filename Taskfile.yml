@@ -48,13 +48,18 @@ tasks:
     cmds:
       - ./run_parallel_task.sh {{.TASKS}}
 
+  start-bluetooth-stream:
+    desc: Start bluetooth streaming with listener output piped to gatherer-stdin
+    cmds:
+      - task listener:start | task gatherer-stdin:start
+
   start-gateway:
     desc: Start gateway services in parallel
     cmds:
       - task: run_parallel
         vars:
           TASKS: >
-            gatherer-stdin:start
+            start-bluetooth-stream
             gatherer-http:start
             publisher:start
 
