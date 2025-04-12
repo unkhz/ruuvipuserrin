@@ -54,7 +54,6 @@ tasks:
       - task: run_parallel
         vars:
           TASKS: >
-            listener:start
             gatherer-stdin:start
             gatherer-http:start
             publisher:start

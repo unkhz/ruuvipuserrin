@@ -44,4 +44,4 @@ tasks:
     desc: Start the application
     cmds:
       - echo "Start gathering to $REDIS_HOST:$REDIS_PORT"
-      - bun index.ts --measurementName=$INFLUXDB_MEASUREMENT --pollingInterval=15000
+      - task listener:start | bun index.ts --measurementName=$INFLUXDB_MEASUREMENT --pollingInterval=15000
