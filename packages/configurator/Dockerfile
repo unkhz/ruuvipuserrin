@@ -15,4 +15,4 @@ EXPOSE 3000
 
 ENV PORT=3000
 
-CMD ["bun x", "remix-serve", "./build/server/index.js"]
+CMD ["bunx", "remix-serve", "./build/server/index.js"]
