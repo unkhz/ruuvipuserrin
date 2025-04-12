@@ -17,14 +17,10 @@ WORKDIR /app
 COPY --link --from=ghcr.io/unkhz/ruuvipuserrin-base-bun /app/node_modules ./node_modules
 COPY --link --from=build /app/packages/configurator/build ./packages/configurator/build
 
-WORKDIR /app
+WORKDIR /app/packages/configurator/build/server
 
 EXPOSE 3000
 
 ENV PORT=3000
 
-CMD [ \
-    "node_modules/.bin/tsx", \
-    "node_modules/.bin/remix-serve", \
-    "packages/configurator/build/server/index.js" \
-    ]
+CMD ["npx", "remix-serve", "/app/packages/configurator/build/server"]
