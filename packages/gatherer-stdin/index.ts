@@ -16,7 +16,7 @@ async function periodicallyPublishSnapshot() {
 
   while (true) {
     const intervalPromise: Promise<void> = new Promise((resolve) => setTimeout(() => resolve(), pollingInterval))
-    await Promise.all([pushMeasurementSnapshotToQueue(), intervalPromise])
+    await Promise.allSettled([pushMeasurementSnapshotToQueue(), intervalPromise])
   }
 }
 
