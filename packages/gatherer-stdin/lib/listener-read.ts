@@ -18,7 +18,9 @@ export async function processMeasurementsFromStandardInput(cb: (data: RuuviMeasu
     // Only process input with sepcific ruuvitag-listener influxdb measurement name
     if (line.startsWith(args.measurementName)) {
       const measurement = parseLineFromRuuvitagListener(line)
-      cb(measurement)
+      if (measurement) {
+        cb(measurement)
+      }
     }
   })
 }

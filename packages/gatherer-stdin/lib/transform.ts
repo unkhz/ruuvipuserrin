@@ -41,15 +41,26 @@ function parseKeyValueCsv<TData extends Record<string, unknown>>(line: string): 
   return Object.fromEntries(pairs.map((pair) => pair.split('=')))
 }
 
-export function parseLineFromRuuvitagListener(line: string): RuuviMeasurement {
+export function parseLineFromRuuvitagListener(line: string): RuuviMeasurement | undefined {
   const [identifiers, data, time] = line.split(' ')
-  const { mac } = ZRuuvitagIdentifiersFromParsedInput.parse(parseKeyValueCsv<{ mac: string }>(identifiers))
-  const parsedData = ZRuuviMeasurementDataFromParsedInput.parse(
+  const macResult = ZRuuvitagIdentifiersFromParsedInput.safeParse(parseKeyValueCsv<{ mac: string }>(identifiers))
+  if (!macResult.success) {
+    console.debug('Ignoring measurement with invalid mac', macResult.error.issues)
+    return undefined
+  }
+
+  const dataResult = ZRuuviMeasurementDataFromParsedInput.safeParse(
     parseKeyValueCsv<z.infer<typeof ZRuuviMeasurementDataFromParsedInput>>(data),
   )
+
+  if (!dataResult.success) {
+    console.debug('Ignoring invalid measurement', dataResult.error.issues)
+    return undefined
+  }
+
   return {
-    ...parsedData,
-    mac,
+    ...dataResult.data,
+    mac: macResult.data.mac,
     time: z.coerce.number().parse(time),
   }
 }

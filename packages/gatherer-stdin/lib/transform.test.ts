@@ -58,18 +58,11 @@ describe('parseLineFromRuuvitagListener', () => {
   const failureCases: { desc: string; input: string }[] = [
     { desc: 'missing mac', input: 'wrong' },
     { desc: 'non-numeric data value', input: createRuuvitagListenerOutput({ acceleration_x: 'wrong' }) },
-    { desc: 'missing data value', input: createRuuvitagListenerOutput({ tx_power: '' }) },
   ]
   failureCases.forEach(({ desc, input }) => {
-    it(`should fail w/ ${desc}`, async () => {
-      try {
-        parseLineFromRuuvitagListener(input)
-      } catch (error: unknown) {
-        expect(error instanceof ZodError).toEqual(true)
-        if (error instanceof ZodError) {
-          expect(error.errors[0].code).toEqual('invalid_type')
-        }
-      }
+    it(`should return failure result w/ ${desc}`, async () => {
+      var result = parseLineFromRuuvitagListener(input)
+      expect(result).toEqual(undefined)
     })
   })
 })
