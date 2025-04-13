@@ -1,5 +1,7 @@
-import { vitePlugin as remix } from '@remix-run/dev'
 import { defineConfig } from 'vite'
+import { vitePlugin as remix } from '@remix-run/dev'
+import tailwindcss from '@tailwindcss/vite'
+import devtoolsJson from 'vite-plugin-devtools-json'
 import path from 'path'
 
 export default defineConfig({
@@ -11,5 +13,5 @@ export default defineConfig({
       '~': path.resolve(__dirname, './app'),
     },
   },
-  plugins: [remix()],
+  plugins: [remix(), tailwindcss(), devtoolsJson()],
 })
