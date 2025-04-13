@@ -25,7 +25,7 @@ jobs:
           version: 3.38.0
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version-file: ".bun-version"
+          bun-version-file: '.bun-version'
       # Update lockfile here until renovate can update it
       - run: bun install
       - run: task ${{ matrix.package }}:lint
