@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       # Install bun to update lockfile. We'll bump it in the release commit until renovate can update it.
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: '.bun-version'
       - run: bun install
