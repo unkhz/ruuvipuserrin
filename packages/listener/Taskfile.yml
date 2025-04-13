@@ -9,7 +9,7 @@ tasks:
     cmds:
       - cargo install ruuvitag-listener --locked --root ./dist -j 1
     env:
-      RUSTFLAGS: "-C opt-level=3 -C codegen-units=1"
+      RUSTFLAGS: '-C opt-level=3 -C codegen-units=1'
 
   setup:
     cmds:

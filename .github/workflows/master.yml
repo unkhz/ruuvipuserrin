@@ -28,7 +28,7 @@ jobs:
       # Update lockfile here until renovate can update it
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version-file: ".bun-version"
+          bun-version-file: '.bun-version'
       - run: bun install
       - run: task ${{ matrix.package }}:lint
       - run: task ${{ matrix.package }}:test
@@ -90,7 +90,7 @@ jobs:
       # Update lockfile here until renovate can update it
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version-file: ".bun-version"
+          bun-version-file: '.bun-version'
       - run: bun install
 
       - name: Update version tags
