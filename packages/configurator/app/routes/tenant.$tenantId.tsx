@@ -103,12 +103,14 @@ export default function SourcesTable() {
     <>
       <table className="table w-full">
         <thead>
-          {schema.map(({ name, cellClassName }) => (
-            <th key={name} className={cellClassName}>
-              {name}
-            </th>
-          ))}
-          <th></th>
+          <tr>
+            {schema.map(({ name, cellClassName }) => (
+              <th key={name} className={cellClassName}>
+                {name}
+              </th>
+            ))}
+            <th></th>
+          </tr>
         </thead>
         <tbody>
           {items.map((item) => (

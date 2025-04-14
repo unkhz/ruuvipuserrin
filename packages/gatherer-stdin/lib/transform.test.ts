@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'bun:test'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ZodError } from 'zod'
 import { parseLineFromRuuvitagListener } from './transform'
 

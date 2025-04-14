@@ -21,7 +21,9 @@ export default function App() {
       </head>
       <body className="min-h-screen">
         <main>
-          <nav className="navbar w-full bg-zinc-100 dark:bg-zinc-900 px-2 py-4 text-4xl sm:text-5xl">Ruuvipuserrin</nav>
+          <nav className="navbar w-full bg-zinc-100 dark:bg-zinc-900 px-2 py-4 text-4xl sm:text-5xl">
+            <h1 className="p-0 text-4xl sm:text-5xl">Ruuvipuserrin</h1>
+          </nav>
           <div className="flex justify-center sm:px-8 sm:py-16">
             <div className="container flex-none mx-auto max-w-4xl">
               <Outlet />

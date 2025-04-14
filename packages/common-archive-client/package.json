@@ -7,6 +7,12 @@
   "devDependencies": {
     "@ruuvipuserrin/base-bun": "workspace:*"
   },
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "require": "./dist/index.js"
+    }
+  },
   "dependencies": {
     "@ruuvipuserrin/archive": "workspace:*",
     "@trpc/client": "^10.12.0",

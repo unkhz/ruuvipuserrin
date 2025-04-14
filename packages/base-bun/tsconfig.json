@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["ESNext"],
-    "module": "commonjs",
+    "module": "nodenext",
     "target": "esnext",
     "moduleResolution": "nodenext",
     "esModuleInterop": true,
@@ -12,6 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
-    "types": ["node", "jest"]
+    "types": ["node", "bun"],
   }
 }

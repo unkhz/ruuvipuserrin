@@ -1,5 +1,4 @@
 import { ColumnType } from 'kysely'
-import { z } from 'zod'
 
 export interface RuuviMeasurementTable {
   time: ColumnType<Date, string | undefined, never>

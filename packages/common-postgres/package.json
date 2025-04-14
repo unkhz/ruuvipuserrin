@@ -4,6 +4,12 @@
   "main": "dist/index.js",
   "module": "index.ts",
   "type": "commonjs",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "require": "./dist/index.js"
+    }
+  },
   "devDependencies": {
     "@ruuvipuserrin/base-bun": "workspace:*",
     "@types/minimist": "^1.2.2",
