@@ -14,4 +14,12 @@ export default defineConfig({
     },
   },
   plugins: [remix(), tailwindcss(), devtoolsJson()],
+  build: {
+    rollupOptions: {
+      external: [
+        'vitest',
+        /^vitest\/.*/, // Exclude all vitest subpaths
+      ],
+    },
+  },
 })
