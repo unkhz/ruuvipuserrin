@@ -1,8 +1,8 @@
-import { readArgs } from './args'
+import { readArgs } from './args.js'
 import { RuuviMeasurement } from '@ruuvipuserrin/common-data'
-import { parseLineFromRuuvitagListener } from './transform'
+import { parseLineFromRuuvitagListener } from './transform.js'
 
-const readline = require('node:readline')
+import * as readline from 'node:readline'
 const standardInputStream = readline.createInterface({
   input: process.stdin,
 })
