@@ -12,6 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
-    "types": ["node", "jest"]
+    "types": ["node", "bun"],
   }
 }

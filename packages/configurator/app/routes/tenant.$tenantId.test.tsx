@@ -4,7 +4,7 @@ import { createRemixStub } from '@remix-run/testing'
 import { render, screen, waitFor } from '@testing-library/react'
 import { generateMock } from '@anatine/zod-mock'
 import SourcesTable from './tenant.$tenantId.jsx'
-import { ZItem } from '~/utils/schema.js'
+import { ZItem } from '~/utils/schema'
 
 vi.mock('@ruuvipuserrin/common-archive-client', () => {
   return {

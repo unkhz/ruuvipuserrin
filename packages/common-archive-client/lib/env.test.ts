@@ -1,6 +1,11 @@
-import { getEnv } from './env'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { getEnv } from './env.js'
 
 describe('getEnv', () => {
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('should typify selected values', async () => {
     const env = {
       OTHER: 'stuff',
@@ -22,6 +27,7 @@ describe('getEnv', () => {
   })
 
   it('should fail with wrong values', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {})
     const env = {
       OTHER: 'stuff',
       ARCHIVE_API_SSL: '0',
