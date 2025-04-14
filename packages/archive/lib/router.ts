@@ -3,7 +3,7 @@ import z from 'zod'
 import { ConfigTable, SourceView, sql } from '@ruuvipuserrin/common-postgres'
 import { ZConfig, ZHealthMeasurement, ZMeasurement, ZValidTenantId } from '@ruuvipuserrin/common-data'
 
-import type { Context } from './context'
+import type { Context } from './context.js'
 
 export const trpc = initTRPC.context<Context>().create()
 

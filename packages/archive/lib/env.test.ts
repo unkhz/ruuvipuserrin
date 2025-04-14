@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { getEnv } from './env'
+import { getEnv } from './env.js'
 
 describe('getEnv', () => {
   it('should typify selected values', async () => {
