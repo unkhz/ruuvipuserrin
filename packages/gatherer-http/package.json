@@ -1,7 +1,7 @@
 {
   "name": "@ruuvipuserrin/gatherer-http",
   "module": "index.ts",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@ruuvipuserrin/base-bun": "workspace:*"
   },

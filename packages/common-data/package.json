@@ -2,7 +2,7 @@
   "name": "@ruuvipuserrin/common-data",
   "main": "dist/index.js",
   "module": "index.ts",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./index.ts",

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "dist/index.js",
   "module": "index.ts",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@ruuvipuserrin/base-bun": "workspace:*"
   },
