@@ -1,6 +1,6 @@
-import { readArgs } from './lib/args'
-import { transformSnapshotFromRuuviStation, RuuviMeasurementFromRuuviStation } from './lib/transform'
-import { pushMeasurementSnapshotToQueue, updateMeasurementSnapshot } from './lib/queue-write'
+import { readArgs } from './lib/args.js'
+import { transformSnapshotFromRuuviStation, RuuviMeasurementFromRuuviStation } from './lib/transform.js'
+import { pushMeasurementSnapshotToQueue, updateMeasurementSnapshot } from './lib/queue-write.js'
 
 async function periodicallyPublishSnapshot() {
   const { pollingInterval, measurementName } = readArgs()
