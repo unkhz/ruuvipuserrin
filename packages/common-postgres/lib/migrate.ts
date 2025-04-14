@@ -1,7 +1,7 @@
 import * as path from 'path'
 import { promises as fs } from 'fs'
 import { Migrator, FileMigrationProvider } from 'kysely'
-import { createClient } from './client'
+import { createClient } from './client.js'
 
 function createMigrator(db: ReturnType<typeof createClient>) {
   return new Migrator({

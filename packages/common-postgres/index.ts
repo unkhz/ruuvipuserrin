@@ -1,4 +1,4 @@
-export * from './lib/client'
-export * from './lib/migrate'
-export * from './lib/database'
+export * from './lib/client.js'
+export * from './lib/migrate.js'
+export * from './lib/database.js'
 export { sql } from 'kysely'
