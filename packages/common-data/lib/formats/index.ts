@@ -1,1 +1,1 @@
-export * from './ruuvi'
+export * from './ruuvi.js'

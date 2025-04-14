@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { RuuviMeasurement, RuuviMeasurementSnapshot } from './ruuvi'
+import { RuuviMeasurement, RuuviMeasurementSnapshot } from './ruuvi.js'
 
 const exampleMeasurement = {
   acceleration_x: 123.456,
