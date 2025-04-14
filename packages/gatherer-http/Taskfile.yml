@@ -30,7 +30,7 @@ tasks:
   build:
     desc: Build the project
     cmds:
-      - bun index.ts --tsconfig-override tsconfig.build.json
+      - bun build --target=bun --outfile=dist/index.js index.ts
 
   start:
     desc: Start the application

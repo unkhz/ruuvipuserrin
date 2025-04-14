@@ -15,8 +15,7 @@ tasks:
   serve:
     desc: Run in development mode
     cmds:
-      # Can't run with bun yet, see https://github.com/remix-run/remix/discussions/7413
-      - npx remix-serve build/server/index.js
+      - bun x remix-serve build/server/index.js
 
   prettier-check:
     desc: Check if files are formatted with Prettier
@@ -38,8 +37,3 @@ tasks:
     desc: Run unit tests
     cmds:
       - bun x vitest --run
-
-  type-check:
-    desc: Run TypeScript type checking
-    cmds:
-      - bun x tsc --noEmit

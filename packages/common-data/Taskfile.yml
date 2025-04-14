@@ -35,7 +35,7 @@ tasks:
   build:
     desc: Build the project
     cmds:
-      - bun x tsc --project tsconfig.build.json
+      - bun build --target=bun --outfile=dist/index.js index.ts
 
   protoc-ruuvi:
     desc: Generate TypeScript from Ruuvi proto file

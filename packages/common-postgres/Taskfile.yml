@@ -30,8 +30,7 @@ tasks:
   build:
     desc: Build the project
     cmds:
-      - rm -rf ./dist
-      - bun x tsc --project tsconfig.build.json
+      - bun build --target=bun --outfile=dist/index.js index.ts
 
   migrate-one-up:
     desc: Run one migration up for a specific tenant
