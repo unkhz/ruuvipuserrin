@@ -1,6 +1,6 @@
 import { RuuviMeasurementSnapshot, RuuviMeasurement } from '@ruuvipuserrin/common-data'
-import { processMeasurementsFromQueue } from './lib/queue-read'
-import { pushMeasurementsToArchive } from './lib/archive-write'
+import { processMeasurementsFromQueue } from './lib/queue-read.js'
+import { pushMeasurementsToArchive } from './lib/archive-write.js'
 
 function readMeasurements(data: Buffer): RuuviMeasurement[] {
   try {
