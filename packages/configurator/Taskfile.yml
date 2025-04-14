@@ -18,10 +18,21 @@ tasks:
       # Can't run with bun yet, see https://github.com/remix-run/remix/discussions/7413
       - npx remix-serve build/server/index.js
 
-  lint:
+  prettier-check:
+    desc: Check if files are formatted with Prettier
+    cmds:
+      - bun x prettier --check *.json *.ts app/**/*.ts
+
+  eslint-check:
     desc: Run ESLint
     cmds:
       - bun x eslint --ext .ts,.tsx,.js,.jsx
+
+  lint:
+    desc: Lint code
+    cmds:
+      - task: eslint-check
+      - task: prettier-check
 
   test:
     desc: Run ESLint
