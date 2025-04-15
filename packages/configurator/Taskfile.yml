@@ -28,12 +28,12 @@ tasks:
 
   lint:
     desc: Lint code
-    cmds:
+    deps:
       - task: eslint-check
       - task: base-bun:tsc-check
       - task: base-bun:prettier-check
 
   test:
     desc: Run tests
-    cmds:
+    deps:
       - task: base-bun:test
