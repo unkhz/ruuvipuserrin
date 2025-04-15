@@ -20,7 +20,7 @@ tasks:
   test-unit:
     desc: Run unit tests
     cmds:
-      -  bun x vitest --run
+      - bun x vitest --run
 
   lint:
     desc: Run static analysis checks

@@ -2,6 +2,6 @@
 version: '3'
 
 includes:
-    base-bun:
-      taskfile: ../base-bun/Taskfile.yaml
-      flatten: true
+  base-bun:
+    taskfile: ../base-bun/Taskfile.yaml
+    flatten: true
