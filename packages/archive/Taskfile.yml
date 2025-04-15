@@ -10,7 +10,7 @@ tasks:
   dev:
     desc: Run in development mode
     cmds:
-      - bun x nodemon --watch './**/*.ts' --exec 'ts-node' index.ts
+      - bun --watch index.ts
 
   start:
     desc: Start the application
