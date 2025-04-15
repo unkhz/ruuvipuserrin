@@ -2,12 +2,8 @@
 version: '3'
 
 includes:
-    base-bun:
-      taskfile: ../base-bun/Taskfile.yaml
-      flatten: true
-      excludes:
-        - lint
-        - build
+  base-bun:
+    taskfile: ../base-bun/Taskfile.yaml
 
 tasks:
   build:
@@ -33,6 +29,6 @@ tasks:
   lint:
     desc: Lint code
     cmds:
-      - task: tsc-check
       - task: eslint-check
-      - task: prettier-check
+      - task: base-bun:tsc-check
+      - task: base-bun:prettier-check
