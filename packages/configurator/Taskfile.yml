@@ -32,3 +32,8 @@ tasks:
       - task: eslint-check
       - task: base-bun:tsc-check
       - task: base-bun:prettier-check
+
+  test:
+    desc: Run tests
+    cmds:
+      - task: base-bun:test
