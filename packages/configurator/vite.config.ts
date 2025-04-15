@@ -13,13 +13,11 @@ export default defineConfig({
       '~': path.resolve(__dirname, './app'),
     },
   },
-  plugins: [remix(), tailwindcss(), devtoolsJson()],
-  build: {
-    rollupOptions: {
-      external: [
-        'vitest',
-        /^vitest\/.*/, // Exclude all vitest subpaths
-      ],
-    },
-  },
+  plugins: [
+    remix({
+      ignoredRouteFiles: ['**/*.css', '**/*.test.tsx', '**/*.test.ts'],
+    }),
+    tailwindcss(),
+    devtoolsJson(),
+  ],
 })
