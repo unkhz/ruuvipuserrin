@@ -4,7 +4,7 @@ import { createRemixStub } from '@remix-run/testing'
 import { render, screen, waitFor } from '@testing-library/react'
 import { generateMock } from '@anatine/zod-mock'
 import SourcesTable from './tenant.$tenantId.jsx'
-import { ZItem } from '~/utils/schema'
+import { Item, ZItem } from '~/utils/schema'
 
 vi.mock('@ruuvipuserrin/common-archive-client', () => {
   return {
@@ -12,8 +12,10 @@ vi.mock('@ruuvipuserrin/common-archive-client', () => {
   }
 })
 
+const mockItem = (name: string): Item => ({ ...generateMock(ZItem), source: crypto.randomUUID(), name })
+
 test('renders', async () => {
-  const items = [generateMock(ZItem), generateMock(ZItem), generateMock(ZItem)]
+  const items = [mockItem('Room 1'), mockItem('Room 2'), mockItem('Room 3')]
   const WrappedSourcesTable = createRemixStub([
     {
       path: '/',
