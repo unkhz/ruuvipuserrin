@@ -15,11 +15,13 @@ function getConfig(tenantId: string): PoolConfig {
     user: env.PG_USER,
     password: env.PG_PASSWORD,
     database: `${env.PG_DB}_${tenantId}`,
-    ssl: {
-      requestCert: false,
-      rejectUnauthorized: false,
-      ca: env.PG_CERT ?? undefined,
-    },
+    ssl: env.PG_CERT
+      ? {
+          requestCert: false,
+          rejectUnauthorized: false,
+          ca: env.PG_CERT,
+        }
+      : undefined,
     max: 5,
   }
 }
