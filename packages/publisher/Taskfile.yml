@@ -1,37 +1,12 @@
 # packages/publisher/Taskfile.yml
 version: '3'
 
+includes:
+    base-bun:
+      taskfile: ../base-bun/Taskfile.yaml
+      flatten: true
+      
 tasks:
-  prettier-write:
-    desc: Run Prettier and format files
-    cmds:
-      - bun x prettier --write *.json *.ts lib/**/*.ts
-
-  prettier-check:
-    desc: Check if files are formatted with Prettier
-    cmds:
-      - bun x prettier --check *.json *.ts lib/**/*.ts
-
-  test-unit:
-    desc: Run unit tests
-    cmds:
-      -  bun x vitest --run
-
-  lint:
-    desc: Run linter (Prettier check)
-    deps:
-      - prettier-check
-
-  test:
-    desc: Run all tests
-    deps:
-      - test-unit
-
-  build:
-    desc: Build the project
-    cmds:
-      - bun build --target=bun --outfile=dist/index.js index.ts
-
   dev:
     desc: Run in development mode
     cmds:
