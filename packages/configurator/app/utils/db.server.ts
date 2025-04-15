@@ -2,7 +2,7 @@ import { createClient } from '@ruuvipuserrin/common-archive-client'
 import { ZConfig } from '@ruuvipuserrin/common-data'
 import type { ValidTenantId } from '@ruuvipuserrin/common-data'
 import { getDateAndTime } from './date.js'
-import { Item } from './schema.js'
+import type { Item } from './schema.js'
 
 const client = createClient()
 
