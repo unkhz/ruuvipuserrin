@@ -1,9 +1,11 @@
-import { Pool, PoolConfig } from 'pg'
+import { Pool } from 'pg'
+import type { PoolConfig } from 'pg'
 import { Kysely, PostgresDialect } from 'kysely'
-import { ZValidTenantId, ValidTenantId } from '@ruuvipuserrin/common-data'
+import { ZValidTenantId } from '@ruuvipuserrin/common-data'
+import type { ValidTenantId } from '@ruuvipuserrin/common-data'
 
 import { getEnv } from './env.js'
-import { Database } from './database.js'
+import type { Database } from './database.js'
 
 function getConfig(tenantId: string): PoolConfig {
   const env = getEnv()

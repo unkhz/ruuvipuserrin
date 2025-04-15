@@ -1,0 +1,39 @@
+# packages/base-bun/Taskfile.yml
+version: '3'
+
+tasks:
+  prettier-write:
+    desc: Run Prettier and format files
+    cmds:
+      - bun x prettier --write --ignore-unknown --no-error-on-unmatched-pattern **/*.{ts,js,tsx,jsx,json,md,yml,yaml,html,css,scss}
+
+  prettier-check:
+    desc: Check if files are formatted with Prettier
+    cmds:
+      - bun x prettier --check --ignore-unknown --no-error-on-unmatched-pattern **/*.{ts,js,tsx,jsx,json,md,yml,yaml,html,css,scss}
+
+  tsc-check:
+    desc: Run TypeScript compiler check
+    cmds:
+      - bun x tsc --noEmit
+
+  test-unit:
+    desc: Run unit tests
+    cmds:
+      - bun x vitest --run
+
+  lint:
+    desc: Run static analysis checks
+    deps:
+      - tsc-check
+      - prettier-check
+
+  test:
+    desc: Run all tests
+    deps:
+      - test-unit
+
+  build:
+    desc: Build the project
+    cmds:
+      - bun build --target=bun --outfile=dist/index.js index.ts

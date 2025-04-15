@@ -1,6 +1,10 @@
 # packages/configurator/Taskfile.yml
 version: '3'
 
+includes:
+  base-bun:
+    taskfile: ../base-bun/Taskfile.yaml
+
 tasks:
   build:
     desc: Build the project
@@ -17,11 +21,6 @@ tasks:
     cmds:
       - bun x remix-serve build/server/index.js
 
-  prettier-check:
-    desc: Check if files are formatted with Prettier
-    cmds:
-      - bun x prettier --check *.json *.ts app/**/*.ts
-
   eslint-check:
     desc: Run ESLint
     cmds:
@@ -31,9 +30,10 @@ tasks:
     desc: Lint code
     cmds:
       - task: eslint-check
-      - task: prettier-check
+      - task: base-bun:tsc-check
+      - task: base-bun:prettier-check
 
   test:
-    desc: Run unit tests
+    desc: Run tests
     cmds:
-      - bun x vitest --run
+      - task: base-bun:test

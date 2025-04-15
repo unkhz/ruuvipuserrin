@@ -41,6 +41,20 @@ includes:
     dir: packages/publisher
 
 tasks:
+  run_for_all_apps:
+    desc: Run task for all applications
+    vars:
+      TASK: '{{.TASK | default ""}}'
+    cmds:
+      - task: archive:{{.TASK}}
+      - task: common-archive-client:{{.TASK}}
+      - task: common-data:{{.TASK}}
+      - task: common-postgres:{{.TASK}}
+      - task: configurator:{{.TASK}}
+      - task: gatherer-http:{{.TASK}}
+      - task: gatherer-stdin:{{.TASK}}
+      - task: publisher:{{.TASK}}
+
   run_parallel:
     desc: Run specified tasks in parallel
     vars:
@@ -83,3 +97,15 @@ tasks:
             gatherer-http:dev
             gatherer-stdin:dev
             publisher:dev
+
+  lint-all:
+    cmds:
+      - task: run_for_all_apps
+        vars:
+          TASK: lint
+  
+  test-all:
+    cmds:
+      - task: run_for_all_apps
+        vars:
+          TASK: test

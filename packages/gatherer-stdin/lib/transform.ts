@@ -43,6 +43,11 @@ function parseKeyValueCsv<TData extends Record<string, unknown>>(line: string): 
 
 export function parseLineFromRuuvitagListener(line: string): RuuviMeasurement | undefined {
   const [identifiers, data, time] = line.split(' ')
+  if (!identifiers || !data || !time) {
+    console.debug('Ignoring invalid measurement line', line)
+    return undefined
+  }
+
   const macResult = ZRuuvitagIdentifiersFromParsedInput.safeParse(parseKeyValueCsv<{ mac: string }>(identifiers))
   if (!macResult.success) {
     console.debug('Ignoring measurement with invalid mac', macResult.error.issues)

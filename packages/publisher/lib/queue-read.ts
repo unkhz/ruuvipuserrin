@@ -21,7 +21,13 @@ type Message = [id: Buffer, fields: Buffer[]]
 async function processRange(range: Message[], processMessage: (data: Buffer) => Promise<void>) {
   if (range?.length) {
     try {
-      await Promise.all(range.map(([id, [key, data]]: Message) => processMessage(data)))
+      await Promise.all(
+        range.map(([id, [key, data]]: Message) => {
+          if (data !== undefined) {
+            processMessage(data)
+          }
+        }),
+      )
       const [lastId] = range.at(-1) ?? []
       if (lastId) {
         await Promise.all([

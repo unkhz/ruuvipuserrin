@@ -1,7 +1,7 @@
-import { inferAsyncReturnType } from '@trpc/server'
-import { CreateExpressContextOptions } from '@trpc/server/adapters/express'
+import type { inferAsyncReturnType } from '@trpc/server'
+import type { CreateExpressContextOptions } from '@trpc/server/adapters/express'
 import { createClient, migrateToLatest } from '@ruuvipuserrin/common-postgres'
-import { ValidTenantId } from '@ruuvipuserrin/common-data'
+import type { ValidTenantId } from '@ruuvipuserrin/common-data'
 
 const clients = new Map<ValidTenantId, Promise<ReturnType<typeof createClient>>>()
 
