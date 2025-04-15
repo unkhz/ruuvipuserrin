@@ -1,4 +1,4 @@
-import { ColumnType } from 'kysely'
+import type { ColumnType } from 'kysely'
 
 export interface RuuviMeasurementTable {
   time: ColumnType<Date, string | undefined, never>

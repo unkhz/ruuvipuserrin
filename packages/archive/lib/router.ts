@@ -1,6 +1,7 @@
 import { initTRPC } from '@trpc/server'
 import z from 'zod'
-import { ConfigTable, SourceView, sql } from '@ruuvipuserrin/common-postgres'
+import { sql } from '@ruuvipuserrin/common-postgres'
+import type { ConfigTable, SourceView } from '@ruuvipuserrin/common-postgres'
 import { ZConfig, ZHealthMeasurement, ZMeasurement, ZValidTenantId } from '@ruuvipuserrin/common-data'
 
 import type { Context } from './context.js'
