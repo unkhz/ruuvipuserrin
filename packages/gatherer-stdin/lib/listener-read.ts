@@ -9,7 +9,7 @@ export async function processMeasurementsFromStandardInput(cb: (data: RuuviMeasu
     `Reading ruuvitag-listener measurements from stdin with the name "${args.measurementName}" (configure with option --measurementName)`,
   )
 
-  for await (const line of Bun.stdin.stream()) {
+  for await (const line of console) {
     // Only process input with sepcific ruuvitag-listener influxdb measurement name
     if (line.startsWith(args.measurementName)) {
       const measurement = parseLineFromRuuvitagListener(line)
