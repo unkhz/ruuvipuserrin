@@ -5,12 +5,12 @@ tasks:
   prettier-write:
     desc: Run Prettier and format files
     cmds:
-      - bun x prettier --write *.json *.ts lib/**/*.ts app/**/*.ts
+      - bun x prettier --write --ignore-unknown --no-error-on-unmatched-pattern **/*.{ts,js,tsx,jsx,json,md,yml,yaml,html,css,scss}
 
   prettier-check:
     desc: Check if files are formatted with Prettier
     cmds:
-      - bun x prettier --check *.json *.ts lib/**/*.ts app/**/*.ts
+      - bun x prettier --check --ignore-unknown --no-error-on-unmatched-pattern **/*.{ts,js,tsx,jsx,json,md,yml,yaml,html,css,scss}
 
   tsc-check:
     desc: Run TypeScript compiler check
