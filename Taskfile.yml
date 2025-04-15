@@ -45,15 +45,15 @@ tasks:
     desc: Run task for all applications
     vars:
       TASK: '{{.TASK | default ""}}'
-    cmds:
-      - task: archive:{{.TASK}}
-      - task: common-archive-client:{{.TASK}}
-      - task: common-data:{{.TASK}}
-      - task: common-postgres:{{.TASK}}
-      - task: configurator:{{.TASK}}
-      - task: gatherer-http:{{.TASK}}
-      - task: gatherer-stdin:{{.TASK}}
-      - task: publisher:{{.TASK}}
+    deps:
+      - archive:{{.TASK}}
+      - common-archive-client:{{.TASK}}
+      - common-data:{{.TASK}}
+      - common-postgres:{{.TASK}}
+      - configurator:{{.TASK}}
+      - gatherer-http:{{.TASK}}
+      - gatherer-stdin:{{.TASK}}
+      - publisher:{{.TASK}}
 
   run_parallel:
     desc: Run specified tasks in parallel
