@@ -56,6 +56,12 @@ describe('parseLineFromRuuvitagListener', () => {
   })
 
   const failureCases: { desc: string; input: string }[] = [
+    { desc: 'empty line', input: '' },
+    {
+      desc: 'partial line',
+      input:
+        'measurement,mac=AA:BB:CC:DD:EE:FF,name=AA:BB:CC:DD:EE:FF acceleration_x=-0.824,acceleration_y=0.536,acceleration_z=-0.06,battery_potential=2.293,humidity=30.69,measurement_sequence_nu',
+    },
     { desc: 'missing mac', input: 'wrong' },
     { desc: 'non-numeric data value', input: createRuuvitagListenerOutput({ acceleration_x: 'wrong' }) },
   ]
