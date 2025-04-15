@@ -2,7 +2,6 @@
   "extends": "../base-bun/tsconfig.json",
   "include": ["*.ts", "./lib/**/*.ts"],
   "compilerOptions": {
-    "outDir": "./dist",
-    "types": ["bun-types"]
+    "outDir": "./dist"
   }
 }
