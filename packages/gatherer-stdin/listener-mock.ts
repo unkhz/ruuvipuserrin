@@ -1,4 +1,4 @@
-import { readArgs } from './lib/args'
+import { readArgs } from './lib/args.js'
 
 const data = [
   'acceleration_x=-0.055,acceleration_y=-0.032,acceleration_z=0.998,battery_potential=3.007,humidity=19.5,pressure=101.481,temperature=19.63,movement_counter=1,measurement_sequence_number=1,tx_power=1',

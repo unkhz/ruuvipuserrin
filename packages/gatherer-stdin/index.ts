@@ -1,6 +1,6 @@
-import { readArgs } from './lib/args'
-import { processMeasurementsFromStandardInput } from './lib/listener-read'
-import { pushMeasurementSnapshotToQueue, updateMeasurementSnapshot } from './lib/queue-write'
+import { readArgs } from './lib/args.js'
+import { processMeasurementsFromStandardInput } from './lib/listener-read.js'
+import { pushMeasurementSnapshotToQueue, updateMeasurementSnapshot } from './lib/queue-write.js'
 
 processMeasurementsFromStandardInput(updateMeasurementSnapshot).catch((err) => {
   console.error(err)

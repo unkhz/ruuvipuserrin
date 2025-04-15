@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { readArgs } from './args'
+import { readArgs } from './args.js'
 
 describe('readArgs', () => {
   it('should produce record of args', async () => {

@@ -1,10 +1,10 @@
 import * as trpcExpress from '@trpc/server/adapters/express'
 import express from 'express'
-import { createContext } from './lib/context'
-import { getEnv } from './lib/env'
-import { archiveApiRouter } from './lib/router'
+import { createContext } from './lib/context.js'
+import { getEnv } from './lib/env.js'
+import { archiveApiRouter } from './lib/router.js'
 
-export type { ArchiveApiRouter } from './lib/router'
+export type { ArchiveApiRouter } from './lib/router.js'
 
 const env = getEnv()
 

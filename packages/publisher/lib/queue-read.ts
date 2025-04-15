@@ -1,7 +1,7 @@
 import { Redis } from 'ioredis'
 import { RuuviMeasurement } from '@ruuvipuserrin/common-data'
-import { readArgs } from './args'
-import { getEnv } from './env'
+import { readArgs } from './args.js'
+import { getEnv } from './env.js'
 
 const { REDIS_HOST, REDIS_PORT } = getEnv()
 

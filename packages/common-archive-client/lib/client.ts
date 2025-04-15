@@ -1,6 +1,6 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
 import type { ArchiveApiRouter } from '@ruuvipuserrin/archive'
-import { getEnv } from './env'
+import { getEnv } from './env.js'
 
 const cache: Map<string, unknown> = new Map()
 

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import minimist from 'minimist'
-import { migrateOneDown, migrateOneUp, migrateToLatest } from './lib/migrate'
-import { createClient } from './lib/client'
+import { migrateOneDown, migrateOneUp, migrateToLatest } from './lib/migrate.js'
+import { createClient } from './lib/client.js'
 import { ZValidTenantId } from '@ruuvipuserrin/common-data'
 
 const ZRunMigrateArgsFromProcessArgv = z.object({

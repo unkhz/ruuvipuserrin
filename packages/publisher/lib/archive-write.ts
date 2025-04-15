@@ -1,6 +1,6 @@
 import type { RuuviMeasurement } from '@ruuvipuserrin/common-data'
 import { createClient } from '@ruuvipuserrin/common-archive-client'
-import { getEnv } from './env'
+import { getEnv } from './env.js'
 
 const client = createClient()
 const env = getEnv()

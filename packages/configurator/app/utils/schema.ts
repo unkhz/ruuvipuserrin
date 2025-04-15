@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { getDateAndTime } from './date'
+import { getDateAndTime } from './date.js'
 
 export const ZItem = z.object({
   source: z.string(),
