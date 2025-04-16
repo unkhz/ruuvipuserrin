@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: apps
 resources:
   - deployment.yaml
+  - backup-secret.sealed.yaml
 images:
   - name: ghcr.io/unkhz/ruuvipuserrin-archive
     newTag: fc7267492817ba9bdd816e54c513484e8ad6a8dc
