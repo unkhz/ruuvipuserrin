@@ -20,7 +20,7 @@ spec:
     ruuvi_dev: archive
     ruuvi_prod: archive
   postgresql:
-    version: '16'
+    version: '17'
   resources:
     requests:
       cpu: 500m
