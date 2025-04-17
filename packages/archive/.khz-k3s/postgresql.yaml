@@ -1,0 +1,30 @@
+---
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: ruuvipuserrin
+  namespace: apps
+  labels:
+    app.kubernetes.io/part-of: ruuvipuserrin
+    argocd.argoproj.io/instance: ruuvipuserrin
+spec:
+  enableLogicalBackup: false
+  teamId: acid
+  volume:
+    size: 1Gi
+  numberOfInstances: 1
+  users:
+    archive:
+      - nosuperuser
+  databases:
+    ruuvi_dev: archive
+    ruuvi_prod: archive
+  postgresql:
+    version: '16'
+  resources:
+    requests:
+      cpu: 500m
+      memory: 500Mi
+    limits:
+      cpu: '1'
+      memory: 1Gi

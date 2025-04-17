@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: apps
 resources:
   - deployment.yaml
+  - postgresql.yaml
   - backup-secret.sealed.yaml
 images:
   - name: ghcr.io/unkhz/ruuvipuserrin-archive
