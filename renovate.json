@@ -9,10 +9,15 @@
     },
     {
       "groupName": "Bun updates",
-      "matchPackagePatterns": ["^bun$"],
-      "matchFileNames": ["Dockerfile", "bun.lock", ".bun-version", "package.json"],
+      "matchFileNames": [
+        "Dockerfile",
+        "bun.lock",
+        ".bun-version",
+        "package.json"
+      ],
       "groupSlug": "bun-updates",
-      "matchUpdateTypes": ["major", "minor", "patch"]
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "matchPackageNames": ["/^bun$/"]
     }
   ]
 }
