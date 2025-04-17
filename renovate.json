@@ -1,23 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": ["config:best-practices"],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true
+      "groupName": "Bun updates",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["@types/bun"],
+      "enabled": true
     },
     {
       "groupName": "Bun updates",
-      "matchFileNames": [
-        "Dockerfile",
-        "bun.lock",
-        ".bun-version",
-        "package.json"
-      ],
-      "groupSlug": "bun-updates",
-      "matchUpdateTypes": ["major", "minor", "patch"],
-      "matchPackageNames": ["/^bun$/"]
+      "matchManagers": ["npm", "bun", "bun-version"],
+      "matchFileNames": [".bun-version", "package.json", "bun.lock"],
+      "enabled": true
+    },
+    {
+      "groupName": "Bun updates",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchPackageNames": ["oven/bun"],
+      "enabled": true
     }
   ]
 }
