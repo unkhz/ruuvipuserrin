@@ -20,6 +20,12 @@
       "matchManagers": ["dockerfile", "docker-compose"],
       "matchPackageNames": ["oven/bun"],
       "enabled": true
+    },
+    {
+      "groupName": "Ruuvipuserrin package images",
+      "matchManagers": ["dockerfile", "docker-compose", "kustomize"],
+      "matchPackageNames": ["ghcr.io/unkhz/ruuvipuserrin-*"],
+      "enabled": false
     }
   ]
 }
