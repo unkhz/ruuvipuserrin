@@ -62,6 +62,18 @@ tasks:
     cmds:
       - ./run_parallel_task.sh {{.TASKS}}
 
+  setup-parallel:
+    cmds:
+      - sudo apt install -y parallel
+
+  setup:
+    desc: Setup all applications
+    cmds:
+      - task: setup-parallel
+      - task: infra-redis:setup
+      - task: common-data:setup
+      - task: listener:setup
+
   start-bluetooth-stream:
     desc: Start bluetooth streaming with listener output piped to gatherer-stdin
     cmds:
@@ -103,7 +115,7 @@ tasks:
       - task: run_for_all_apps
         vars:
           TASK: lint
-  
+
   test-all:
     cmds:
       - task: run_for_all_apps

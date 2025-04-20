@@ -42,9 +42,7 @@ bun install
 Run package specific setup scripts
 
 ```
-task listener:setup
-task common-data:setup
-task infra-redis:setup
+task setup
 ```
 
 ### Running
