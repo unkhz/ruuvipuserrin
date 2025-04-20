@@ -28,6 +28,7 @@ Following shiny tools are used
 
 Ensure you have installed following tools in your gateway box (e.g. raspberry pi).
 
+- [Taskfile](https://taskfile.dev)
 - [Rust](https://rustup.rs/)
 - [Bun](https://bun.sh/)
 - [Redis](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
