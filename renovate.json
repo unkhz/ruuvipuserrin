@@ -28,6 +28,18 @@
       "matchManagers": ["dockerfile", "docker-compose", "kustomize"],
       "matchPackageNames": ["ghcr.io/unkhz/ruuvipuserrin-*"],
       "enabled": false
+    },
+    {
+      "packageRules": [
+        {
+          "matchUpdateTypes": ["patch", "digest"],
+          "matchCurrentVersion": "!/^0/",
+          "platformAutomerge": false,
+          "automerge": true,
+          "automergeType": "pr",
+          "automergeStrategy": "merge-commit"
+        }
+      ]
     }
   ]
 }
