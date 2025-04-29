@@ -30,16 +30,12 @@
       "enabled": false
     },
     {
-      "packageRules": [
-        {
-          "matchUpdateTypes": ["patch", "digest"],
-          "matchCurrentVersion": "!/^0/",
-          "platformAutomerge": false,
-          "automerge": true,
-          "automergeType": "pr",
-          "automergeStrategy": "merge-commit"
-        }
-      ]
+      "matchUpdateTypes": ["patch", "digest"],
+      "matchCurrentVersion": "!/^0/",
+      "platformAutomerge": false,
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "merge-commit"
     }
   ]
 }
