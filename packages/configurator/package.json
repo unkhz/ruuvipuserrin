@@ -17,9 +17,9 @@
   "devDependencies": {
     "@anatine/zod-mock": "3.14.0",
     "@eslint/js": "9.27.0",
-    "@remix-run/dev": "2.16.6",
-    "@remix-run/eslint-config": "2.16.6",
-    "@remix-run/testing": "2.16.6",
+    "@remix-run/dev": "2.16.7",
+    "@remix-run/eslint-config": "2.16.7",
+    "@remix-run/testing": "2.16.7",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.3.0",
     "@types/react": "18.3.21",
