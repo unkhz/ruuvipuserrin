@@ -2,7 +2,7 @@
   "name": "@ruuvipuserrin/base-bun",
   "version": "0.0.0",
   "devDependencies": {
-    "@types/bun": "1.2.14",
+    "@types/bun": "1.2.15",
     "@types/node": "22.15.24",
     "prettier": "3.5.3",
     "typescript": "5.8.3",
