@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: apps
 images:
   - name: ghcr.io/unkhz/ruuvipuserrin-base-bun
-    newTag: 70f96a6b0ee1f68fd284848039667a25857e6102
+    newTag: a58217262ab8a3e51dd99e7bfb9d86aed2de539d
