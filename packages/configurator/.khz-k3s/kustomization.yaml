@@ -5,4 +5,4 @@ resources:
   - deployment.yaml
 images:
   - name: ghcr.io/unkhz/ruuvipuserrin-configurator
-    newTag: 0ff589932ea73b31bc218c0d943d5cc71248a5e5
+    newTag: de82117d0623bdaba903af3e4c34e2dd3389b321
