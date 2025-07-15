@@ -7,4 +7,4 @@ resources:
   - backup-secret.sealed.yaml
 images:
   - name: ghcr.io/unkhz/ruuvipuserrin-archive
-    newTag: 25bb9779af054e626cdddae54febef4d064112de
+    newTag: b05f3e5ea5789b177569bb08f0da014b1f1c7dda
