@@ -24,7 +24,7 @@
       "version": "0.0.0",
       "devDependencies": {
         "@types/bun": "1.2.18",
-        "@types/node": "24.0.14",
+        "@types/node": "24.0.15",
         "prettier": "3.6.2",
         "typescript": "5.8.3",
         "vitest": "3.2.4",
@@ -567,7 +567,7 @@
 
     "@types/ms": ["@types/ms@2.1.0", "", {}, "sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA=="],
 
-    "@types/node": ["@types/node@24.0.14", "", { "dependencies": { "undici-types": "~7.8.0" } }, "sha512-4zXMWD91vBLGRtHK3YbIoFMia+1nqEz72coM42C5ETjnNCa/heoj7NT1G67iAfOqMmcfhuCZ4uNpyz8EjlAejw=="],
+    "@types/node": ["@types/node@24.0.15", "", { "dependencies": { "undici-types": "~7.8.0" } }, "sha512-oaeTSbCef7U/z7rDeJA138xpG3NuKc64/rZ2qmUFkFJmnMsAPaluIifqyWd8hSSMxyP9oie3dLAqYPblag9KgA=="],
 
     "@types/pg": ["@types/pg@8.15.4", "", { "dependencies": { "@types/node": "*", "pg-protocol": "*", "pg-types": "^2.2.0" } }, "sha512-I6UNVBAoYbvuWkkU3oosC8yxqH21f4/Jc4DK71JLG3dT2mdlGe1z+ep/LQGXaKaOgcvUrsQoPRqfgtMcvZiJhg=="],
 
