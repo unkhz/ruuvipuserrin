@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "module": "index.ts",
   "devDependencies": {
-    "@types/express": "5.0.4"
+    "@types/express": "5.0.5"
   },
   "dependencies": {
     "@ruuvipuserrin/base-bun": "workspace:*",
