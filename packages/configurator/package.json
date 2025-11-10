@@ -26,7 +26,7 @@
     "@types/react-dom": "18.3.7",
     "eslint": "9.37.0",
     "eslint-plugin-react": "7.37.5",
-    "jsdom": "27.0.1",
+    "jsdom": "27.1.0",
     "npm-run-all2": "8.0.4",
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3",
