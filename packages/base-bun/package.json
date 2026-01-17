@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "devDependencies": {
     "@types/bun": "1.2.23",
-    "@types/node": "25.0.7",
+    "@types/node": "25.0.8",
     "prettier": "3.6.2",
     "typescript": "5.9.3",
     "vitest": "3.2.4"
