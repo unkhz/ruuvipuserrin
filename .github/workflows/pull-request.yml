@@ -23,7 +23,7 @@ jobs:
       - uses: arduino/setup-task@v2
         with:
           version: 3.42.1
-      - uses: oven-sh/setup-bun@ecf28ddc73e819eb6fa29df6b34ef8921c743461 # v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version-file: '.bun-version'
       - run: bun install
