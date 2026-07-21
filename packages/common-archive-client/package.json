@@ -17,6 +17,6 @@
     "@ruuvipuserrin/archive": "workspace:*",
     "@trpc/client": "^11.0.0",
     "web-auth-library": "^1.0.3",
-    "zod": "^3.20.2"
+    "zod": "^4.0.0"
   }
 }
