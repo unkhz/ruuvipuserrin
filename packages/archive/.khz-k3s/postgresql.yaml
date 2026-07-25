@@ -10,6 +10,11 @@ metadata:
 spec:
   enableLogicalBackup: false
   teamId: acid
+  # hcloud-volumes has no CSI snapshot support, so velero backs this
+  # volume up via node-agent fs-backup (kopia, crash-consistent) instead
+  # of a CSI snapshot. ctrl tasks 006/007.
+  podAnnotations:
+    backup.velero.io/backup-volumes: pgdata
   volume:
     size: 1Gi
   numberOfInstances: 1
