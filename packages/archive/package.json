@@ -13,6 +13,6 @@
     "@ruuvipuserrin/common-postgres": "workspace:*",
     "@trpc/server": "^11.0.0",
     "express": "^5.0.0",
-    "zod": "^3.20.6"
+    "zod": "^4.0.0"
   }
 }
