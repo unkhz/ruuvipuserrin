@@ -82,7 +82,7 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
       - name: Install yq
-        uses: mikefarah/yq@master
+        uses: mikefarah/yq@a814ff5166040ec745a96bddd79ee31c3a548e83 # master
         with:
           cmd: yq --version
 
