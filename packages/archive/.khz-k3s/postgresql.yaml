@@ -16,6 +16,9 @@ spec:
   users:
     archive:
       - nosuperuser
+    # read-only login for the WAL archiving check (pg_stat_archiver is
+    # readable by any role); ctrl task 020
+    archivemon: []
   databases:
     ruuvi_dev: archive
     ruuvi_prod: archive

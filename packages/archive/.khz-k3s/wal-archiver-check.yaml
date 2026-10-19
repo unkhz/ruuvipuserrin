@@ -1,0 +1,83 @@
+---
+# Fails when postgres WAL archiving (wal-g -> S3) is failing or stale.
+# Alerting lives in core (prometheus-stack PostgresWalArchivingUnhealthy):
+# it fires when this CronJob has had no successful run for an hour.
+# Background: spilo-18's wal-g silently stopped archiving for two days in
+# 2026-07/08 while every alert stayed green (ctrl tasks 019, 020).
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ruuvipuserrin-wal-archiver-check
+  namespace: apps
+  labels:
+    app.kubernetes.io/part-of: ruuvipuserrin
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 120
+      # keep a failed run's logs for an hour, then let it go so the generic
+      # KubeJobFailed alert does not outlive a recovery
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          restartPolicy: Never
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 70
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: check
+              image: docker.io/library/postgres:17.8-alpine
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+              env:
+                - name: PGHOST
+                  value: ruuvipuserrin
+                - name: PGDATABASE
+                  value: postgres
+                - name: PGSSLMODE
+                  value: require
+                - name: PGCONNECT_TIMEOUT
+                  value: "10"
+                - name: PGUSER
+                  valueFrom:
+                    secretKeyRef:
+                      name: archivemon.ruuvipuserrin.credentials.postgresql.acid.zalan.do
+                      key: username
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: archivemon.ruuvipuserrin.credentials.postgresql.acid.zalan.do
+                      key: password
+              command:
+                - sh
+                - -c
+                - |
+                  set -eu
+                  # archive_timeout is 1800s and the database is written
+                  # continuously, so >75min without a successful archive is stale
+                  result=$(psql -XtA -c "
+                    select case
+                      when last_failed_time > coalesce(last_archived_time, 'epoch') then 'FAILING'
+                      when coalesce(last_archived_time, 'epoch') < now() - interval '75 minutes' then 'STALE'
+                      else 'OK' end
+                      || ' last_archived=' || coalesce(last_archived_time::text, 'never')
+                      || ' last_failed=' || coalesce(last_failed_time::text, 'never')
+                    from pg_stat_archiver")
+                  echo "$result"
+                  case "$result" in OK*) exit 0 ;; *) exit 1 ;; esac
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 16Mi
+                limits:
+                  memory: 64Mi

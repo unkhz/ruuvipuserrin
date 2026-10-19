@@ -5,6 +5,7 @@ resources:
   - deployment.yaml
   - postgresql.yaml
   - backup-secret.sealed.yaml
+  - wal-archiver-check.yaml
 images:
   - name: ghcr.io/unkhz/ruuvipuserrin-archive
     newTag: ab836ca788dd42e27a68b6d738bd9d906119402c
