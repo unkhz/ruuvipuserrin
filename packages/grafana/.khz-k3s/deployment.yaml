@@ -111,6 +111,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+    traefik.ingress.kubernetes.io/router.middlewares: 'apps-cloudflare-only@kubernetescrd'
     traefik.ingress.kubernetes.io/ssl-redirect: 'true'
 spec:
   ingressClassName: traefik
