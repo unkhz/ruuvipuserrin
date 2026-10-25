@@ -30,7 +30,7 @@ spec:
     # endpoints; spilo-18 defaults WALG_S3_SSE=AES256, which silently broke
     # all WAL archiving in 2026-07/08 (ctrl task 019).
     - name: WALG_DISABLE_S3_SSE
-      value: "true"
+      value: 'true'
   resources:
     requests:
       cpu: 500m
