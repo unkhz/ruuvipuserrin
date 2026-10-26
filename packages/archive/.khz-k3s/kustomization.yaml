@@ -8,4 +8,4 @@ resources:
   - wal-archiver-check.yaml
 images:
   - name: ghcr.io/unkhz/ruuvipuserrin-archive
-    newTag: fc983b74a1f136743115ef77fa3ba0d6a7446162
+    newTag: 042fd58d971bf6dece31dff1786e97284cd14e5d
