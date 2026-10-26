@@ -1,0 +1,3 @@
+[install]
+# Keep the hoisted node_modules layout: packages rely on types/tools hoisted from base-bun.
+linker = "hoisted"
