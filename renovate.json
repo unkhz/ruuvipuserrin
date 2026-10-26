@@ -42,6 +42,17 @@
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "merge-commit"
+    },
+    {
+      "description": "Keep the @remix-run ranges in lockstep: lockfile-only updates left older copies next to newer ones",
+      "matchPackageNames": ["@remix-run/**"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": "Label majors and never automerge them",
+      "matchUpdateTypes": ["major"],
+      "labels": ["breaking-change"],
+      "automerge": false
     }
   ]
 }
